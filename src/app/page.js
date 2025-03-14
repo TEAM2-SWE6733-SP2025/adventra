@@ -23,7 +23,7 @@ export default function Home() {
     {
       id: 3,
       name: "Safari",
-      location: "Serengeti, Tanzania",
+      location: 'Serengeti, Tanzania',
       image: "/safari.jpg",
     },
   ];
