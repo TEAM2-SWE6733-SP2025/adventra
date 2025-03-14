@@ -16,7 +16,7 @@
     "cypress:run": "cypress run"
   },
   "lint-staged": {
-    "app/**/*.{js,jsx,ts,tsx}": [
+    "src/app/**/*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
     ]
