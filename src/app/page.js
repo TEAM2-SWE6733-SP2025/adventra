@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import Link from "next/link"
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -16,7 +16,7 @@ export default function Home() {
     },
     {
       id: 2,
-      name: "Mountain Biking",
+      name: 'Mountain Biking',
       location: "Rocky Mountains, USA",
       image: "/biking.jpg",
     },
