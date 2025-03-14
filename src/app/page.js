@@ -29,7 +29,7 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    document.body.style.overflow = "hidden"; // Prevents page scrolling
+    document.body.style.overflow = 'hidden' // Prevents page scrolling
     return () => {
       document.body.style.overflow = "auto"; // Restores scrolling when unmounted
     };
