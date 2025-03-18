@@ -1,4 +1,17 @@
 {
-    "jest.rootPath": "./",
-    "jest.runMode": "watch",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.run": "onType", // Run ESLint as you type
+  "editor.formatOnSave": true, // Format code on save
+  "jest.rootPath": "./",
+  "jest.runMode": "watch",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.requireConfig": true
 }

@@ -1,18 +1,18 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import Page from "../src/app/page";
+import Home from "../src/app/page";
 
 describe("Home component", () => {
-  test("Nav contains an h1 with 'Adventra'", () => {
-    render(<Page />);
+  test("renders the main heading", () => {
+    render(<Home />);
 
-    // Find the H1 inside the nav
-    const navHeading = screen.getByRole("heading", {
+    // Find the main heading
+    const mainHeading = screen.getByRole("heading", {
       level: 1,
-      name: "Adventra",
+      name: /Meet Adventurers, Explore Together/i,
     });
 
-    // Check if it exists in the document
-    expect(navHeading).toBeInTheDocument();
+    // Check if the heading is in the document
+    expect(mainHeading).toBeInTheDocument();
   });
 });

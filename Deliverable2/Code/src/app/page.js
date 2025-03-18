@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import Navbar from "./components/Navbar.jsx";
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -31,7 +31,7 @@ export default function Home() {
   useEffect(() => {
     document.body.style.overflow = "hidden"; // Prevents page scrolling
     return () => {
-      document.body.style.overflow = "auto"; // Restores scrolling when unmounted
+      document.body.style.overflow = "auto";
     };
   }, []);
 
@@ -48,16 +48,8 @@ export default function Home() {
 
   return (
     <main className="relative w-full h-screen overflow-hidden flex flex-col bg-black">
-      {/* Navbar */}
-      <nav className="absolute top-0 w-full flex items-center justify-between px-6 py-4 bg-black/60 text-white z-30">
-        <h1 className="text-2xl font-bold">Adventra</h1>
-        <div>
-          <h1>Home</h1>
-          <Link href="/about">About</Link>
-        </div>
-      </nav>
+      <Navbar />
 
-      {/* Hero Section */}
       <header className="absolute top-20 left-0 w-full text-center text-white px-6 z-30">
         <h1 className="text-4xl md:text-6xl font-bold drop-shadow-lg">
           Meet Adventurers,{" "}
@@ -68,7 +60,6 @@ export default function Home() {
         </p>
       </header>
 
-      {/* Adventure Swiper */}
       <section className="relative w-full h-full flex justify-center items-center overflow-hidden">
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
@@ -90,7 +81,6 @@ export default function Home() {
               else if (info.offset.x > 0.1) handleSwipe("left"); // Pass
             }}
           >
-            {/* Overlay & Adventure Info */}
             <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-6">
               <h2 className="text-4xl font-bold">
                 {adventures[currentIndex].name}
@@ -101,7 +91,6 @@ export default function Home() {
         </AnimatePresence>
       </section>
 
-      {/* Swipe Buttons */}
       <div className="absolute bottom-16 w-full flex justify-center gap-6 z-10">
         <button
           onClick={() => handleSwipe("left")}

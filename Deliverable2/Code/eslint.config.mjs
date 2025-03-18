@@ -13,7 +13,11 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.config({
     extends: ["next/core-web-vitals", "prettier"],
+    plugins: ["prettier"],
     rules: {
+      "prettier/prettier": "error",
+      "no-unused-vars": ["warn"],
+      indent: ["error", 2],
       semi: ["error"],
       quotes: ["error", "double"],
       "prefer-arrow-callback": ["error"],
