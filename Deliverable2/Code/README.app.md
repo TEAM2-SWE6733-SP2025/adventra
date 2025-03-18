@@ -90,7 +90,7 @@ You can customize styles in **tailwind.config.js**.
 - Use Prisma in your Next.js API routes:
 
   ```js
-  import { PrismaClient } from '@prisma/client';
+  import { PrismaClient } from "@prisma/client";
 
   const prisma = new PrismaClient();
   export default async function handler(req, res) {
@@ -116,12 +116,12 @@ npm run test  # or yarn test
 Create a test file **Button.test.js** in the `__tests__` folder:
 
 ```js
-import { render, screen } from '@testing-library/react';
-import Button from '../components/Button';
+import { render, screen } from "@testing-library/react";
+import Button from "../components/Button";
 
-test('renders the button correctly', () => {
+test("renders the button correctly", () => {
   render(<Button label="Click Me" />);
-  expect(screen.getByText('Click Me')).toBeInTheDocument();
+  expect(screen.getByText("Click Me")).toBeInTheDocument();
 });
 ```
 
