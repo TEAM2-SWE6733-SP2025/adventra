@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import AuthButton from "./AuthButton";
 
 export const Navbar = ({ onMenuToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,10 +43,11 @@ export const Navbar = ({ onMenuToggle }) => {
             </svg>
           </button>
 
-          <div className="hidden md:flex space-x-12">
+          <div className="hidden md:flex space-x-12 items-center">
             <Link href="/">Home</Link>
             <Link href="/about">About</Link>
             <Link href="/profile">Profile</Link>
+            <AuthButton />
           </div>
         </div>
       </div>
@@ -59,6 +61,7 @@ export const Navbar = ({ onMenuToggle }) => {
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
           <Link href="/profile">Profile</Link>
+          <AuthButton />
         </div>
       </div>
     </nav>

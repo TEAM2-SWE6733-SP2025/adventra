@@ -3,12 +3,15 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import ValidatedEmailInput from "../../components/ValidateEmailInput";
 
 export default function SignIn() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,12 +32,10 @@ export default function SignIn() {
         {error && <p className="text-red-500 text-center">Error: {error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
+          <ValidatedEmailInput
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 bg-gray-800 rounded-lg focus:outline-none"
+            onChange={setEmail}
+            placeholder="Email"
           />
           <input
             type="password"
@@ -66,6 +67,15 @@ export default function SignIn() {
         >
           Sign in with Apple
         </button>
+        <div className="text-center">
+          <p className="text-gray-400">Don't have an account?</p>
+          <button
+            onClick={() => router.push("/auth/signup")}
+            className="mt-2 text-blue-500 hover:underline"
+          >
+            Sign Up
+          </button>
+        </div>
       </div>
     </div>
   );

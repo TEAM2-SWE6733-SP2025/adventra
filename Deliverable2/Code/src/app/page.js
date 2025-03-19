@@ -76,11 +76,17 @@ export default function Home() {
 
       <main className="relative w-full h-screen overflow-hidden flex flex-col">
         <section className="absolute inset-0 flex flex-col justify-start items-center text-center text-white px-6 pt-16 z-10">
-          <h1 className="text-4xl md:text-6xl font-bold drop-shadow-2xl">
+          <h1
+            className="text-4xl md:text-6xl font-bold"
+            style={{ textShadow: "0px 10px 15px rgba(0, 0, 0, 0.9)" }}
+          >
             Meet Adventurers,{" "}
             <span className="text-yellow-400">Explore Together</span>
           </h1>
-          <p className="mt-4 text-lg md:text-xl text-gray-200 drop-shadow-lg">
+          <p
+            className="mt-4 text-lg md:text-xl text-gray-200"
+            style={{ textShadow: "0px 5px 10px rgba(0, 0, 0, 0.8)" }}
+          >
             Find like-minded people to join you on your next adventure.
           </p>
         </section>
@@ -106,10 +112,18 @@ export default function Home() {
               }}
             >
               <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-6">
-                <h2 className="text-4xl font-bold">
+                <h2
+                  className="text-4xl font-bold"
+                  style={{ textShadow: "0px 8px 12px rgba(0, 0, 0, 0.9)" }}
+                >
                   {adventures[currentIndex].name}
                 </h2>
-                <p className="text-lg">{adventures[currentIndex].location}</p>
+                <p
+                  className="text-lg"
+                  style={{ textShadow: "0px 5px 10px rgba(0, 0, 0, 0.8)" }}
+                >
+                  {adventures[currentIndex].location}
+                </p>
               </div>
             </motion.div>
           </AnimatePresence>
