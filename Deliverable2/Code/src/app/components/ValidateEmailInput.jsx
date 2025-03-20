@@ -28,7 +28,7 @@ export default function ValidatedEmailInput({ value, onChange, placeholder }) {
         placeholder={placeholder || "Email"}
         value={value}
         onChange={handleEmailChange}
-        className={`w-full p-3 bg-gray-800 rounded-lg focus:outline-none ${
+        className={`w-full p-3 bg-gray-200 dark:bg-gray-700 rounded-lg focus:outline-none ${
           emailError === null && value !== ""
             ? "border-2 border-green-500"
             : emailError

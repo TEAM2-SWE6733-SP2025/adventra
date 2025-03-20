@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import AuthButton from "./AuthButton";
+import { useSession } from "next-auth/react"; 
 
 export const Navbar = ({ onMenuToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession(); 
 
   const handleClick = () => {
     const newState = !isOpen;
@@ -46,7 +48,7 @@ export const Navbar = ({ onMenuToggle }) => {
           <div className="hidden md:flex space-x-12 items-center">
             <Link href="/">Home</Link>
             <Link href="/about">About</Link>
-            <Link href="/profile">Profile</Link>
+            {session && <Link href="/profile">Profile</Link>}{" "}
             <AuthButton />
           </div>
         </div>
@@ -60,7 +62,7 @@ export const Navbar = ({ onMenuToggle }) => {
         <div className="px-4 py-3 flex flex-col gap-4">
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
-          <Link href="/profile">Profile</Link>
+          {session && <Link href="/profile">Profile</Link>}{" "}
           <AuthButton />
         </div>
       </div>

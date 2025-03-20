@@ -2,7 +2,9 @@
 
 exports[`renders homepage unchanged 1`] = `
 <div>
-  <div>
+  <main
+    class="relative w-full h-screen overflow-hidden flex flex-col bg-black"
+  >
     <header
       class="fixed top-0 left-0 w-full z-50 transition-transform duration-300 -translate-y-full"
     >
@@ -62,6 +64,7 @@ exports[`renders homepage unchanged 1`] = `
               >
                 Profile
               </a>
+               
               <div
                 class="flex items-center space-x-4"
               >
@@ -100,6 +103,7 @@ exports[`renders homepage unchanged 1`] = `
             >
               Profile
             </a>
+             
             <div
               class="flex items-center space-x-4"
             >
@@ -118,72 +122,68 @@ exports[`renders homepage unchanged 1`] = `
         </div>
       </nav>
     </header>
-    <main
-      class="relative w-full h-screen overflow-hidden flex flex-col"
+    <section
+      class="absolute top-20 left-0 w-full text-center text-white px-6 z-30"
     >
-      <section
-        class="absolute inset-0 flex flex-col justify-start items-center text-center text-white px-6 pt-16 z-10"
+      <h1
+        class="text-4xl md:text-6xl font-bold"
+        style="text-shadow: 0px 10px 15px rgba(0, 0, 0, 0.9);"
       >
-        <h1
-          class="text-4xl md:text-6xl font-bold"
-          style="text-shadow: 0px 10px 15px rgba(0, 0, 0, 0.9);"
+        Meet Adventurers,
+         
+        <span
+          class="text-yellow-400"
         >
-          Meet Adventurers,
-           
-          <span
-            class="text-yellow-400"
-          >
-            Explore Together
-          </span>
-        </h1>
-        <p
-          class="mt-4 text-lg md:text-xl text-gray-200"
-          style="text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);"
-        >
-          Find like-minded people to join you on your next adventure.
-        </p>
-      </section>
-      <section
-        class="absolute inset-0 w-full h-full flex justify-center items-center overflow-hidden"
+          Explore Together
+        </span>
+      </h1>
+      <p
+        class="mt-4 text-lg md:text-xl text-gray-200"
+        style="text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);"
+      >
+        Find like-minded people to join you on your next adventure.
+      </p>
+    </section>
+    <section
+      class="relative w-full h-full flex justify-center items-center overflow-hidden"
+    >
+      <div
+        class="absolute w-full h-full bg-cover bg-center"
+        draggable="false"
+        style="background-image: url(/scuba.jpg); opacity: 1; transform: none; user-select: none;"
       >
         <div
-          class="absolute w-full h-full bg-cover bg-center"
-          draggable="false"
-          style="background-image: url(/scuba.jpg); opacity: 1; transform: none; user-select: none;"
+          class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-6"
         >
-          <div
-            class="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-6"
+          <h2
+            class="text-4xl font-bold"
+            style="text-shadow: 0px 8px 12px rgba(0, 0, 0, 0.9);"
           >
-            <h2
-              class="text-4xl font-bold"
-              style="text-shadow: 0px 8px 12px rgba(0, 0, 0, 0.9);"
-            >
-              Scuba Diving
-            </h2>
-            <p
-              class="text-lg"
-              style="text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);"
-            >
-              Redang Island, Malaysia
-            </p>
-          </div>
+            Scuba Diving
+          </h2>
+          <p
+            class="text-lg"
+            style="text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);"
+          >
+            Redang Island, Malaysia
+          </p>
         </div>
-      </section>
-      <div
-        class="absolute bottom-16 w-full flex justify-center gap-6 z-20"
-      >
-        <button
-          class="w-20 h-20 bg-gray-900 hover:bg-gray-700 text-white font-semibold text-lg rounded-xl shadow-lg active:scale-95"
-        >
-          Pass
-        </button>
-        <button
-          class="w-20 h-20 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold text-lg rounded-xl shadow-lg active:scale-95"
-        >
-          Match
-        </button>
       </div>
-    </main>
-  </div>
+    </section>
+    <div
+      class="absolute bottom-16 w-full flex justify-center gap-6 z-10"
+    >
+      <button
+        class="w-20 h-20 bg-gray-900 hover:bg-gray-700 text-white font-semibold text-lg rounded-xl shadow-lg active:scale-95"
+      >
+        Pass
+      </button>
+      <button
+        class="w-20 h-20 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold text-lg rounded-xl shadow-lg active:scale-95"
+      >
+        Match
+      </button>
+    </div>
+  </main>
 </div>
 `;

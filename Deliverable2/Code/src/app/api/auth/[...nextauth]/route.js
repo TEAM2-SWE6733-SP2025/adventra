@@ -11,7 +11,6 @@ export const authOptions = {
   adapter: {
     ...PrismaAdapter(prisma),
     linkAccount: async (data) => {
-      // Remove the `type` field before linking the account
       const { type, ...rest } = data;
       return prisma.account.create({
         data: rest,
@@ -46,7 +45,10 @@ export const authOptions = {
           throw new Error("No user found with this email");
         }
 
-        const isValid = await bcrypt.compare(credentials.password, user.password);
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password,
+        );
         if (!isValid) {
           throw new Error("Invalid password");
         }
@@ -72,7 +74,6 @@ export const authOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Redirect to the home page after sign-in
       return baseUrl;
     },
   },
