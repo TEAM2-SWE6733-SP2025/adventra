@@ -30,7 +30,7 @@ export default function Signup() {
 
     if (!validatePassword(password)) {
       setError(
-        "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character."
+        "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.",
       );
       return;
     }
@@ -50,8 +50,14 @@ export default function Signup() {
       }
 
       setSuccess(data.message);
+
+      localStorage.setItem(
+        "authCredentials",
+        JSON.stringify({ email, password }),
+      );
+
       setTimeout(() => {
-        router.push("/auth/signin"); 
+        router.push("/auth/signin");
       }, 2000);
     } catch (err) {
       setError("Something went wrong");
@@ -59,7 +65,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+    <div className="min-h-screen flex items-center justify-center dark:bg-gray-900 dark:text-white">
       <div className="w-full max-w-md space-y-6">
         <h1 className="text-3xl font-bold text-center">Sign Up</h1>
         {error && <p className="text-red-500 text-center">{error}</p>}
@@ -71,19 +77,20 @@ export default function Signup() {
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full p-3 bg-gray-800 rounded-lg focus:outline-none"
+            className="w-full p-3 bg-gray-200 dark:bg-gray-700 rounded-lg focus:outline-none"
           />
           <ValidatedEmailInput
             value={email}
-            onChange={setEmail} 
+            onChange={setEmail}
             placeholder="Email"
+            className="w-full p-3 bg-gray-200 dark:bg-gray-700 rounded-lg focus:outline-none"
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 bg-gray-800 rounded-lg focus:outline-none"
+            className="w-full p-3 bg-gray-200 dark:bg-gray-700 rounded-lg focus:outline-none"
           />
           <button type="submit" className="w-full p-3 bg-green-600 rounded-lg">
             Sign Up
