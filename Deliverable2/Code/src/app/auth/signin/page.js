@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { FaGithub, FaGoogle, FaApple } from "react-icons/fa"; 
+import { FaGithub, FaGoogle, FaApple } from "react-icons/fa";
 import ValidatedEmailInput from "../../components/ValidateEmailInput";
 
 export default function SignIn() {
@@ -56,7 +56,6 @@ export default function SignIn() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-3 bg-gray-200 dark:bg-gray-700 rounded-lg focus:outline-none"
-
           />
           <button
             type="submit"
@@ -91,7 +90,9 @@ export default function SignIn() {
         </div>
 
         <div className="text-center">
-          <p className="text-gray-500 dark:text-gray-400">Don't have an account?</p>
+          <p className="text-gray-500 dark:text-gray-400">
+            Don't have an account?
+          </p>
           <button
             onClick={() => router.push("/auth/signup")}
             className="mt-2 text-blue-500 dark:text-blue-400 hover:underline"

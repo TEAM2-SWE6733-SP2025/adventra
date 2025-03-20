@@ -5,12 +5,11 @@ import { authOptions } from "../auth/[...nextauth]/route";
 export async function GET(req) {
   try {
     const session = await getServerSession(authOptions);
-
+    console.log("Current Session:", session);
     if (!session || !session.user || !session.user.id) {
-      return new Response(
-        JSON.stringify({ error: "User not authenticated" }),
-        { status: 401 }
-      );
+      return new Response(JSON.stringify({ error: "User not authenticated" }), {
+        status: 401,
+      });
     }
 
     const userId = session.user.id;
@@ -21,10 +20,9 @@ export async function GET(req) {
     });
 
     if (!user) {
-      return new Response(
-        JSON.stringify({ error: "User not found" }),
-        { status: 404 }
-      );
+      return new Response(JSON.stringify({ error: "User not found" }), {
+        status: 404,
+      });
     }
 
     return new Response(JSON.stringify(user), { status: 200 });
