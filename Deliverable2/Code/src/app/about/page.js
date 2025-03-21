@@ -13,10 +13,12 @@ export default function AboutPage() {
             About Us
           </h1>
           <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed text-center">
-            Welcome to <span className="font-bold text-yellow-500">Adventra</span>! We are passionate about connecting adventurers
-            from around the world. Whether you're into scuba diving, mountain
-            biking, or safaris, Adventra is here to help you find like-minded
-            people to share your journey.
+            Welcome to{" "}
+            <span className="font-bold text-yellow-500">Adventra</span>! We are
+            passionate about connecting adventurers from around the world.
+            Whether you're into scuba diving, mountain biking, or safaris,
+            Adventra is here to help you find like-minded people to share your
+            journey.
           </p>
           <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mt-4 text-center">
             Our mission is to make exploring the world more fun, safe, and

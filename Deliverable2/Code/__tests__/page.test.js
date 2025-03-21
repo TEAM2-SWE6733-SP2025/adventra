@@ -17,7 +17,7 @@ describe("Home component", () => {
     render(
       <SessionProvider session={mockSession}>
         <Home />
-      </SessionProvider>
+      </SessionProvider>,
     );
 
     const mainHeading = screen.getByRole("heading", {
