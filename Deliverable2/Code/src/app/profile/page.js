@@ -1,7 +1,6 @@
 "use client";
-
+import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import {
   FaTwitter,
   FaInstagram,
@@ -15,7 +14,6 @@ import Navbar from "../components/Navbar";
 import { signOut } from "next-auth/react";
 
 export default function ProfilePage() {
-  const router = useRouter();
   const [user, setUser] = useState(null);
   const [isEditingAccount, setIsEditingAccount] = useState(false);
   const [editedUser, setEditedUser] = useState(null);
@@ -139,23 +137,26 @@ export default function ProfilePage() {
       </header>
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex flex-col items-center bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 mb-8">
-          <img
+          <Image
             src={user.image}
             alt="Profile"
-            className="w-32 h-32 rounded-full border-4 border-gray-300 dark:border-gray-700 shadow-md object-cover"
+            width={128}
+            height={128}
+            priority
+            className="rounded-full border-4 border-gray-300 dark:border-gray-700 shadow-md object-cover"
           />
           {isEditingAccount ? (
             <>
               <input
                 type="text"
                 name="name"
-                value={editedUser.name}
+                value={editedUser.name || ""}
                 onChange={handleInputChange}
                 className="mt-4 text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white text-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2"
               />
               <textarea
                 name="bio"
-                value={editedUser.bio}
+                value={editedUser.bio || ""}
                 onChange={handleInputChange}
                 className="mt-2 text-base sm:text-lg text-gray-600 dark:text-gray-300 text-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2 w-full"
               />
@@ -163,7 +164,7 @@ export default function ProfilePage() {
                 type="text"
                 name="location"
                 value={editedUser.location}
-                onChange={handleInputChange}
+                onChange={handleInputChange || ""}
                 className="mt-2 text-base sm:text-lg text-gray-900 dark:text-white text-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2 w-full"
                 placeholder="Location"
               />
@@ -172,7 +173,7 @@ export default function ProfilePage() {
                 <input
                   type="text"
                   name="instagramLink"
-                  value={editedUser.instagramLink}
+                  value={editedUser.instagramLink || ""}
                   onChange={handleInputChange}
                   className="mt-2 text-base sm:text-lg text-gray-900 dark:text-white text-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2 w-full"
                   placeholder="Instagram"
@@ -183,7 +184,7 @@ export default function ProfilePage() {
                 <input
                   type="text"
                   name="twitterLink"
-                  value={editedUser.twitterLink}
+                  value={editedUser.twitterLink || ""}
                   onChange={handleInputChange}
                   className="mt-2 text-base sm:text-lg text-gray-900 dark:text-white text-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2 w-full"
                   placeholder="Twitter"
@@ -194,7 +195,7 @@ export default function ProfilePage() {
                 <input
                   type="text"
                   name="linkedInLink"
-                  value={editedUser.linkedInLink}
+                  value={editedUser.linkedInLink || ""}
                   onChange={handleInputChange}
                   className="mt-2 text-base sm:text-lg text-gray-900 dark:text-white text-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2 w-full"
                   placeholder="LinkedIn"

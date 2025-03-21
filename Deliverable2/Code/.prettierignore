@@ -1,0 +1,13 @@
+.next/
+node_modules/
+dist/
+coverage/
+public/
+*.config.js
+*.config.mjs
+*.d.ts
+prisma/migrations/
+out/
+logs/
+*.min.js
+*.snap
