@@ -2,7 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { FaTwitter, FaInstagram, FaLinkedin, FaEdit, FaTrash, FaSave, FaTimes } from "react-icons/fa";
+import {
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+  FaEdit,
+  FaTrash,
+  FaSave,
+  FaTimes,
+} from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import { signOut } from "next-auth/react";
 
@@ -27,12 +35,7 @@ export default function ProfilePage() {
       people: "Adventurous, open-minded, and fun-loving individuals.",
       adventureTypes: "Outdoor, water sports, and extreme adventures.",
     },
-    socialMedia: {
-      twitter: "https://twitter.com/johndoe",
-      instagram: "https://instagram.com/johndoe",
-      linkedin: "https://linkedin.com/in/johndoe",
-    },
-  })
+  });
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -78,6 +81,9 @@ export default function ProfilePage() {
           name: editedUser.name,
           bio: editedUser.bio,
           location: editedUser.location,
+          instagramLink: editedUser.instagramLink,
+          twitterLink: editedUser.twitterLink,
+          linkedInLink: editedUser.linkedInLink,
         }),
       });
 
@@ -97,7 +103,7 @@ export default function ProfilePage() {
 
   const handleDeleteAccount = async () => {
     const confirmed = confirm(
-      "Are you sure you want to delete your account? This action cannot be undone."
+      "Are you sure you want to delete your account? This action cannot be undone.",
     );
     if (!confirmed) return;
 
@@ -132,7 +138,6 @@ export default function ProfilePage() {
         <Navbar />
       </header>
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-
         <div className="flex flex-col items-center bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 mb-8">
           <img
             src={user.image}
@@ -162,6 +167,39 @@ export default function ProfilePage() {
                 className="mt-2 text-base sm:text-lg text-gray-900 dark:text-white text-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2 w-full"
                 placeholder="Location"
               />
+              <div className="flex items-center justify-center gap-4 mt-4">
+                <FaInstagram size={24} className="mt-2" />
+                <input
+                  type="text"
+                  name="instagramLink"
+                  value={editedUser.instagramLink}
+                  onChange={handleInputChange}
+                  className="mt-2 text-base sm:text-lg text-gray-900 dark:text-white text-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2 w-full"
+                  placeholder="Instagram"
+                />
+              </div>
+              <div className="flex items-center justify-center gap-4 mt-4">
+                <FaTwitter size={24} className="mt-2" />
+                <input
+                  type="text"
+                  name="twitterLink"
+                  value={editedUser.twitterLink}
+                  onChange={handleInputChange}
+                  className="mt-2 text-base sm:text-lg text-gray-900 dark:text-white text-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2 w-full"
+                  placeholder="Twitter"
+                />
+              </div>
+              <div className="flex items-center justify-center gap-4 mt-4">
+                <FaLinkedin size={24} className="mt-2" />
+                <input
+                  type="text"
+                  name="linkedInLink"
+                  value={editedUser.linkedInLink}
+                  onChange={handleInputChange}
+                  className="mt-2 text-base sm:text-lg text-gray-900 dark:text-white text-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2 w-full"
+                  placeholder="LinkedIn"
+                />
+              </div>
             </>
           ) : (
             <>
@@ -174,43 +212,54 @@ export default function ProfilePage() {
               <p className="mt-2 text-base sm:text-lg text-gray-600 dark:text-gray-300 text-center">
                 <strong>Location:</strong> {user.location}
               </p>
+              <div className="flex justify-center gap-4 mt-4">
+                {user.instagramLink ? (
+                  <a
+                    href={user.instagramLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaInstagram
+                      size={24}
+                      className="text-pink-500 hover:text-pink-600"
+                    />
+                  </a>
+                ) : (
+                  <FaInstagram size={24} />
+                )}
+
+                {user.twitterLink ? (
+                  <a
+                    href={user.twitterLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaTwitter
+                      size={24}
+                      className="text-blue-500 hover:text-blue-700"
+                    />
+                  </a>
+                ) : (
+                  <FaTwitter size={24} />
+                )}
+                {user.linkedInLink ? (
+                  <a
+                    href={user.linkedInLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaLinkedin
+                      size={24}
+                      className="text-blue-500 hover:text-blue-700"
+                    />
+                  </a>
+                ) : (
+                  <FaLinkedin size={24} />
+                )}
+              </div>
             </>
           )}
-
-          <div className="flex justify-center gap-4 mt-4">
-            {userProfile.socialMedia.twitter && (
-              <a
-                href={userProfile.socialMedia.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:text-blue-700"
-              >
-                <FaTwitter size={24} />
-              </a>
-            )}
-            {userProfile.socialMedia.instagram && (
-              <a
-                href={userProfile.socialMedia.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-pink-500 hover:text-pink-700"
-              >
-                <FaInstagram size={24} />
-              </a>
-            )}
-            {userProfile.socialMedia.linkedin && (
-              <a
-                href={userProfile.socialMedia.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-700 hover:text-blue-900"
-              >
-                <FaLinkedin size={24} />
-              </a>
-            )}
-          </div>
         </div>
-
         <div className="flex justify-end gap-4 mb-8">
           {isEditingAccount ? (
             <>
@@ -255,7 +304,10 @@ export default function ProfilePage() {
           </h2>
           <ul className="list-disc pl-5 space-y-2">
             {userProfile.favoriteActivities.map((activity, index) => (
-              <li key={index} className="text-base sm:text-lg text-gray-700 dark:text-gray-300">
+              <li
+                key={index}
+                className="text-base sm:text-lg text-gray-700 dark:text-gray-300"
+              >
                 {activity}
               </li>
             ))}
@@ -289,631 +341,11 @@ export default function ProfilePage() {
             <strong>People:</strong> {userProfile.preferences.people}
           </p>
           <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mt-2">
-            <strong>Adventure Types:</strong> {userProfile.preferences.adventureTypes}
+            <strong>Adventure Types:</strong>{" "}
+            {userProfile.preferences.adventureTypes}
           </p>
         </div>
       </main>
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

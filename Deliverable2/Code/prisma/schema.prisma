@@ -18,6 +18,9 @@ model User {
   accounts      Account[]
   sessions      Session[]
   password      String? // For email/password authentication
+  instagramLink String?
+  twitterLink  String?
+  linkedInLink String?
 }
 
 model Account {

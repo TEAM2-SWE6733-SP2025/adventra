@@ -3,7 +3,8 @@ import prisma from "../../lib/prisma";
 export async function PUT(req) {
   try {
     const body = await req.json();
-    const { id, name, bio, location } = body;
+    const { id, name, bio, location, instagramLink, twitterLink, linkedInLink } =
+      body;
 
     if (!id) {
       return new Response(JSON.stringify({ error: "User ID is required" }), {
@@ -13,8 +14,10 @@ export async function PUT(req) {
 
     const updatedUser = await prisma.user.update({
       where: { id },
-      data: { name, bio, location },
+      data: { name, bio, location, instagramLink, twitterLink, linkedInLink },
     });
+
+    console.log("Account updated successfully:", updatedUser);
 
     return new Response(
       JSON.stringify({

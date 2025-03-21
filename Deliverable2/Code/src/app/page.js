@@ -75,8 +75,9 @@ export default function Home() {
     <main className="relative w-full h-screen overflow-hidden flex flex-col bg-black">
       <header
         ref={headerRef}
-        className={`fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${showMenu ? "translate-y-0" : "-translate-y-full"
-          }`}
+        className={`fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${
+          showMenu ? "translate-y-0" : "-translate-y-full"
+        }`}
       >
         <Navbar onMenuToggle={handleMenuToggle} />
       </header>
@@ -113,8 +114,7 @@ export default function Home() {
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.0}
             onDragEnd={(event, info) => {
-              if (info.offset.x < -0.1)
-                handleSwipe("right");
+              if (info.offset.x < -0.1) handleSwipe("right");
               else if (info.offset.x > 0.1) handleSwipe("left");
             }}
           >
