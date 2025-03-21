@@ -23,7 +23,21 @@ const eslintConfig = [
       "prefer-arrow-callback": ["error"],
       "prefer-template": ["error"],
     },
-    ignorePatterns: [".next/", "node_modules/"],
+    ignorePatterns: [
+      ".next/",
+      "node_modules/",
+      "dist/",
+      "coverage/",
+      "public/",
+      "*.config.js",
+      "*.config.mjs",
+      "*.d.ts",
+      "prisma/migrations/",
+      "out/",
+      "logs/",
+      "*.min.js",
+      "*.snap",
+    ],
   }),
 ];
 
