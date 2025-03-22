@@ -69,6 +69,7 @@ export default function Home() {
 
   const handleMenuToggle = (isOpen) => {
     setMenuOpen(isOpen);
+    console.log("Menu Open:", menuOpen);
   };
 
   return (

@@ -138,7 +138,7 @@ export default function ProfilePage() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex flex-col items-center bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 mb-8">
           <Image
-            src={user.image}
+            src={user.image || "/profilepic.png"}
             alt="Profile"
             width={128}
             height={128}
@@ -159,14 +159,15 @@ export default function ProfilePage() {
                 value={editedUser.bio || ""}
                 onChange={handleInputChange}
                 className="mt-2 text-base sm:text-lg text-gray-600 dark:text-gray-300 text-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2 w-full"
+                placeholder="Enter your bio"
               />
               <input
                 type="text"
                 name="location"
-                value={editedUser.location}
+                value={editedUser.location || ""}
                 onChange={handleInputChange || ""}
                 className="mt-2 text-base sm:text-lg text-gray-900 dark:text-white text-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2 w-full"
-                placeholder="Location"
+                placeholder="Enter your location"
               />
               <div className="flex items-center justify-center gap-4 mt-4">
                 <FaInstagram size={24} className="mt-2" />
@@ -211,7 +212,13 @@ export default function ProfilePage() {
                 {user.bio}
               </p>
               <p className="mt-2 text-base sm:text-lg text-gray-600 dark:text-gray-300 text-center">
-                <strong>Location:</strong> {user.location}
+                {user.location ? (
+                  user.location
+                ) : (
+                  <>
+                    <span>No location provided</span>
+                  </>
+                )}
               </p>
               <div className="flex justify-center gap-4 mt-4">
                 {user.instagramLink ? (
