@@ -91,7 +91,7 @@ export default function SignIn() {
 
         <div className="text-center">
           <p className="text-gray-500 dark:text-gray-400">
-            Don't have an account?
+            Don&#39;t have an account?
           </p>
           <button
             onClick={() => router.push("/auth/signup")}
