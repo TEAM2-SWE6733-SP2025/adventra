@@ -18,14 +18,19 @@ See [app README](./README.app.md) for details on how to setup and run the app.
 | Prudhvi Prasad Samudrala | Developer |
 | Yaswitha Swarna | Tester |
 
+### Video Links ###
 ---
+#### Deliverable 2 ####
+[Product Demo](https://kennesawedu-my.sharepoint.com/:v:/g/personal/khuttar1_students_kennesaw_edu/EbrnRZFynbZAllWJbJSlNGsBh-9W9SKgxxJPmSUpMBDd3w?e=4hEJwV&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D) 
+
+[Mob Programming](https://kennesawedu-my.sharepoint.com/:v:/g/personal/khuttar1_students_kennesaw_edu/EUkDhwE4woBBlF45sO-jI6EBb_yiffZuxLJC0iQN3qqCbg?e=xLBEzu&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D) 
+
+[Sprint Retro](https://kennesawedu-my.sharepoint.com/:v:/g/personal/khuttar1_students_kennesaw_edu/EYQTYEhAwkNIn_CJ0mEL14kBP18zuZYhTjL1K1Uhkp5bSA?e=n8Aeaz&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D) 
+
 
 ## Atlassian Tools Integration ##
 To streamline collaboration and project management, we use Atlassian tools for documentation and backlog tracking. Below are the relevant links:
 
-
-### Video Links ###
-#### Deliverable 2 ####
 ### Confluence ###
 
 [Story Point Estimate](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/11272224/Story+Point+Forecast) | [PDF](Deliverable2/ProjectDocuments/StoryPointForecast.pdf)
@@ -46,14 +51,11 @@ To streamline collaboration and project management, we use Atlassian tools for d
 [Adventra Backlog](https://6733team2.atlassian.net/jira/software/projects/ADVNTR/boards/1/backlog) 
 
 
----
-
 ## Collaboration Setup
 - **Communication Channel:** Microsoft Teams, Live Share
 - **Meeting Schedule:** Specify regular meeting times for stand-ups, sprint planning, and retrospectives
 - **geekbot:** Sends daily standup reminders and tracks responses from all team members.
 
----
 
 ## Contributors
 - [Christopher Wilder](https://github.com/Chris-Wilder)
