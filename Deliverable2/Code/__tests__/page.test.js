@@ -151,3 +151,53 @@ describe("Home component", () => {
     expect(mainHeading).toBeInTheDocument();
   });
 });
+describe("Home component", () => {
+  test("renders the main heading", () => {
+    const mockSession = {
+      user: {
+        name: "Test User",
+        email: "test@example.com",
+        image: "https://example.com/avatar.png",
+      },
+      expires: "2025-12-31T23:59:59.999Z",
+    };
+
+    render(
+      <SessionProvider session={mockSession}>
+        <Home />
+      </SessionProvider>,
+    );
+
+    const mainHeading = screen.getByRole("heading", {
+      level: 2,
+      name: /favicon/i,
+    });
+
+    expect(mainHeading).toBeInTheDocument();
+  });
+});
+describe("Home component", () => {
+  test("renders the main heading", () => {
+    const mockSession = {
+      user: {
+        name: "Test User",
+        email: "test@example.com",
+        image: "https://example.com/avatar.png",
+      },
+      expires: "2025-12-31T23:59:59.999Z",
+    };
+
+    render(
+      <SessionProvider session={mockSession}>
+        <Home />
+      </SessionProvider>,
+    );
+
+    const mainHeading = screen.getByRole("heading", {
+      level: 2,
+      name: /profilepic/i,
+    });
+
+    expect(mainHeading).toBeInTheDocument();
+  });
+});
