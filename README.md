@@ -1,4 +1,4 @@
-# Adventra
+# Adventra.org - [Link](http://www.adventra.org/) 
 An online app designed for adventure seekers and nature lovers, connecting like-minded outdoor enthusiasts through activity-based matchmaking and shared adventure planning. Created as part of the SWE6733 course project.
 
 See [app README](./README.app.md) for details on how to setup and run the app.
@@ -23,14 +23,20 @@ See [app README](./README.app.md) for details on how to setup and run the app.
 ## Atlassian Tools Integration ##
 To streamline collaboration and project management, we use Atlassian tools for documentation and backlog tracking. Below are the relevant links:
 
+
+### Video Links ###
+#### Deliverable 2 ####
 ### Confluence ###
-[Team Roster](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/164011/Team+Roles) | [PDF](ProjectDocuments/AdventraTeamRoles.pdf)
 
-[Product Vision](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/3375118/Adventra+Project+Vision+Document) | [PDF](ProjectDocuments/AdventraAdventraProjectVision.pdf)
+[Story Point Estimate](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/11272224/Story+Point+Forecast) | [PDF](Deliverable2/ProjectDocuments/StoryPointForecast.pdf)
 
-[Backlog Prioritization Criteria](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/3604909/Backlog+Prioritization+Criteria) | [PDF](ProjectDocuments/AdventraBacklogPrioritizationCriteria.pdf)
+[Team Roster](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/164011/Team+Roles) | [PDF](Deliverable1/ProjectDocuments/AdventraTeamRoles.pdf)
 
-[Definition of Ready](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/3604899/Definition+of+Ready+Document) | [PDF](ProjectDocuments/AdventraDefinitionofReadyDocument.pdf)
+[Product Vision](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/3375118/Adventra+Project+Vision+Document) | [PDF](Deliverable1/ProjectDocuments/AdventraAdventraProjectVision.pdf)
+
+[Backlog Prioritization Criteria](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/3604909/Backlog+Prioritization+Criteria) | [PDF](Deliverable1/ProjectDocuments/AdventraBacklogPrioritizationCriteria.pdf)
+
+[Definition of Ready](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/3604899/Definition+of+Ready+Document) | [PDF](Deliverable1/ProjectDocuments/AdventraDefinitionofReadyDocument.pdf)
 
 ### Jira ###
 [Kanban Board](https://6733team2.atlassian.net/jira/software/projects/ADVNTR/boards/1) 
@@ -45,6 +51,7 @@ To streamline collaboration and project management, we use Atlassian tools for d
 ## Collaboration Setup
 - **Communication Channel:** Microsoft Teams, Live Share
 - **Meeting Schedule:** Specify regular meeting times for stand-ups, sprint planning, and retrospectives
+- **geekbot:** Sends daily standup reminders and tracks responses from all team members.
 
 ---
 
