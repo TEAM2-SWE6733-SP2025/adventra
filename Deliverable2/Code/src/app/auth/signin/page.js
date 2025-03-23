@@ -1,5 +1,5 @@
 "use client";
-
+import { Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { FaGithub, FaGoogle, FaApple } from "react-icons/fa";
 import ValidatedEmailInput from "../../components/ValidateEmailInput";
 
-export default function SignIn() {
+function SignInContent() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const error = searchParams.get("error");
@@ -104,5 +104,13 @@ export default function SignIn() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SignIn() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignInContent />
+    </Suspense>
   );
 }
