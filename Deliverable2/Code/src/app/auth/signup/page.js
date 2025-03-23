@@ -60,6 +60,7 @@ export default function Signup() {
         router.push("/auth/signin");
       }, 2000);
     } catch (err) {
+      console.log("Error during signup:", err);
       setError("Something went wrong");
     }
   };

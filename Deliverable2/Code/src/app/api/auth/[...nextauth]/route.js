@@ -12,6 +12,7 @@ export const authOptions = {
     ...PrismaAdapter(prisma),
     linkAccount: async (data) => {
       const { type, ...rest } = data;
+      console.log("Account type", type);
       return prisma.account.create({
         data: rest,
       });
@@ -74,6 +75,7 @@ export const authOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
+      console.log("Redirect URL:", url);
       return baseUrl;
     },
   },

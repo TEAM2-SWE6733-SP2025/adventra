@@ -16,7 +16,7 @@ export default function AboutPage() {
             Welcome to{" "}
             <span className="font-bold text-yellow-500">Adventra</span>! We are
             passionate about connecting adventurers from around the world.
-            Whether you're into scuba diving, mountain biking, or safaris,
+            Whether you&#39;re into scuba diving, mountain biking, or safaris,
             Adventra is here to help you find like-minded people to share your
             journey.
           </p>

@@ -3,8 +3,15 @@ import prisma from "../../lib/prisma";
 export async function PUT(req) {
   try {
     const body = await req.json();
-    const { id, name, bio, location, instagramLink, twitterLink, linkedInLink } =
-      body;
+    const {
+      id,
+      name,
+      bio,
+      location,
+      instagramLink,
+      twitterLink,
+      linkedInLink,
+    } = body;
 
     if (!id) {
       return new Response(JSON.stringify({ error: "User ID is required" }), {
