@@ -30,6 +30,7 @@ jobs:
           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd /var/www/adventra
             git pull origin main
+            git cd /var/www/adventra/Deliverable2/Code
             npm install
             npm run build
             pm2 restart adventra || pm2 start npm --name "adventra" -- start
