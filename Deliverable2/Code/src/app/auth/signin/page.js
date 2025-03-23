@@ -9,6 +9,7 @@ import ValidatedEmailInput from "../../components/ValidateEmailInput";
 
 export default function SignIn() {
   const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   const error = searchParams.get("error");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,6 +43,7 @@ export default function SignIn() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white px-4">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-6">
         <h1 className="text-3xl font-bold text-center">Sign In</h1>
+        {callbackUrl && <p>Redirecting to: {callbackUrl}</p>}
         {error && <p className="text-red-500 text-center">Error: {error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
