@@ -143,3 +143,8 @@ dist
 # vercel
 .vercel
 
+# Cypress generated files
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+cypress/videos/
