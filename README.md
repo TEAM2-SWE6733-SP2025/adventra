@@ -33,6 +33,10 @@ To streamline collaboration and project management, we use Atlassian tools for d
 [Definition of Ready](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/3604899/Definition+of+Ready+Document) | [PDF](ProjectDocuments/AdventraDefinitionofReadyDocument.pdf)
 
 ### Jira ###
+[Kanban Board](https://6733team2.atlassian.net/jira/software/projects/ADVNTR/boards/1) 
+
+[Burndown Chart](https://6733team2.atlassian.net/jira/software/projects/ADVNTR/boards/1/reports/burndown?source=overview) 
+
 [Adventra Backlog](https://6733team2.atlassian.net/jira/software/projects/ADVNTR/boards/1/backlog) 
 
 
