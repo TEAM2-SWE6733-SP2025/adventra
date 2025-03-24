@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import Home from "../src/app/page";
 import { SessionProvider } from "next-auth/react";
 
@@ -90,6 +90,9 @@ describe("Home component", () => {
         <Home />
       </SessionProvider>,
     );
+    const matchButton = screen.getByRole("button", { name: /Match/i });
+
+    fireEvent.click(matchButton);
 
     const mainHeading = screen.getByRole("heading", {
       level: 2,
@@ -143,6 +146,11 @@ describe("Home component", () => {
       </SessionProvider>,
     );
 
+    const matchButton = screen.getByRole("button", { name: /Match/i });
+
+    fireEvent.click(matchButton);
+    fireEvent.click(matchButton);
+
     const mainHeading = screen.getByRole("heading", {
       level: 2,
       name: /Mountain Biking/i,
@@ -151,6 +159,7 @@ describe("Home component", () => {
     expect(mainHeading).toBeInTheDocument();
   });
 });
+
 describe("Home component", () => {
   test("renders the main heading", () => {
     const mockSession = {
@@ -168,80 +177,9 @@ describe("Home component", () => {
       </SessionProvider>,
     );
 
-    const mainHeading = screen.getByRole("heading", {
-      level: 2,
-      name: /favicon/i,
-    });
+    const matchButton = screen.getByRole("button", { name: /Match/i });
 
-    expect(mainHeading).toBeInTheDocument();
-  });
-});
-describe("Home component", () => {
-  test("renders the main heading", () => {
-    const mockSession = {
-      user: {
-        name: "Test User",
-        email: "test@example.com",
-        image: "https://example.com/avatar.png",
-      },
-      expires: "2025-12-31T23:59:59.999Z",
-    };
-
-    render(
-      <SessionProvider session={mockSession}>
-        <Home />
-      </SessionProvider>,
-    );
-
-    const mainHeading = screen.getByRole("heading", {
-      level: 2,
-      name: /profilepic/i,
-    });
-
-    expect(mainHeading).toBeInTheDocument();
-  });
-});
-describe("Home component", () => {
-  test("renders the main heading", () => {
-    const mockSession = {
-      user: {
-        name: "Test User",
-        email: "test@example.com",
-        image: "https://example.com/avatar.png",
-      },
-      expires: "2025-12-31T23:59:59.999Z",
-    };
-
-    render(
-      <SessionProvider session={mockSession}>
-        <Home />
-      </SessionProvider>,
-    );
-
-    const mainHeading = screen.getByRole("heading", {
-      level: 2,
-      name: /Hiking/i,
-    });
-
-    expect(mainHeading).toBeInTheDocument();
-  });
-});
-describe("Home component", () => {
-  test("renders the main heading", () => {
-    const mockSession = {
-      user: {
-        name: "Test User",
-        email: "test@example.com",
-        image: "https://example.com/avatar.png",
-      },
-      expires: "2025-12-31T23:59:59.999Z",
-    };
-
-    render(
-      <SessionProvider session={mockSession}>
-        <Home />
-      </SessionProvider>,
-    );
+    fireEvent.click(matchButton);
 
     const mainHeading = screen.getByRole("heading", {
       level: 2,
