@@ -74,7 +74,7 @@ exports[`renders homepage unchanged 1`] = `
                   src="https://example.com/avatar.png"
                 />
                 <button
-                  class="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-500"
+                  class="border border-yellow-500 text-yellow-500 px-4 py-2 rounded-lg hover:bg-yellow-900 cursor-pointer"
                 >
                   Logout
                 </button>
@@ -113,7 +113,7 @@ exports[`renders homepage unchanged 1`] = `
                 src="https://example.com/avatar.png"
               />
               <button
-                class="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-500"
+                class="border border-yellow-500 text-yellow-500 px-4 py-2 rounded-lg hover:bg-yellow-900 cursor-pointer"
               >
                 Logout
               </button>
