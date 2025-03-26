@@ -1,20 +1,24 @@
-import React from "react";
-import Avatar from "./Avatar";
+import Image from "next/image";
 
-const AvatarUploader = ({ src, isEditing, onChange }) => {
+export default function AvatarUploader({ src, alt, isEditing, onChange }) {
   return (
-    <div className="relative">
-      <Avatar src={src} alt="Profile Picture" className="w-32 h-32" />
+    <div className="relative border-4 border-yellow-500 rounded-full p-1">
+      <Image
+        src={src || "/profilepic.png"}
+        alt={alt || "User Avatar"}
+        width={150}
+        height={150}
+        className="rounded-full object-cover"
+        priority
+      />
       {isEditing && (
         <input
           type="file"
           accept="image/*"
           onChange={onChange}
-          className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+          className="absolute inset-0 opacity-0 cursor-pointer"
         />
       )}
     </div>
   );
-};
-
-export default AvatarUploader;
+}

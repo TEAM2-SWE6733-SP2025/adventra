@@ -11,7 +11,9 @@ export const Navbar = ({ onMenuToggle }) => {
   const handleClick = () => {
     const newState = !isOpen;
     setIsOpen(newState);
-    onMenuToggle(newState);
+    if (onMenuToggle) {
+      onMenuToggle(newState);
+    }
   };
 
   return (

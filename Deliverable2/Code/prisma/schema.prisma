@@ -17,10 +17,17 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  password      String? // For email/password authentication
+  password      String? 
   instagramLink String?
-  twitterLink  String?
-  linkedInLink String?
+  twitterLink   String?
+  linkedInLink  String?
+  adventureTypes Json?    
+  attitude      Json?    
+  skillLevel    String?  
+  languages     Json?    
+  birthdate     DateTime? 
+  profilePic    String?  
+  socialMedia   Json?    
 }
 
 model Account {

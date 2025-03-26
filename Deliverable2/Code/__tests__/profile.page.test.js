@@ -14,14 +14,14 @@ describe("ProfilePage Component", () => {
     expires: "2025-12-31T23:59:59.999Z",
   };
 
-  test("renders text on the page", () => {
+  test("renders the Navbar component", () => {
     render(
       <SessionProvider session={mockSession}>
         <ProfilePage />
       </SessionProvider>,
     );
 
-    const mainHeading = screen.getByText(/About Me/i);
-    expect(mainHeading).toBeInTheDocument();
+    const navbarElement = screen.getByRole("navigation");
+    expect(navbarElement).toBeInTheDocument();
   });
 });

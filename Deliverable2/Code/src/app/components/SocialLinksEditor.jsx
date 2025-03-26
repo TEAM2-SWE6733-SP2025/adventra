@@ -1,7 +1,7 @@
 import React from "react";
 import { FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
 
-const SocialLinksEditor = ({ isEditing, links, onChange }) => {
+const SocialLinksEditor = ({ isEditing, links = {}, onChange }) => {
   return (
     <div className="flex gap-4 mt-4">
       {!isEditing ? (
@@ -27,21 +27,21 @@ const SocialLinksEditor = ({ isEditing, links, onChange }) => {
           <input
             type="text"
             placeholder="Instagram URL"
-            value={links.instagram}
+            value={links.instagram || ""}
             onChange={(e) => onChange("instagram", e.target.value)}
             className="bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full"
           />
           <input
             type="text"
             placeholder="Twitter URL"
-            value={links.twitter}
+            value={links.twitter || ""}
             onChange={(e) => onChange("twitter", e.target.value)}
             className="bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full"
           />
           <input
             type="text"
             placeholder="LinkedIn URL"
-            value={links.linkedin}
+            value={links.linkedin || ""}
             onChange={(e) => onChange("linkedin", e.target.value)}
             className="bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full"
           />
