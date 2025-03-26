@@ -1,0 +1,300 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders about page unchanged 1`] = `
+<div>
+  <header
+    class="block w-full"
+  >
+    <nav
+      class="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-700 w-full"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10"
+      >
+        <div
+          class="flex justify-between items-center h-16"
+        >
+          <div
+            class="flex-shrink-0"
+          >
+            <a
+              class="text-2xl font-bold"
+              href="/"
+            >
+              Adventra
+            </a>
+          </div>
+          <button
+            class="md:hidden text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100 cursor-pointer"
+          >
+            <svg
+              aria-hidden="true"
+              class="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 6h16M4 12h16m-7 6h7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              />
+            </svg>
+          </button>
+          <div
+            class="hidden md:flex space-x-12 items-center"
+          >
+            <a
+              href="/"
+            >
+              Home
+            </a>
+            <a
+              href="/about"
+            >
+              About
+            </a>
+            <a
+              href="/profile"
+            >
+              Profile
+            </a>
+             
+            <div
+              class="flex items-center space-x-4"
+            >
+              <img
+                alt="User Profile"
+                class="w-8 h-8 rounded-full"
+                src="https://example.com/avatar.png"
+              />
+              <button
+                class="border border-yellow-500 text-yellow-500 px-4 py-2 rounded-lg hover:bg-yellow-900 cursor-pointer"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="md:hidden overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0 bg-white dark:bg-black border-t border-gray-200 dark:border-gray-700"
+      >
+        <div
+          class="px-4 py-3 flex flex-col gap-4"
+        >
+          <a
+            href="/"
+          >
+            Home
+          </a>
+          <a
+            href="/about"
+          >
+            About
+          </a>
+          <a
+            href="/profile"
+          >
+            Profile
+          </a>
+           
+          <div
+            class="flex items-center space-x-4"
+          >
+            <img
+              alt="User Profile"
+              class="w-8 h-8 rounded-full"
+              src="https://example.com/avatar.png"
+            />
+            <button
+              class="border border-yellow-500 text-yellow-500 px-4 py-2 rounded-lg hover:bg-yellow-900 cursor-pointer"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div
+    class="min-h-screen flex items-center justify-center p-8"
+  >
+    <div
+      class="max-w-4xl w-full"
+    >
+      <h1
+        class="text-4xl font-extrabold text-yellow-500 mb-8"
+      >
+        Welcome to Adventra!
+      </h1>
+      <p
+        class="text-lg dark:text-white text-gray-600 mb-12"
+      >
+        At Adventra, we believe that life is best experienced through shared adventures. Whether you're into hiking, skiing, backpacking, or simply exploring new places, our platform connects like-minded adventurers. Our goal is to help you find your perfect adventure buddy — someone who matches your skills, preferences, and adventurous spirit.
+      </p>
+      <p
+        class="text-lg dark:text-white text-gray-600 mb-12"
+      >
+        With a passionate team led by experienced developers, product innovators, and design experts, we are committed to making every journey memorable. From planning your next escapade to capturing unforgettable moments, Adventra is your go-to travel companion.
+      </p>
+      <p
+        class="text-lg dark:text-white text-gray-600 mb-12"
+      >
+        Let’s embark on your next adventure together. Your story starts here.
+      </p>
+      <h2
+        class="text-4xl font-extrabold text-yellow-500 mb-8"
+      >
+        Meet Our Team
+      </h2>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
+      >
+        <div
+          class="p-6 dark rounded-2xl shadow-lg flex flex-col items-center"
+        >
+          <div
+            class="w-24 h-24 bg-yellow-500 text-black font-bold flex items-center justify-center rounded-full text-2xl mb-4"
+          >
+            K
+          </div>
+          <h2
+            class="text-xl font-semibold"
+          >
+            Kirsten Huttar
+          </h2>
+          <p
+            class="text-gray-400"
+          >
+            Scrum Master
+          </p>
+        </div>
+        <div
+          class="p-6 dark rounded-2xl shadow-lg flex flex-col items-center"
+        >
+          <a
+            href="/profilepic.png"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <img
+              alt="John Pranoy Yalla"
+              class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-yellow-500"
+              data-nimg="1"
+              decoding="async"
+              height="96"
+              loading="lazy"
+              src="/_next/image?url=%2Fprofilepic.png&w=256&q=75"
+              srcset="/_next/image?url=%2Fprofilepic.png&w=96&q=75 1x, /_next/image?url=%2Fprofilepic.png&w=256&q=75 2x"
+              style="color: transparent;"
+              width="96"
+            />
+          </a>
+          <h2
+            class="text-xl font-semibold"
+          >
+            John Pranoy Yalla
+          </h2>
+          <p
+            class="text-gray-400"
+          >
+            Product Owner
+          </p>
+        </div>
+        <div
+          class="p-6 dark rounded-2xl shadow-lg flex flex-col items-center"
+        >
+          <a
+            href="/team-1.jpg"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <img
+              alt="Louis Muhammad"
+              class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-yellow-500"
+              data-nimg="1"
+              decoding="async"
+              height="96"
+              loading="lazy"
+              src="/_next/image?url=%2Fteam-1.jpg&w=256&q=75"
+              srcset="/_next/image?url=%2Fteam-1.jpg&w=96&q=75 1x, /_next/image?url=%2Fteam-1.jpg&w=256&q=75 2x"
+              style="color: transparent;"
+              width="96"
+            />
+          </a>
+          <h2
+            class="text-xl font-semibold"
+          >
+            Louis Muhammad
+          </h2>
+          <p
+            class="text-gray-400"
+          >
+            Senior Developer
+          </p>
+        </div>
+        <div
+          class="p-6 dark rounded-2xl shadow-lg flex flex-col items-center"
+        >
+          <div
+            class="w-24 h-24 bg-yellow-500 text-black font-bold flex items-center justify-center rounded-full text-2xl mb-4"
+          >
+            C
+          </div>
+          <h2
+            class="text-xl font-semibold"
+          >
+            Christopher Wilder
+          </h2>
+          <p
+            class="text-gray-400"
+          >
+            Developer
+          </p>
+        </div>
+        <div
+          class="p-6 dark rounded-2xl shadow-lg flex flex-col items-center"
+        >
+          <div
+            class="w-24 h-24 bg-yellow-500 text-black font-bold flex items-center justify-center rounded-full text-2xl mb-4"
+          >
+            P
+          </div>
+          <h2
+            class="text-xl font-semibold"
+          >
+            Prudhvi Samudrala
+          </h2>
+          <p
+            class="text-gray-400"
+          >
+            Developer
+          </p>
+        </div>
+        <div
+          class="p-6 dark rounded-2xl shadow-lg flex flex-col items-center"
+        >
+          <div
+            class="w-24 h-24 bg-yellow-500 text-black font-bold flex items-center justify-center rounded-full text-2xl mb-4"
+          >
+            Y
+          </div>
+          <h2
+            class="text-xl font-semibold"
+          >
+            Yaswitha Swarna
+          </h2>
+          <p
+            class="text-gray-400"
+          >
+            UI / Tester
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

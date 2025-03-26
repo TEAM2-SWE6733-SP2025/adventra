@@ -1,15 +1,14 @@
 "use client";
-import { Suspense } from "react";
-import { signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { FaGithub, FaGoogle, FaApple } from "react-icons/fa";
-import ValidatedEmailInput from "../../components/ValidateEmailInput";
+import Card from "../../components/Card";
+import Button from "../../components/Button";
 
-function SignInContent() {
+export default function SignInPage() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
   const error = searchParams.get("error");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +21,6 @@ function SignInContent() {
         JSON.parse(storedCredentials);
       setEmail(storedEmail);
       setPassword(storedPassword);
-
       localStorage.removeItem("authCredentials");
     }
   }, []);
@@ -30,87 +28,104 @@ function SignInContent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await signIn("credentials", {
-      redirect: true,
+      redirect: false,
       email,
       password,
+      callbackUrl,
     });
-    if (!result?.ok) {
-      console.error("Error signing in", result.error);
+
+    if (result?.error) {
+      console.error("Sign-in error:", result.error);
+    } else {
+      router.push(result.url || callbackUrl);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white px-4">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-6">
-        <h1 className="text-3xl font-bold text-center">Sign In</h1>
-        {callbackUrl && <p>Redirecting to: {callbackUrl}</p>}
-        {error && <p className="text-red-500 text-center">Error: {error}</p>}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <ValidatedEmailInput
-            value={email}
-            onChange={setEmail}
-            placeholder="Email"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 bg-gray-200 dark:bg-gray-700 rounded-lg focus:outline-none"
-          />
-          <button
-            type="submit"
-            className="w-full p-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md"
-          >
-            Sign In with Email
-          </button>
-        </form>
-
-        <div className="space-y-3">
-          <button
-            onClick={() => signIn("github")}
-            className="w-full flex items-center justify-center gap-3 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold rounded-lg shadow-md"
-          >
-            <FaGithub size={20} />
-            Sign in with GitHub
-          </button>
-          <button
-            onClick={() => signIn("google")}
-            className="w-full flex items-center justify-center gap-3 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg shadow-md"
-          >
-            <FaGoogle size={20} />
-            Sign in with Google
-          </button>
-          <button
-            onClick={() => signIn("apple")}
-            className="w-full flex items-center justify-center gap-3 py-2 bg-black hover:bg-gray-800 text-white font-semibold rounded-lg shadow-md"
-          >
-            <FaApple size={20} />
-            Sign in with Apple
-          </button>
-        </div>
-
-        <div className="text-center">
-          <p className="text-gray-500 dark:text-gray-400">
-            Don&#39;t have an account?
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white">
+      <Card className="w-full max-w-md p-8">
+        <h1 className="text-3xl font-extrabold text-center mb-6">Sign In</h1>
+        {error && (
+          <p className="text-red-500 text-center mb-4">
+            {error === "CredentialsSignin"
+              ? "Invalid email or password."
+              : "An error occurred. Please try again."}
           </p>
-          <button
-            onClick={() => router.push("/auth/signup")}
-            className="mt-2 text-blue-500 dark:text-blue-400 hover:underline"
+        )}
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 dark:text-gray-300 font-semibold mb-2"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 bg-gray-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="password"
+              className="block text-gray-700 dark:text-gray-300 font-semibold mb-2"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 bg-gray-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+          <Button
+            type="submit"
+            className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-md"
           >
-            Sign Up
-          </button>
+            Sign In
+          </Button>
+        </form>
+        <div className="mt-6">
+          <p className="text-gray-600 dark:text-gray-400 text-center mb-4">
+            Or sign in with
+          </p>
+          <div className="flex justify-center gap-4">
+            <button
+              onClick={() => signIn("github", { callbackUrl })}
+              className="bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-white p-3 rounded-full"
+            >
+              <FaGithub size={20} />
+            </button>
+            <button
+              onClick={() => signIn("google", { callbackUrl })}
+              className="bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-white p-3 rounded-full"
+            >
+              <FaGoogle size={20} />
+            </button>
+            <button
+              onClick={() => signIn("apple", { callbackUrl })}
+              className="bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-white p-3 rounded-full"
+            >
+              <FaApple size={20} />
+            </button>
+          </div>
         </div>
-      </div>
+        <p className="text-gray-600 dark:text-gray-400 text-center mt-6">
+          Don&#39;t have an account?{" "}
+          <a href="/auth/signup" className="text-yellow-500 hover:underline">
+            Sign Up
+          </a>
+        </p>
+      </Card>
     </div>
-  );
-}
-
-export default function SignIn() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <SignInContent />
-    </Suspense>
   );
 }

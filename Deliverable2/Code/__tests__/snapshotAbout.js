@@ -1,0 +1,22 @@
+import { render } from "@testing-library/react";
+import AboutPage from "../src/app/about/page";
+import { SessionProvider } from "next-auth/react";
+
+it("renders about page unchanged", () => {
+  const mockSession = {
+    user: {
+      name: "Test User",
+      email: "test@example.com",
+      image: "https://example.com/avatar.png",
+    },
+    expires: "2025-12-31T23:59:59.999Z",
+  };
+
+  const { container } = render(
+    <SessionProvider session={mockSession}>
+      <AboutPage />
+    </SessionProvider>,
+  );
+
+  expect(container).toMatchSnapshot();
+});

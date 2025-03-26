@@ -18,7 +18,7 @@ export default function AuthButton() {
           )}
           <button
             onClick={() => signOut()}
-            className="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-500"
+            className="border border-yellow-500 text-yellow-500 px-4 py-2 rounded-lg hover:bg-yellow-900 cursor-pointer"
           >
             Logout
           </button>
@@ -26,7 +26,7 @@ export default function AuthButton() {
       ) : (
         <button
           onClick={() => signIn()}
-          className="bg-green-600 px-4 py-2 rounded-lg hover:bg-green-500"
+          className="bg-yellow-500 text-black hover:bg-yellow-600 px-4 py-2 rounded-lg cursor-pointer"
         >
           Login
         </button>
