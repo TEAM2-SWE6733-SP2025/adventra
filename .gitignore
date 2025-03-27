@@ -132,7 +132,6 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
-.vscode/
 
 # yarn v2
 .yarn/cache
@@ -144,10 +143,8 @@ dist
 # vercel
 .vercel
 
-# macOS
-.DS_Store
-
 # Cypress generated files
 cypress/screenshots/
 cypress/videos/
 cypress/downloads/
+cypress/videos/

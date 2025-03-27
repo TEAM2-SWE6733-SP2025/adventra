@@ -10,8 +10,27 @@ on:
       - main
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 23.x
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm test
+
   deploy:
     runs-on: ubuntu-latest
+    needs: test
 
     steps:
       - name: Checkout Code
@@ -30,8 +49,8 @@ jobs:
           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd /var/www/adventra
             git pull origin main
-            cd /var/www/adventra/Deliverable2/Code
             npm install
             npm run build
-            pm2 restart adventra || pm2 start npm --name "adventra" -- start
+            npx prisma migrate deploy
+            pm2 restart adventra || pm2 start npm --name "adventra" -- start -- -p 4000
           EOF
