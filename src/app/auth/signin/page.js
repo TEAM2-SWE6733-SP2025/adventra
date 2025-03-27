@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from "react";
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -6,7 +7,7 @@ import { FaGithub, FaGoogle, FaApple } from "react-icons/fa";
 import Card from "../../components/Card";
 import Button from "../../components/Button";
 
-export default function SignInPage() {
+function SignInContent() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
   const error = searchParams.get("error");
@@ -127,5 +128,13 @@ export default function SignInPage() {
         </p>
       </Card>
     </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <SignInContent />
+    </Suspense>
   );
 }
