@@ -148,3 +148,5 @@ cypress/screenshots/
 cypress/videos/
 cypress/downloads/
 cypress/videos/
+
+.DS_Store
