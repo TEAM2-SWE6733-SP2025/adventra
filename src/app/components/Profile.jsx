@@ -61,8 +61,15 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isOffline, setIsOffline] = useState(!navigator.onLine); // Track offline status
 
   useEffect(() => {
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
     const fetchUserData = async () => {
       try {
         const response = await fetch("/api/profile");
@@ -77,15 +84,28 @@ export default function ProfilePage() {
           languages: data.languages || [],
           socialMedia: data.socialMedia || {},
         });
+
+        localStorage.setItem("profile", JSON.stringify(data));
         setLoading(false);
       } catch (error) {
         console.error("Error fetching user data:", error);
-        setError("Failed to load user data.");
+
+        const cachedProfile = localStorage.getItem("profile");
+        if (cachedProfile) {
+          setUserData(JSON.parse(cachedProfile));
+        } else {
+          setError("Failed to load user data.");
+        }
         setLoading(false);
       }
     };
 
     fetchUserData();
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
   }, []);
 
   const handleDelete = async () => {
@@ -118,6 +138,8 @@ export default function ProfilePage() {
       const updatedData = await response.json();
       setUserData(updatedData);
       setIsEditing(false);
+
+      localStorage.setItem("profile", JSON.stringify(updatedData));
     } catch (error) {
       console.error("Error saving user data:", error);
       setError("Failed to save user data.");

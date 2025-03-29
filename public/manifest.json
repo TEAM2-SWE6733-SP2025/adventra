@@ -1,0 +1,27 @@
+{
+  "name": "Adventra",
+  "short_name": "Adventra",
+  "description": "Connect with your friends and family",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["social", "lifestyle", "travel"],
+  "icons": [
+    {
+      "src": "/icons/logo192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/logo512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "prefer_related_applications": false
+}

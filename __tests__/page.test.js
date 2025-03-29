@@ -46,7 +46,7 @@ describe("Home component", () => {
 
     const adventureName = screen.getByRole("heading", {
       level: 2,
-      name: /Scuba Diving/i,
+      name: /Safari/i,
     });
 
     expect(adventureName).toBeInTheDocument();
@@ -68,7 +68,7 @@ describe("Home component", () => {
       </SessionProvider>
     );
 
-    const adventureLocation = screen.getByText(/Redang Island, Malaysia/i);
+    const adventureLocation = screen.getByText(/Serengeti, Tanzania/i);
 
     expect(adventureLocation).toBeInTheDocument();
   });
@@ -96,7 +96,7 @@ describe("Home component", () => {
 
     const mainHeading = screen.getByRole("heading", {
       level: 2,
-      name: /Safari/i,
+      name: /Scuba Diving/i,
     });
 
     expect(mainHeading).toBeInTheDocument();
@@ -122,7 +122,7 @@ describe("Home component", () => {
 
     const mainHeading = screen.getByRole("heading", {
       level: 2,
-      name: /Scuba Diving/i,
+      name: /Safari/i,
     });
 
     expect(mainHeading).toBeInTheDocument();
@@ -183,7 +183,7 @@ describe("Home component", () => {
 
     const mainHeading = screen.getByRole("heading", {
       level: 2,
-      name: /safari/i,
+      name: /Scuba Diving/i,
     });
 
     expect(mainHeading).toBeInTheDocument();

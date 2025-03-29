@@ -1,11 +1,23 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   "eslint.run": "onType",
   "jest.rootPath": "./",
   "jest.runMode": "watch",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.includeLanguages": {
+    "javascript": "javascript",
+    "typescript": "javascript",
+    "javascriptreact": "javascript",
+    "typescriptreact": "javascript"
   }
 }
