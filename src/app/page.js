@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar.jsx";
+import Button from "./components/Button.jsx";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,9 +14,9 @@ export default function Home() {
   const adventures = [
     {
       id: 1,
-      name: "Scuba Diving",
-      location: "Redang Island, Malaysia",
-      image: "/scuba.jpg",
+      name: "Safari",
+      location: "Serengeti, Tanzania",
+      image: "/safari.jpg",
     },
     {
       id: 2,
@@ -25,9 +26,9 @@ export default function Home() {
     },
     {
       id: 3,
-      name: "Safari",
-      location: "Serengeti, Tanzania",
-      image: "/safari.jpg",
+      name: "Scuba Diving",
+      location: "Redang Island, Malaysia",
+      image: "/scuba.jpg",
     },
   ];
 
@@ -137,18 +138,11 @@ export default function Home() {
       </section>
 
       <div className="absolute bottom-16 w-full flex justify-center gap-6 z-10">
-        <button
-          onClick={() => handleSwipe("left")}
-          className="w-20 h-20 bg-gray-900 hover:bg-gray-700 text-white font-semibold text-lg rounded-xl shadow-lg active:scale-95"
-        >
+        <Button variant="outline" onClick={() => handleSwipe("left")}>
           Pass
-        </button>
-        <button
-          onClick={() => handleSwipe("right")}
-          className="w-20 h-20 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold text-lg rounded-xl shadow-lg active:scale-95"
-        >
-          Match
-        </button>
+        </Button>
+
+        <Button onClick={() => handleSwipe("right")}>Match</Button>
       </div>
     </main>
   );

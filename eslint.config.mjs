@@ -1,22 +1,29 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
-import cypress from "eslint-plugin-cypress";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import js from '@eslint/js'
+import { FlatCompat } from '@eslint/eslintrc'
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: import.meta.dirname,
+  recommendedConfig: js.configs.recommended,
 });
 
 const eslintConfig = [
   ...compat.config({
-    extends: ["next/core-web-vitals", "prettier"],
+    extends: [
+      "eslint:recommended",
+      "next",
+      "plugin:prettier/recommended",
+    ],
     plugins: ["prettier"],
+    env: {
+      browser: true,
+      node: true,
+      jest: true,
+      cypress: true,
+    },
     rules: {
       "prettier/prettier": "error",
-      "no-unused-vars": ["warn"],
+      "no-unused-vars": "warn",
+      "no-console": "warn",
       indent: ["error", 2],
       semi: ["error", "always"],
       quotes: ["error", "double"],
@@ -43,4 +50,4 @@ const eslintConfig = [
   }),
 ];
 
-export default eslintConfig;
+export default eslintConfig
