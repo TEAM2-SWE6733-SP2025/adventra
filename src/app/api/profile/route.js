@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 import prisma from "@/app/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+// eslint-disable-next-line no-unused-vars
 export async function GET(req) {
   try {
     const session = await getServerSession(authOptions);

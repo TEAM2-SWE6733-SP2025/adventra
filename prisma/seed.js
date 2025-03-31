@@ -3,10 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("Seeding the database...");
-
-  // Create a user
-  const user = await prisma.user.create({
+  await prisma.user.create({
     data: {
       id: "12345",
       name: "John Doe",
@@ -15,9 +12,6 @@ async function main() {
       email: "johndoe@example.com",
       emailVerified: new Date(),
       image: "sj-pic.jpg",
-      instagramLink: "https://instagram.com/johndoe",
-      twitterLink: "https://twitter.com/johndoe",
-      linkedInLink: "https://linkedin.com/in/johndoe",
       adventureTypes: ["Hiking", "Photography"],
       attitude: ["Adventurous", "Curious"],
       skillLevel: "Intermediate",
@@ -31,12 +25,11 @@ async function main() {
       },
     },
   });
-
-  console.log("User created:", user);
 }
 
 main()
   .catch((e) => {
+    // eslint-disable-next-line no-console
     console.error(e);
     process.exit(1);
   })

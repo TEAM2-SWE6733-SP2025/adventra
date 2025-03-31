@@ -5,8 +5,6 @@ export async function DELETE(req) {
     const body = await req.json();
     const { id } = body;
 
-    console.log("ID received in request:", id);
-
     if (!id) {
       return new Response(JSON.stringify({ error: "User ID is required" }), {
         status: 400,
@@ -42,6 +40,7 @@ export async function DELETE(req) {
       }
     );
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error deleting account:", error);
     return new Response(JSON.stringify({ error: "Failed to delete account" }), {
       status: 500,

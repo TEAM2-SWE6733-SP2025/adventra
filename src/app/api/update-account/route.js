@@ -24,8 +24,6 @@ export async function PUT(req) {
       data: { name, bio, location, instagramLink, twitterLink, linkedInLink },
     });
 
-    console.log("Account updated successfully:", updatedUser);
-
     return new Response(
       JSON.stringify({
         message: "Account updated successfully",
@@ -34,6 +32,7 @@ export async function PUT(req) {
       { status: 200 }
     );
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error updating account:", error);
     return new Response(JSON.stringify({ error: "Failed to update account" }), {
       status: 500,
