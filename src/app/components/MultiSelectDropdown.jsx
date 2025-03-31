@@ -1,13 +1,17 @@
 import React from "react";
 import Select from "react-select";
 
-export default function MultiSelectDropdown({ options, selected, onChange }) {
+export default function MultiSelectDropdown({
+  options,
+  selected = [],
+  onChange,
+}) {
   const formattedOptions = options.map((option) => ({
     value: option,
     label: option,
   }));
 
-  const formattedSelected = selected.map((value) => ({
+  const formattedSelected = (selected || []).map((value) => ({
     value,
     label: value,
   }));
