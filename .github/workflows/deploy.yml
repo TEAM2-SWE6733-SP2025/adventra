@@ -52,5 +52,6 @@ jobs:
             npm install
             npm run build
             npx prisma migrate deploy
-            pm2 restart adventra || pm2 start npm --name "adventra" -- start -- -p 4000
+            pm2 delete adventra || true
+            pm2 start npm --name "adventra" -- start -- -p 4000
           EOF

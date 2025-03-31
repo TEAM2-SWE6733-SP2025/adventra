@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import AvatarUploader from "./AvatarUploader";
+import React, { useEffect, useState, useRef } from "react";
 import EditableField from "./EditableField";
 import SocialLinksEditor from "./SocialLinksEditor";
 import MultiSelectDropdown from "./MultiSelectDropdown";
@@ -8,6 +7,7 @@ import Badge from "./Badge";
 import Button from "./Button";
 import Card from "./Card";
 import { signOut } from "next-auth/react";
+import { FaTrashAlt } from "react-icons/fa";
 
 const languageOptions = [
   "English",
@@ -61,15 +61,10 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isOffline, setIsOffline] = useState(!navigator.onLine); // Track offline status
+  const [profilePic, setProfilePic] = useState(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
-    const handleOnline = () => setIsOffline(false);
-    const handleOffline = () => setIsOffline(true);
-
-    window.addEventListener("online", handleOnline);
-    window.addEventListener("offline", handleOffline);
-
     const fetchUserData = async () => {
       try {
         const response = await fetch("/api/profile");
@@ -77,51 +72,18 @@ export default function ProfilePage() {
           throw new Error("Failed to fetch user data");
         }
         const data = await response.json();
-        setUserData({
-          ...data,
-          adventureTypes: data.adventureTypes || [],
-          attitude: data.attitude || [],
-          languages: data.languages || [],
-          socialMedia: data.socialMedia || {},
-        });
-
-        localStorage.setItem("profile", JSON.stringify(data));
+        setUserData(data);
+        setProfilePic(data.profilePic || null);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching user data:", error);
-
-        const cachedProfile = localStorage.getItem("profile");
-        if (cachedProfile) {
-          setUserData(JSON.parse(cachedProfile));
-        } else {
-          setError("Failed to load user data.");
-        }
+        setError("Failed to load user data.");
         setLoading(false);
       }
     };
 
     fetchUserData();
-
-    return () => {
-      window.removeEventListener("online", handleOnline);
-      window.removeEventListener("offline", handleOffline);
-    };
   }, []);
-
-  const handleDelete = async () => {
-    try {
-      const response = await fetch("/api/profile", {
-        method: "DELETE",
-      });
-      if (!response.ok) {
-        throw new Error("Failed to delete profile");
-      }
-      router.push("/");
-    } catch (error) {
-      console.error("Error deleting profile:", error);
-      setError("Failed to delete profile.");
-    }
-  };
 
   const handleSave = async () => {
     try {
@@ -173,6 +135,103 @@ export default function ProfilePage() {
     }
   };
 
+  const handlePhotoUpload = async (fileUrl) => {
+    setProfilePic(fileUrl);
+    setUserData((prev) => ({
+      ...prev,
+      profilePic: fileUrl,
+    }));
+
+    try {
+      const response = await fetch("/api/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...userData, profilePic: fileUrl }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save profile picture");
+      }
+
+      const updatedData = await response.json();
+      setUserData(updatedData);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error saving profile picture:", error);
+    }
+  };
+
+  const handleDeletePhoto = async () => {
+    const confirmed = confirm(
+      "Are you sure you want to delete your profile picture?"
+    );
+    if (!confirmed) return;
+
+    try {
+      const key = profilePic.split("/").pop(); // Assuming the key is the last part of the URL
+
+      const response = await fetch("/api/upload", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ key }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete profile picture");
+      }
+
+      setProfilePic(null);
+      setUserData((prev) => ({
+        ...prev,
+        profilePic: null,
+      }));
+
+      alert("Profile picture deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting profile picture:", error);
+      alert("Failed to delete profile picture. Please try again.");
+    }
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const formData = new FormData();
+      formData.append("photo", file);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload photo");
+      }
+
+      const { fileUrl } = await response.json();
+      setProfilePic(fileUrl);
+      setUserData((prev) => ({
+        ...prev,
+        profilePic: fileUrl,
+      }));
+
+      alert("Profile picture uploaded successfully!");
+    } catch (error) {
+      console.error("Error uploading photo:", error);
+      alert("Failed to upload photo. Please try again.");
+    }
+  };
+
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -184,21 +243,42 @@ export default function ProfilePage() {
   return (
     <Card>
       <div className="flex flex-col md:flex-row items-center gap-8">
-        <AvatarUploader
-          src={userData.profilePic || userData.image || ""}
-          alt={userData.name || "User"}
-          isEditing={isEditing}
-          onChange={(e) =>
-            setUserData({
-              ...userData,
-              profilePic: URL.createObjectURL(e.target.files[0]),
-            })
-          }
-        />
+        {!isEditing && (
+          <img
+            src={profilePic || "/profilepic.png"}
+            alt="Profile"
+            className="w-40 h-40 object-cover mb-4 relative border-4 border-yellow-500 rounded-full p-1"
+          />
+        )}
+        {isEditing && (
+          <div>
+            <img
+              src={profilePic || "/profilepic.png"}
+              alt="Profile"
+              title="Click to upload a new photo"
+              className="w-40 h-40 object-cover mb-4 relative border-4 border-yellow-500 rounded-full p-1 cursor-pointer hover:opacity-80 hover:border-yellow-700"
+              onClick={handleImageClick}
+            />
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </div>
+        )}
+        {isEditing && profilePic && (
+          <button
+            onClick={handleDeletePhoto}
+            className="mt-2"
+            title="Delete Photo" // Tooltip for accessibility
+          >
+            <FaTrashAlt className="w-5 h-5 text-yellow-500 hover:text-yellow-700 cursor-pointer transition duration-200" />
+          </button>
+        )}
         <div>
-          <h1 className="text-3xl font-extrabold">
-            {userData.name || "New User"}
-          </h1>
+          <h1 className="text-3xl font-extrabold">{userData.name}</h1>
           <div className="flex items-center gap-x-4">
             <EditableField
               isEditing={isEditing}

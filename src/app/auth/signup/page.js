@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ValidatedEmailInput from "../../components/ValidateEmailInput";
@@ -73,6 +72,7 @@ export default function Signup() {
         router.push("/auth/signin");
       }, 2000);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.log("Error during signup:", err);
       setError("Something went wrong.");
     }

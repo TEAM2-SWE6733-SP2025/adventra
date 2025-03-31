@@ -18,9 +18,6 @@ model User {
   accounts      Account[]
   sessions      Session[]
   password      String? 
-  instagramLink String?
-  twitterLink   String?
-  linkedInLink  String?
   adventureTypes Json?    
   attitude      Json?    
   skillLevel    String?  

@@ -37,6 +37,10 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const requestUrl = new URL(event.request.url);
 
+  if (event.request.method !== "GET") {
+    return;
+  }
+
   if (requestUrl.pathname.match(/\.(?:png|jpg|jpeg|svg|webp|gif|ico|css)$/)) {
     event.respondWith(
       caches.match(event.request).then((response) => {
@@ -51,7 +55,10 @@ self.addEventListener("fetch", (event) => {
         );
       })
     );
-  } else if (requestUrl.pathname.includes("/about") || requestUrl.pathname.includes("/profile")) {
+    return;
+  }
+
+  if (requestUrl.pathname.includes("/about") || requestUrl.pathname.includes("/profile")) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
@@ -62,7 +69,10 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(() => caches.match(event.request))
     );
-  } else if (requestUrl.origin !== location.origin) {
+    return;
+  }
+
+  if (requestUrl.origin !== location.origin) {
     if (requestUrl.pathname.match(/\.(?:png|jpg|jpeg|svg|webp|gif)$/)) {
       event.respondWith(
         caches.match(event.request).then((response) => {
@@ -78,7 +88,10 @@ self.addEventListener("fetch", (event) => {
         })
       );
     }
-  } else {
-    event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
+    return;
   }
+
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match(event.request))
+  );
 });

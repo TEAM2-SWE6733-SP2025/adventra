@@ -36,6 +36,7 @@ function SignInContent() {
     });
 
     if (result?.error) {
+      // eslint-disable-next-line no-console
       console.error("Sign-in error:", result.error);
     } else {
       router.push(result.url || callbackUrl);

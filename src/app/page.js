@@ -70,6 +70,7 @@ export default function Home() {
 
   const handleMenuToggle = (isOpen) => {
     setMenuOpen(isOpen);
+    // eslint-disable-next-line no-console
     console.log("Menu Open:", menuOpen);
   };
 
