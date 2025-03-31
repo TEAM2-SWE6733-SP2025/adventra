@@ -5,7 +5,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 export async function GET(req) {
   try {
     const session = await getServerSession(authOptions);
-    console.log("Request:", req);
     if (!session || !session.user) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -58,7 +57,7 @@ export async function POST(req) {
         skillLevel: body.skillLevel || null,
         languages: body.languages || null,
         birthdate: body.birthdate ? new Date(body.birthdate) : null,
-        profilePic: body.image || body.image || null,
+        profilePic: body.profilePic || body.image || null,
         socialMedia: body.socialMedia || null,
       },
     });
