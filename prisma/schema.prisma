@@ -17,14 +17,24 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  password      String? 
-  adventureTypes Json?    
-  attitude      Json?    
-  skillLevel    String?  
-  languages     Json?    
-  birthdate     DateTime? 
-  profilePic    String?  
-  socialMedia   Json?    
+  password      String?
+  adventureTypes Json?
+  attitude      Json?
+  skillLevel    String?
+  languages     Json?
+  birthdate     DateTime?
+  profilePic    String?
+  socialMedia   Json?
+
+  photos        Photo[] 
+}
+
+model Photo {
+  id        String   @id @default(cuid())
+  url       String   @unique
+  caption   String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Account {
