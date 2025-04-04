@@ -51,6 +51,21 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/matching");
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+        const data = await response.json();
+        console.log("Fetched data:", data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "auto";
@@ -64,7 +79,7 @@ export default function Home() {
         ? (prev + 1) % adventures.length
         : prev === 0
           ? adventures.length - 1
-          : prev - 1
+          : prev - 1,
     );
   };
 
