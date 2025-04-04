@@ -83,8 +83,8 @@ export default function ProfilePage() {
     setUserData({
       ...userData,
       city: cityName,
-      latitude: city.latitude,
-      longitude: city.longitude,
+      latitude: parseFloat(city.latitude),
+      longitude: parseFloat(city.longitude),
     });
   };
 
