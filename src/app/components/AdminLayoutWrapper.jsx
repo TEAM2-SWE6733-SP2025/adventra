@@ -6,7 +6,6 @@ export default async function AdminLayoutWrapper({ children }) {
   const session = await getSession();
 
   if (!session?.user?.isAdmin) {
-    // Redirect non-admin users
     redirect("/");
     return null;
   }

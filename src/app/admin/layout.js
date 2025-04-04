@@ -1,14 +1,15 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/app/lib/session";
 import Link from "next/link";
-import { FaHome, FaUsers, FaCog } from "react-icons/fa"; // Import icons from react-icons/fa
+import { FaHome, FaUsers, FaCog } from "react-icons/fa";
+import Image from "next/image";
 
 export default async function AdminLayout({ children }) {
   const session = await getSession();
 
   if (!session?.user?.isAdmin) {
-    redirect("/"); // Redirect non-admin users
-    return null; // Prevent rendering the layout
+    redirect("/");
+    return null;
   }
 
   const menuItems = [
@@ -19,14 +20,11 @@ export default async function AdminLayout({ children }) {
 
   return (
     <div className="h-screen flex overflow-hidden">
-      {/* Sidebar */}
       <aside className="h-full flex flex-col shadow-lg border-r border-gray-700">
-        {/* Sidebar Header */}
         <div className="p-4 text-2xl font-bold border-b border-gray-700">
           Admin Panel
         </div>
 
-        {/* Sidebar Navigation */}
         <nav className="flex-1 p-4 overflow-y-auto">
           <ul className="space-y-2">
             {menuItems.map((item) => (
@@ -35,7 +33,7 @@ export default async function AdminLayout({ children }) {
                   href={item.href}
                   className="flex items-center px-4 py-2 rounded-md hover:bg-gray-700 transition duration-200"
                 >
-                  <item.icon className="w-5 h-5 mr-3" /> {/* Icon */}
+                  <item.icon className="w-5 h-5 mr-3" />
                   {item.name}
                 </Link>
               </li>
@@ -43,12 +41,13 @@ export default async function AdminLayout({ children }) {
           </ul>
         </nav>
 
-        {/* Current User Info */}
         <div className="p-4 border-t border-gray-700 text-sm text-gray-300 flex items-center gap-3">
-          <img
+          <Image
             src={session.user.profilePic || "/default-profile.png"}
             alt="Profile"
             className="w-10 h-10 rounded-full border-2 border-gray-500"
+            width={96}
+            height={96}
           />
           <div>
             <p>Logged in as:</p>
@@ -59,7 +58,6 @@ export default async function AdminLayout({ children }) {
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 overflow-y-auto h-full">
         <div className="max-w-6xl mx-auto p-6">{children}</div>
       </main>
