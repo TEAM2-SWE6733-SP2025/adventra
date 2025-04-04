@@ -1,9 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import prisma from "@/app/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-// eslint-disable-next-line no-unused-vars
 export async function GET(req) {
   try {
     const session = await getServerSession(authOptions);
@@ -17,6 +17,7 @@ export async function GET(req) {
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
+      include: { photos: true },
     });
 
     if (!user) {
@@ -37,7 +38,6 @@ export async function GET(req) {
 export async function POST(req) {
   try {
     const session = await getServerSession(authOptions);
-
     if (!session || !session.user) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -46,8 +46,10 @@ export async function POST(req) {
 
     const userId = session.user.id;
     const body = await req.json();
+    const incomingPhotos = body.photos || [];
 
-    const updatedUser = await prisma.user.update({
+    // Update base user fields (not including photos)
+    await prisma.user.update({
       where: { id: userId },
       data: {
         name: body.name || null,
@@ -67,6 +69,47 @@ export async function POST(req) {
       },
     });
 
+    // Get current photos from DB
+    const existingPhotos = await prisma.photo.findMany({
+      where: { userId },
+    });
+
+    // Determine which photos to delete (not in incoming list)
+    const incomingUrls = incomingPhotos.map((p) => p.url);
+    const photosToDelete = existingPhotos.filter(
+      (p) => !incomingUrls.includes(p.url),
+    );
+
+    // Delete removed photos
+    await prisma.photo.deleteMany({
+      where: {
+        userId,
+        url: {
+          in: photosToDelete.map((p) => p.url),
+        },
+      },
+    });
+
+    // Upsert incoming photos
+    await Promise.all(
+      incomingPhotos.map((photo) =>
+        prisma.photo.upsert({
+          where: { url: photo.url },
+          update: { caption: photo.caption || "" },
+          create: {
+            userId,
+            url: photo.url,
+            caption: photo.caption || "",
+          },
+        }),
+      ),
+    );
+
+    const updatedUser = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { photos: true },
+    });
+
     return new Response(JSON.stringify(updatedUser), { status: 200 });
   } catch (error) {
     console.error("Error updating user:", error);
@@ -79,7 +122,6 @@ export async function POST(req) {
 export async function PUT(req) {
   try {
     const session = await getServerSession(authOptions);
-
     if (!session || !session.user) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -124,6 +166,7 @@ export async function PUT(req) {
         profilePic: body.profilePic || null,
         socialMedia: body.socialMedia || null,
       },
+      include: { photos: true },
     });
 
     return new Response(JSON.stringify(upsertedUser), { status: 200 });

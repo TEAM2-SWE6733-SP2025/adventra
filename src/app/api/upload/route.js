@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import AWS from "aws-sdk";
+import { Exo } from "next/font/google";
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -28,6 +29,7 @@ export async function POST(req) {
       Key: fileName,
       Body: buffer,
       ContentType: file.type,
+      Exopires: 30 * 24 * 60 * 60, // 30 days in seconds
     };
 
     await s3.upload(params).promise();
@@ -42,7 +44,7 @@ export async function POST(req) {
         message: "File uploaded successfully!",
         fileUrl: signedUrl,
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Upload error:", error);
@@ -71,7 +73,7 @@ export async function DELETE(req) {
 
     return new Response(
       JSON.stringify({ message: "File deleted successfully!" }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Delete error:", error);

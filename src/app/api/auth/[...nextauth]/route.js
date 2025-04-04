@@ -49,7 +49,7 @@ export const authOptions = {
 
         const isValid = await bcrypt.compare(
           credentials.password,
-          user.password
+          user.password,
         );
         if (!isValid) {
           throw new Error("Invalid password");
@@ -66,12 +66,14 @@ export const authOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.isAdmin = user.isAdmin; // Add isAdmin to the token
       }
       return token;
     },
     async session({ session, token }) {
       if (token?.id) {
         session.user.id = token.id;
+        session.user.isAdmin = token.isAdmin; // Add isAdmin to the session
       }
       return session;
     },
