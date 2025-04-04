@@ -10,19 +10,48 @@ import { signOut } from "next-auth/react";
 import { FaTrashAlt } from "react-icons/fa";
 
 const languageOptions = [
-  "English", "Spanish", "Mandarin", "Hindi", "French",
-  "Arabic", "Bengali", "Russian", "Portuguese", "German", "Bahasa Malayu",
+  "English",
+  "Spanish",
+  "Mandarin",
+  "Hindi",
+  "French",
+  "Arabic",
+  "Bengali",
+  "Russian",
+  "Portuguese",
+  "German",
+  "Bahasa Malayu",
 ];
 
 const adventureOptions = [
-  "Hiking", "Backpacking", "Skiing", "Climbing", "Kayaking",
-  "Cycling", "Camping", "Surfing", "Rafting", "Zip-lining",
+  "Hiking",
+  "Backpacking",
+  "Skiing",
+  "Climbing",
+  "Kayaking",
+  "Cycling",
+  "Camping",
+  "Surfing",
+  "Rafting",
+  "Zip-lining",
 ];
 
 const attitudeOptions = [
-  "Adventurous", "Easy-Going", "Spontaneous", "Fearless", "Open-Minded",
-  "Curious", "Energetic", "Optimistic", "Resilient", "Independent",
-  "Free-Spirited", "Social", "Flexible", "Nature-Loving", "Bold",
+  "Adventurous",
+  "Easy-Going",
+  "Spontaneous",
+  "Fearless",
+  "Open-Minded",
+  "Curious",
+  "Energetic",
+  "Optimistic",
+  "Resilient",
+  "Independent",
+  "Free-Spirited",
+  "Social",
+  "Flexible",
+  "Nature-Loving",
+  "Bold",
 ];
 
 const skillLevelOptions = ["Beginner", "Intermediate", "Advanced", "Expert"];
@@ -78,7 +107,9 @@ export default function ProfilePage() {
   };
 
   const handleDeleteAccount = async () => {
-    const confirmed = confirm("Are you sure you want to delete your account? This action cannot be undone.");
+    const confirmed = confirm(
+      "Are you sure you want to delete your account? This action cannot be undone."
+    );
     if (!confirmed) return;
 
     try {
@@ -106,7 +137,10 @@ export default function ProfilePage() {
     try {
       const formData = new FormData();
       formData.append("photo", file);
-      const response = await fetch("/api/upload", { method: "POST", body: formData });
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
       if (!response.ok) throw new Error("Failed to upload photo");
       const { fileUrl } = await response.json();
       setProfilePic(fileUrl);
@@ -119,7 +153,9 @@ export default function ProfilePage() {
   };
 
   const handleDeletePhoto = async () => {
-    const confirmed = confirm("Are you sure you want to delete your profile picture?");
+    const confirmed = confirm(
+      "Are you sure you want to delete your profile picture?"
+    );
     if (!confirmed) return;
 
     try {
@@ -148,7 +184,11 @@ export default function ProfilePage() {
     <Card>
       <div className="flex flex-col md:flex-row items-center gap-8">
         {!isEditing ? (
-          <img src={profilePic || "/profilepic.png"} alt="Profile" className="w-40 h-40 object-cover mb-4 border-4 border-yellow-500 rounded-full p-1" />
+          <img
+            src={profilePic || "/profilepic.png"}
+            alt="Profile"
+            className="w-40 h-40 object-cover mb-4 border-4 border-yellow-500 rounded-full p-1"
+          />
         ) : (
           <div>
             <img
@@ -158,11 +198,21 @@ export default function ProfilePage() {
               className="w-40 h-40 object-cover mb-4 border-4 border-yellow-500 rounded-full p-1 cursor-pointer hover:opacity-80 hover:border-yellow-700"
               onClick={handleImageClick}
             />
-            <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileChange} className="hidden" />
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              className="hidden"
+            />
           </div>
         )}
         {isEditing && profilePic && (
-          <button onClick={handleDeletePhoto} className="mt-2" title="Delete Photo">
+          <button
+            onClick={handleDeletePhoto}
+            className="mt-2"
+            title="Delete Photo"
+          >
             <FaTrashAlt className="w-5 h-5 text-yellow-500 hover:text-yellow-700" />
           </button>
         )}
@@ -171,17 +221,27 @@ export default function ProfilePage() {
           <div className="flex items-center gap-x-4">
             <EditableField
               isEditing={isEditing}
-              value={userData.birthdate ? new Date(userData.birthdate).toISOString().split("T")[0] : ""}
-              onChange={(value) => setUserData({ ...userData, birthdate: value })}
+              value={
+                userData.birthdate
+                  ? new Date(userData.birthdate).toISOString().split("T")[0]
+                  : ""
+              }
+              onChange={(value) =>
+                setUserData({ ...userData, birthdate: value })
+              }
               type="date"
             >
-              {userData.birthdate ? `${calculateAge(userData.birthdate)} years old` : "No birthdate"}
+              {userData.birthdate
+                ? `${calculateAge(userData.birthdate)} years old`
+                : "No birthdate"}
             </EditableField>
             <p> | </p>
             <EditableField
               isEditing={isEditing}
               value={userData.location || ""}
-              onChange={(value) => setUserData({ ...userData, location: value })}
+              onChange={(value) =>
+                setUserData({ ...userData, location: value })
+              }
             >
               {userData.location || "No location"}
             </EditableField>
@@ -189,13 +249,20 @@ export default function ProfilePage() {
           <div className="text-gray-400 text-lg">
             <span>Languages: </span>
             {!isEditing ? (
-              userData.languages?.length ? userData.languages.join(", ") : "No languages"
+              userData.languages?.length ? (
+                userData.languages.join(", ")
+              ) : (
+                "No languages"
+              )
             ) : (
               <MultiSelectDropdown
                 options={languageOptions}
                 selected={userData.languages}
                 onChange={(selectedLanguages) =>
-                  setUserData((prev) => ({ ...prev, languages: selectedLanguages }))
+                  setUserData((prev) => ({
+                    ...prev,
+                    languages: selectedLanguages,
+                  }))
                 }
               />
             )}
@@ -204,7 +271,10 @@ export default function ProfilePage() {
             isEditing={isEditing}
             links={userData.socialMedia || {}}
             onChange={(platform, value) =>
-              setUserData({ ...userData, socialMedia: { ...userData.socialMedia, [platform]: value } })
+              setUserData({
+                ...userData,
+                socialMedia: { ...userData.socialMedia, [platform]: value },
+              })
             }
           />
         </div>
@@ -225,7 +295,9 @@ export default function ProfilePage() {
       {!isEditing ? (
         <div className="flex flex-wrap gap-3 mt-4">
           {userData.adventureTypes?.length ? (
-            userData.adventureTypes.map((type) => <Badge key={type}>{type}</Badge>)
+            userData.adventureTypes.map((type) => (
+              <Badge key={type}>{type}</Badge>
+            ))
           ) : (
             <p>No adventure preferences</p>
           )}
@@ -234,22 +306,32 @@ export default function ProfilePage() {
         <MultiSelectDropdown
           options={adventureOptions}
           selected={userData.adventureTypes}
-          onChange={(selected) => setUserData((prev) => ({ ...prev, adventureTypes: selected }))} 
+          onChange={(selected) =>
+            setUserData((prev) => ({ ...prev, adventureTypes: selected }))
+          }
         />
       )}
 
       <h2 className="text-2xl font-semibold mt-8">Skill Level</h2>
       {!isEditing ? (
-        <p className="text-gray-400 text-lg">{userData.skillLevel || "No skill level"}</p>
+        <p className="text-gray-400 text-lg">
+          {userData.skillLevel || "No skill level"}
+        </p>
       ) : (
         <select
           value={userData.skillLevel || ""}
-          onChange={(e) => setUserData({ ...userData, skillLevel: e.target.value })}
+          onChange={(e) =>
+            setUserData({ ...userData, skillLevel: e.target.value })
+          }
           className="mt-4 bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full md:w-1/2"
         >
-          <option value="" disabled>Select Skill Level</option>
+          <option value="" disabled>
+            Select Skill Level
+          </option>
           {skillLevelOptions.map((level) => (
-            <option key={level} value={level}>{level}</option>
+            <option key={level} value={level}>
+              {level}
+            </option>
           ))}
         </select>
       )}
@@ -258,7 +340,9 @@ export default function ProfilePage() {
       {!isEditing ? (
         <div className="flex flex-wrap gap-3 mt-4">
           {userData.attitude?.length ? (
-            userData.attitude.map((attitude) => <Badge key={attitude}>{attitude}</Badge>)
+            userData.attitude.map((attitude) => (
+              <Badge key={attitude}>{attitude}</Badge>
+            ))
           ) : (
             <p>No attitudes selected</p>
           )}
@@ -267,79 +351,82 @@ export default function ProfilePage() {
         <MultiSelectDropdown
           options={attitudeOptions}
           selected={userData.attitude}
-          onChange={(selected) => setUserData((prev) => ({ ...prev, attitude: selected }))} 
+          onChange={(selected) =>
+            setUserData((prev) => ({ ...prev, attitude: selected }))
+          }
         />
       )}
 
       <h2 className="text-2xl font-semibold mt-8">Photo Gallery</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
-  {userData.photos?.length ? (
-    userData.photos.map((photo, index) => {
-      const key = photo.url.split("?")[0].split("/").pop();
-      return (
-        <div key={index} className="relative group">
-          <img
-            src={photo.url}
-            alt={`Photo ${index + 1}`}
-            className="w-full h-40 object-cover rounded-lg cursor-pointer"
-            onClick={() => {
-              setSelectedPhotoIndex(index);
-              setIsModalOpen(true);
-            }}
-          />
-          
-          {/* Caption input added below the image */}
-          {isEditing && (
-            <div className="absolute bottom-0 left-0 w-full p-2 bg-black bg-opacity-50">
-              <EditableField
-                isEditing={isEditing}
-                value={photo.caption || ""}
-                onChange={(value) => {
-                  const updatedPhotos = [...userData.photos];
-                  updatedPhotos[index].caption = value;
-                  setUserData({ ...userData, photos: updatedPhotos });
-                }}
-                type="text"
-                placeholder="Add a caption"
-                className="bg-gray-800 text-white rounded-lg p-2 w-full"
-              >
-                {photo.caption || "No caption"}
-              </EditableField>
-            </div>
-          )}
+        {userData.photos?.length ? (
+          userData.photos.map((photo, index) => {
+            const key = photo.url.split("?")[0].split("/").pop();
+            return (
+              <div key={index} className="relative group">
+                <img
+                  src={photo.url}
+                  alt={`Photo ${index + 1}`}
+                  className="w-full h-40 object-cover rounded-lg cursor-pointer"
+                  onClick={() => {
+                    setSelectedPhotoIndex(index);
+                    setIsModalOpen(true);
+                  }}
+                />
 
-          {isEditing && (
-            <button
-              onClick={async () => {
-                const confirmed = confirm("Delete this photo?");
-                if (!confirmed) return;
-                try {
-                  await fetch("/api/upload", {
-                    method: "DELETE",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ key }),
-                  });
-                  const updated = userData.photos.filter((_, i) => i !== index);
-                  setUserData({ ...userData, photos: updated });
-                  alert("Photo deleted!");
-                } catch (err) {
-                  console.error("Delete error:", err);
-                  alert("Failed to delete photo.");
-                }
-              }}
-              className="absolute top-2 right-2 bg-black bg-opacity-60 p-1 rounded hover:bg-opacity-80"
-            >
-              <FaTrashAlt className="w-4 h-4 text-white" />
-            </button>
-          )}
-        </div>
-      );
-    })
-  ) : (
-    <p className="text-gray-400">No photos yet</p>
-  )}
-</div>
+                {/* Caption input added below the image */}
+                {isEditing && (
+                  <div className="absolute bottom-0 left-0 w-full p-2 bg-black bg-opacity-50">
+                    <EditableField
+                      isEditing={isEditing}
+                      value={photo.caption || ""}
+                      onChange={(value) => {
+                        const updatedPhotos = [...userData.photos];
+                        updatedPhotos[index].caption = value;
+                        setUserData({ ...userData, photos: updatedPhotos });
+                      }}
+                      type="text"
+                      placeholder="Add a caption"
+                      className="bg-gray-800 text-white rounded-lg p-2 w-full"
+                    >
+                      {photo.caption || "No caption"}
+                    </EditableField>
+                  </div>
+                )}
 
+                {isEditing && (
+                  <button
+                    onClick={async () => {
+                      const confirmed = confirm("Delete this photo?");
+                      if (!confirmed) return;
+                      try {
+                        await fetch("/api/upload", {
+                          method: "DELETE",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ key }),
+                        });
+                        const updated = userData.photos.filter(
+                          (_, i) => i !== index
+                        );
+                        setUserData({ ...userData, photos: updated });
+                        alert("Photo deleted!");
+                      } catch (err) {
+                        console.error("Delete error:", err);
+                        alert("Failed to delete photo.");
+                      }
+                    }}
+                    className="absolute top-2 right-2 bg-black bg-opacity-60 p-1 rounded hover:bg-opacity-80"
+                  >
+                    <FaTrashAlt className="w-4 h-4 text-white" />
+                  </button>
+                )}
+              </div>
+            );
+          })
+        ) : (
+          <p className="text-gray-400">No photos yet</p>
+        )}
+      </div>
 
       {isModalOpen && selectedPhoto && (
         <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
@@ -391,39 +478,43 @@ export default function ProfilePage() {
       {isEditing && (
         <div className="mt-4">
           <div className="mt-4">
-  <label
-    htmlFor="file-upload"
-    className="block text-white bg-yellow-500 border border-yellow-500 px-4 py-2 rounded-lg hover:bg-yellow-700 cursor-pointer text-center"
-  >
-    Choose a file
-  </label>
-  <input
-    id="file-upload"
-    type="file"
-    accept="image/*"
-    onChange={async (e) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      try {
-        const formData = new FormData();
-        formData.append("photo", file);
-        const response = await fetch("/api/upload", { method: "POST", body: formData });
-        if (!response.ok) throw new Error("Failed to upload photo");
-        const { fileUrl } = await response.json();
-        const newPhoto = { url: fileUrl, caption: "" };
-        setUserData((prev) => ({
-          ...prev,
-          photos: prev.photos ? [...prev.photos, newPhoto] : [newPhoto],
-        }));
-      } catch (error) {
-        console.error("Error uploading photo:", error);
-        alert("Failed to upload photo. Please try again.");
-      }
-    }}
-    className="hidden"
-  />
-</div>
-
+            <label
+              htmlFor="file-upload"
+              className="block text-white bg-yellow-500 border border-yellow-500 px-4 py-2 rounded-lg hover:bg-yellow-700 cursor-pointer text-center"
+            >
+              Choose a file
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              accept="image/*"
+              onChange={async (e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                try {
+                  const formData = new FormData();
+                  formData.append("photo", file);
+                  const response = await fetch("/api/upload", {
+                    method: "POST",
+                    body: formData,
+                  });
+                  if (!response.ok) throw new Error("Failed to upload photo");
+                  const { fileUrl } = await response.json();
+                  const newPhoto = { url: fileUrl, caption: "" };
+                  setUserData((prev) => ({
+                    ...prev,
+                    photos: prev.photos
+                      ? [...prev.photos, newPhoto]
+                      : [newPhoto],
+                  }));
+                } catch (error) {
+                  console.error("Error uploading photo:", error);
+                  alert("Failed to upload photo. Please try again.");
+                }
+              }}
+              className="hidden"
+            />
+          </div>
         </div>
       )}
 
@@ -431,7 +522,9 @@ export default function ProfilePage() {
         {isEditing ? (
           <>
             <Button onClick={handleSave}>Save</Button>
-            <Button variant="outline" onClick={() => setIsEditing(false)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setIsEditing(false)}>
+              Cancel
+            </Button>
           </>
         ) : (
           <>

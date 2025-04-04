@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import prisma from "@/app/lib/prisma";
 import { getServerSession } from "next-auth/next";
@@ -72,7 +73,9 @@ export async function POST(req) {
 
     // Determine which photos to delete (not in incoming list)
     const incomingUrls = incomingPhotos.map((p) => p.url);
-    const photosToDelete = existingPhotos.filter((p) => !incomingUrls.includes(p.url));
+    const photosToDelete = existingPhotos.filter(
+      (p) => !incomingUrls.includes(p.url)
+    );
 
     // Delete removed photos
     await prisma.photo.deleteMany({
