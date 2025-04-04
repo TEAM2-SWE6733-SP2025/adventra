@@ -65,8 +65,6 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
-  const [selectedState, setSelectedState] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
   const fileInputRef = useRef(null);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -75,16 +73,13 @@ export default function ProfilePage() {
     selectedPhotoIndex !== null ? userData?.photos?.[selectedPhotoIndex] : null;
 
   const handleStateChange = (stateCode) => {
-    setSelectedState(stateCode);
-    setSelectedCity(""); // Reset city when state changes
-    setUserData({ ...userData, state: stateCode });
+    setUserData({ ...userData, state: stateCode, city: null });
   };
 
   const handleCityChange = (cityName) => {
-    const city = City.getCitiesOfState("US", selectedState).find(
+    const city = City.getCitiesOfState("US", userData.state).find(
       (c) => c.name === cityName,
     );
-    setSelectedCity(cityName);
     setUserData({
       ...userData,
       city: cityName,
@@ -272,7 +267,7 @@ export default function ProfilePage() {
             ) : (
               <select
                 onChange={(e) => handleStateChange(e.target.value)}
-                value={selectedState}
+                value={userData.state || ""}
                 className="mt-4 bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full md:w-1/2"
               >
                 <option value="">Select State</option>
@@ -287,14 +282,14 @@ export default function ProfilePage() {
             {!isEditing ? (
               <p></p>
             ) : (
-              selectedState && (
+              userData.state && (
                 <select
                   onChange={(e) => handleCityChange(e.target.value)}
-                  value={selectedCity}
+                  value={userData.city || ""}
                   className="mt-4 bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full md:w-1/2"
                 >
                   <option value="">Select City</option>
-                  {City.getCitiesOfState("US", selectedState).map((city) => (
+                  {City.getCitiesOfState("US", userData.state).map((city) => (
                     <option key={city.name} value={city.name}>
                       {city.name}
                     </option>
