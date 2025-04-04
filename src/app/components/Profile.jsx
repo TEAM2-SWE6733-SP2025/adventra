@@ -238,6 +238,7 @@ export default function ProfilePage() {
             <p> | </p>
             <EditableField
               isEditing={isEditing}
+              placeholder="Location"
               value={userData.location || ""}
               onChange={(value) =>
                 setUserData({ ...userData, location: value })
@@ -374,7 +375,6 @@ export default function ProfilePage() {
                   }}
                 />
 
-                {/* Caption input added below the image */}
                 {isEditing && (
                   <div className="absolute bottom-0 left-0 w-full p-2 bg-black bg-opacity-50">
                     <EditableField
