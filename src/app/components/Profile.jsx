@@ -8,6 +8,9 @@ import Button from "./Button";
 import Card from "./Card";
 import { signOut } from "next-auth/react";
 import { FaTrashAlt } from "react-icons/fa";
+import { State, City } from "country-state-city";
+
+import Select from "react-select";
 
 const languageOptions = [
   "English",
@@ -62,7 +65,28 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
   const fileInputRef = useRef(null);
+
+  const handleStateChange = (stateCode) => {
+    setSelectedState(stateCode);
+    setSelectedCity(""); // Reset city when state changes
+    setUserData({ ...userData, state: stateCode });
+  };
+
+  const handleCityChange = (cityName) => {
+    const city = City.getCitiesOfState("US", selectedState).find(
+      (c) => c.name === cityName,
+    );
+    setSelectedCity(cityName);
+    setUserData({
+      ...userData,
+      city: cityName,
+      latitude: city.latitude,
+      longitude: city.longitude,
+    });
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -110,7 +134,7 @@ export default function ProfilePage() {
 
   const handleDeleteAccount = async () => {
     const confirmed = confirm(
-      "Are you sure you want to delete your account? This action cannot be undone."
+      "Are you sure you want to delete your account? This action cannot be undone.",
     );
     if (!confirmed) return;
 
@@ -165,7 +189,7 @@ export default function ProfilePage() {
 
   const handleDeletePhoto = async () => {
     const confirmed = confirm(
-      "Are you sure you want to delete your profile picture?"
+      "Are you sure you want to delete your profile picture?",
     );
     if (!confirmed) return;
 
@@ -297,15 +321,48 @@ export default function ProfilePage() {
                 : "No birthdate"}
             </EditableField>
             <p> | </p>
-            <EditableField
-              isEditing={isEditing}
-              value={userData.location || ""}
-              onChange={(value) =>
-                setUserData({ ...userData, location: value })
-              }
-            >
-              {userData.location || "No location"}
-            </EditableField>
+          </div>
+          <div className="flex items-center gap-x-4">
+            {/* State Dropdown */}
+            {!isEditing ? (
+              <p className="text-gray-400 text-lg">
+                {userData.city && userData.state
+                  ? userData?.city + ", " + userData?.state
+                  : "No location"}
+              </p>
+            ) : (
+              <select
+                onChange={(e) => handleStateChange(e.target.value)}
+                value={selectedState}
+                className="mt-4 bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full md:w-1/2"
+              >
+                <option value="">Select State</option>
+                {State.getStatesOfCountry("US").map((state) => (
+                  <option key={state.isoCode} value={state.isoCode}>
+                    {state.name}
+                  </option>
+                ))}
+              </select>
+            )}
+            {/* City Dropdown */}
+            {!isEditing ? (
+              <p></p>
+            ) : (
+              selectedState && (
+                <select
+                  onChange={(e) => handleCityChange(e.target.value)}
+                  value={selectedCity}
+                  className="mt-4 bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full md:w-1/2"
+                >
+                  <option value="">Select City</option>
+                  {City.getCitiesOfState("US", selectedState).map((city) => (
+                    <option key={city.name} value={city.name}>
+                      {city.name}
+                    </option>
+                  ))}
+                </select>
+              )
+            )}
           </div>
           <div className="text-gray-400 text-lg">
             <span>Languages: </span>
