@@ -299,6 +299,7 @@ export default function ProfilePage() {
             <p> | </p>
             <EditableField
               isEditing={isEditing}
+              placeholder="Location"
               value={userData.location || ""}
               onChange={(value) =>
                 setUserData({ ...userData, location: value })
