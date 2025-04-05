@@ -44,7 +44,7 @@ export async function POST(req) {
         message: "File uploaded successfully!",
         fileUrl: signedUrl,
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Upload error:", error);
@@ -73,7 +73,7 @@ export async function DELETE(req) {
 
     return new Response(
       JSON.stringify({ message: "File deleted successfully!" }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Delete error:", error);

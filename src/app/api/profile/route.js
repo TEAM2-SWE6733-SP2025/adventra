@@ -54,7 +54,10 @@ export async function POST(req) {
       data: {
         name: body.name || null,
         bio: body.bio || null,
-        location: body.location || null,
+        city: body.city || null,
+        state: body.state || null,
+        latitude: body.latitude || null,
+        longitude: body.longitude || null,
         email: body.email || null,
         adventureTypes: body.adventureTypes || null,
         attitude: body.attitude || null,
@@ -74,7 +77,7 @@ export async function POST(req) {
     // Determine which photos to delete (not in incoming list)
     const incomingUrls = incomingPhotos.map((p) => p.url);
     const photosToDelete = existingPhotos.filter(
-      (p) => !incomingUrls.includes(p.url)
+      (p) => !incomingUrls.includes(p.url),
     );
 
     // Delete removed photos
@@ -98,8 +101,8 @@ export async function POST(req) {
             url: photo.url,
             caption: photo.caption || "",
           },
-        })
-      )
+        }),
+      ),
     );
 
     const updatedUser = await prisma.user.findUnique({
@@ -133,7 +136,10 @@ export async function PUT(req) {
       update: {
         name: body.name || null,
         bio: body.bio || null,
-        location: body.location || null,
+        city: body.city || null,
+        state: body.state || null,
+        latitude: body.latitude || null,
+        longitude: body.longitude || null,
         email: body.email || null,
         adventureTypes: body.adventureTypes || null,
         attitude: body.attitude || null,
@@ -147,7 +153,10 @@ export async function PUT(req) {
         id: userId,
         name: body.name || null,
         bio: body.bio || null,
-        location: body.location || null,
+        city: body.city || null,
+        state: body.state || null,
+        latitude: body.latitude || null,
+        longitude: body.longitude || null,
         email: body.email || null,
         adventureTypes: body.adventureTypes || null,
         attitude: body.attitude || null,

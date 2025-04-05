@@ -9,7 +9,6 @@ async function main() {
       id: "12345",
       name: "John Doe",
       bio: "Outdoor enthusiast who loves hiking and photography.",
-      location: "Denver, CO",
       email: "johndoe@example.com",
       emailVerified: new Date(),
       image: "https://example.com/johndoe.jpg",
@@ -25,6 +24,11 @@ async function main() {
         twitter: "https://twitter.com/johndoe",
         linkedin: "https://linkedin.com/in/johndoe",
       },
+      gender: "M",
+      latitude: 37.7749,
+      longitude: -122.4194,
+      state: "GA",
+      city: "Atlanta",
     },
   });
 

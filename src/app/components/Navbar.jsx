@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import AuthButton from "./AuthButton";
 import { useSession } from "next-auth/react";
+import { FaBars } from "react-icons/fa";
 
 export const Navbar = ({ onMenuToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,10 @@ export const Navbar = ({ onMenuToggle }) => {
     <nav className="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-700 w-full">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <div className="flex justify-between items-center h-16">
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 flex items-center space-x-2">
+            <Link href="/preferences" className="lg:px-5">
+              <FaBars className="w-5 h-5 text-yellow-500 hover:text-yellow-700" />
+            </Link>
             <Link href="/" className="text-2xl font-bold">
               Adventra
             </Link>
