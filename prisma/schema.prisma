@@ -29,7 +29,19 @@ model User {
   city          String?
   latitude      Float?
   longitude     Float?
-  photos        Photo[] 
+  photos        Photo[]
+  gender        String?
+  preferences   Preferences?
+}
+
+model Preferences {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  gender    String?
+  ageStart  Int?
+  ageEnd    Int?
+  distance  Int?
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Photo {
