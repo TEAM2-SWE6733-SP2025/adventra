@@ -22,9 +22,11 @@ export const Navbar = ({ onMenuToggle }) => {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 flex items-center space-x-2">
-            <Link href="/preferences" className="lg:px-5">
-              <FaBars className="w-5 h-5 text-yellow-500 hover:text-yellow-700" />
-            </Link>
+            {session && (
+              <Link href="/preferences" className="lg:px-5">
+                <FaBars className="w-5 h-5 text-yellow-500 hover:text-yellow-700" />
+              </Link>
+            )}
             <Link href="/" className="text-2xl font-bold">
               Adventra
             </Link>
