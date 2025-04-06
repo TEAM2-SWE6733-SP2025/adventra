@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Button from "../components/Button";
 import RangeSlider from "react-range-slider-input";
@@ -11,24 +11,49 @@ export default function PreferencesPage() {
   const [ageRange, setAgeRange] = useState([18, 90]);
   const [distance, setDistance] = useState(0);
 
+  useEffect(() => {
+    const fetchUserPrefData = async () => {
+      try {
+        const response = await fetch("/api/preferences");
+        if (!response.ok)
+          throw new Error("Failed to fetch user Preferences data");
+        const data = await response.json();
+        console.log("fetching user Preferences data", data);
+        setAgeRange([data.ageStart, data.ageEnd]);
+        setDistance(data.distance);
+        setGenderPref(data.gender);
+        setUserPreferencesData(data);
+      } catch (error) {
+        console.error("Error fetching user Preferences data:", error);
+      }
+    };
+    fetchUserPrefData();
+  }, []);
+
   const handleSave = async () => {
     try {
-      setUserPreferencesData({
-        ...userPreferencesData,
+      const updatedPreferences = {
         gender: genderPref,
         ageStart: ageRange[0],
         ageEnd: ageRange[1],
         distance: parseInt(distance),
-      });
+      };
+
+      console.log("Saving user data:", updatedPreferences);
 
       const response = await fetch("/api/preferences", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userPreferencesData),
+        body: JSON.stringify(updatedPreferences),
       });
+
       if (!response.ok) throw new Error("Failed to save user data");
-      const updatedData = await response.json();
-      setUserPreferencesData(updatedData);
+
+      const receivedResp = await response.json();
+      console.log("After Saving user data:", receivedResp);
+
+      setUserPreferencesData(updatedPreferences); // Update state after successful save
+      alert("Preferences saved successfully!");
     } catch (error) {
       console.error("Error saving user data:", error);
     }
