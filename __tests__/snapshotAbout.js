@@ -15,7 +15,7 @@ it("renders about page unchanged", () => {
   const { container } = render(
     <SessionProvider session={mockSession}>
       <AboutPage />
-    </SessionProvider>
+    </SessionProvider>,
   );
 
   expect(container).toMatchSnapshot();

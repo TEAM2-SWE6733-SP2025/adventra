@@ -37,7 +37,7 @@ export async function DELETE(req) {
       JSON.stringify({ message: "Account deleted successfully" }),
       {
         status: 200,
-      }
+      },
     );
   } catch (error) {
     // eslint-disable-next-line no-console

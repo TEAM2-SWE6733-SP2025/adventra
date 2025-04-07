@@ -48,7 +48,7 @@ describe("ValidatedEmailInput Component", () => {
         value=""
         onChange={mockOnChange}
         placeholder="Enter your email"
-      />
+      />,
     );
 
     const input = screen.getByPlaceholderText("Enter your email");
