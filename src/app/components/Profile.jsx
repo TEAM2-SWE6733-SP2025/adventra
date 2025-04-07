@@ -58,6 +58,7 @@ const attitudeOptions = [
 ];
 
 const skillLevelOptions = ["Beginner", "Intermediate", "Advanced", "Expert"];
+const genderOptions = ["Men", "Women"];
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
@@ -256,6 +257,31 @@ export default function ProfilePage() {
             </EditableField>
             <p> | </p>
           </div>
+          <div>
+            {!isEditing ? (
+              <p className="text-gray-400 text-lg">
+                {userData.gender || "N/A"}
+              </p>
+            ) : (
+              <select
+                value={userData.gender || ""}
+                onChange={(e) =>
+                  setUserData({ ...userData, gender: e.target.value })
+                }
+                className="mt-4 bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full md:w-1/2"
+              >
+                <option value="" disabled>
+                  Select Gender
+                </option>
+                {genderOptions.map((level) => (
+                  <option key={level} value={level}>
+                    {level}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
           <div className="flex items-center gap-x-4">
             {/* State Dropdown */}
             {!isEditing ? (

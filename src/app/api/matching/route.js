@@ -50,7 +50,7 @@ export async function GET(req) {
         COS(RADIANS(${user.latitude})) * COS(RADIANS(latitude)) *
         COS(RADIANS(longitude) - RADIANS(${user.longitude})) +
         SIN(RADIANS(${user.latitude})) * SIN(RADIANS(latitude))
-      )) AS distance, gender, EXTRACT(YEAR FROM AGE(birthDate)) AS age
+      )) AS distance, gender, EXTRACT(YEAR FROM AGE(birthDate)) AS age, bio, city || ', ' || state AS location, "profilePic"
     FROM "User"
     WHERE state = '${user.state}'
       AND id != '${userId}'
