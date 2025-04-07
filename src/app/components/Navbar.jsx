@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import AuthButton from "./AuthButton";
 import { useSession } from "next-auth/react";
-import { FaBars } from "react-icons/fa";
+import { FaGear } from "react-icons/fa6";
 
 export const Navbar = ({ onMenuToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +24,7 @@ export const Navbar = ({ onMenuToggle }) => {
           <div className="flex-shrink-0 flex items-center space-x-2">
             {session && (
               <Link href="/preferences" className="lg:px-5">
-                <FaBars className="w-5 h-5 text-yellow-500 hover:text-yellow-700" />
+                <FaGear className="w-5 h-5 text-yellow-500 hover:text-yellow-700" />
               </Link>
             )}
             <Link href="/" className="text-2xl font-bold">

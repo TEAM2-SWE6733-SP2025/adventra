@@ -9,7 +9,7 @@ export default function PreferencesPage() {
   const [userPreferencesData, setUserPreferencesData] = useState(null);
   const [genderPref, setGenderPref] = useState(0);
   const [ageRange, setAgeRange] = useState([18, 90]);
-  const [distance, setDistance] = useState(0);
+  const [distance, setDistance] = useState(99);
 
   useEffect(() => {
     const fetchUserPrefData = async () => {
