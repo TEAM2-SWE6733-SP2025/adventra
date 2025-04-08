@@ -24,7 +24,7 @@ async function main() {
         twitter: "https://twitter.com/johndoe",
         linkedin: "https://linkedin.com/in/johndoe",
       },
-      gender: "M",
+      gender: "Male",
       latitude: 37.7749,
       longitude: -122.4194,
       state: "GA",

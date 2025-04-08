@@ -11,7 +11,7 @@ export default function Home() {
   const [showMenu, setShowMenu] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animationDirection, setAnimationDirection] = useState(1);
-  const [adventures, setAdventures] = useState([]);
+  const [adventurerMatches, setAdventurerMatches] = useState([]);
   const headerRef = useRef(null);
 
   const staticAdventureList = [
@@ -60,7 +60,7 @@ export default function Home() {
           console.log("error fetching data");
         }
         const data = await response.json();
-        setAdventures(data);
+        setAdventurerMatches(data);
         console.log("Fetched data:", data);
       } catch (error) {
         console.error(error);
@@ -78,20 +78,23 @@ export default function Home() {
   }, [session]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      handleSwipeStaticImages("right");
-    }, 3000);
+    if (adventurerMatches.length === 0) {
+      const interval = setInterval(() => {
+        handleSwipeStaticImages("right");
+        console.log("Autoswipe triggered for static images");
+      }, 5000);
 
-    return () => clearInterval(interval);
-  }, [currentIndex]);
+      return () => clearInterval(interval);
+    }
+  }, [currentIndex, adventurerMatches.length]);
 
   const handleSwipe = (direction) => {
     setAnimationDirection(direction === "left" ? -1 : 1);
     setCurrentIndex((prev) =>
       direction === "left"
-        ? (prev + 1) % adventures.length
+        ? (prev + 1) % adventurerMatches.length
         : prev === 0
-          ? adventures.length - 1
+          ? adventurerMatches.length - 1
           : prev - 1,
     );
   };
@@ -112,7 +115,7 @@ export default function Home() {
     console.log("Menu Open:", menuOpen);
   };
 
-  if (adventures.length === 0) {
+  if (adventurerMatches.length === 0) {
     return (
       <main className="relative w-full h-screen overflow-hidden flex flex-col bg-black">
         <header
@@ -193,14 +196,14 @@ export default function Home() {
       <section className="relative w-full h-full flex justify-center items-center overflow-hidden">
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
-            key={adventures[currentIndex]?.id}
+            key={adventurerMatches[currentIndex]?.id}
             initial={{ x: `${animationDirection * 100}%`, opacity: 1 }}
             animate={{ x: "0%", opacity: 1 }}
             exit={{ x: `${-animationDirection * 100}%`, opacity: 1 }}
             transition={{ duration: 0.7, ease: "easeInOut" }}
             className="absolute w-full h-full bg-cover bg-center"
             style={{
-              backgroundImage: `url(${adventures[currentIndex]?.profilePic})`,
+              backgroundImage: `url(${adventurerMatches[currentIndex]?.profilePic})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "auto 100%",
               backgroundPosition: "center",
@@ -219,25 +222,25 @@ export default function Home() {
                   className="text-4xl font-bold"
                   style={{ textShadow: "0px 8px 12px rgba(0, 0, 0, 0.9)" }}
                 >
-                  {adventures[currentIndex]?.name}
+                  {adventurerMatches[currentIndex]?.name}
                 </h2>
                 <p
                   className="text-lg"
                   style={{ textShadow: "0px 5px 10px rgba(0, 0, 0, 0.8)" }}
                 >
-                  {adventures[currentIndex]?.location}{" "}
+                  {adventurerMatches[currentIndex]?.location}{" "}
                 </p>
                 <p
                   className="text-lg"
                   style={{ textShadow: "0px 5px 10px rgba(0, 0, 0, 0.8)" }}
                 >
-                  {adventures[currentIndex]?.age}
+                  {adventurerMatches[currentIndex]?.age}
                 </p>
                 <p
                   className="text-lg"
                   style={{ textShadow: "0px 5px 10px rgba(0, 0, 0, 0.8)" }}
                 >
-                  {adventures[currentIndex]?.bio}
+                  {adventurerMatches[currentIndex]?.bio}
                 </p>
               </div>
             </div>
