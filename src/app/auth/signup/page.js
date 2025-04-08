@@ -37,7 +37,7 @@ export default function Signup() {
 
     if (!validatePassword(password)) {
       setError(
-        "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character."
+        "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.",
       );
       return;
     }
@@ -65,7 +65,7 @@ export default function Signup() {
 
       localStorage.setItem(
         "authCredentials",
-        JSON.stringify({ email, password })
+        JSON.stringify({ email, password }),
       );
 
       setTimeout(() => {

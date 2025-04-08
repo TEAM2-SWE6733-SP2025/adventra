@@ -18,7 +18,7 @@ describe("ProfilePage Component", () => {
     render(
       <SessionProvider session={mockSession}>
         <ProfilePage />
-      </SessionProvider>
+      </SessionProvider>,
     );
 
     const navbarElement = screen.getByRole("navigation");

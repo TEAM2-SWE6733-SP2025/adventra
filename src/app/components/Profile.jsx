@@ -8,6 +8,9 @@ import Button from "./Button";
 import Card from "./Card";
 import { signOut } from "next-auth/react";
 import { FaTrashAlt } from "react-icons/fa";
+import { State, City } from "country-state-city";
+
+import Select from "react-select";
 
 const languageOptions = [
   "English",
@@ -55,6 +58,7 @@ const attitudeOptions = [
 ];
 
 const skillLevelOptions = ["Beginner", "Intermediate", "Advanced", "Expert"];
+const genderOptions = ["Men", "Women"];
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
@@ -68,6 +72,22 @@ export default function ProfilePage() {
 
   const selectedPhoto =
     selectedPhotoIndex !== null ? userData?.photos?.[selectedPhotoIndex] : null;
+
+  const handleStateChange = (stateCode) => {
+    setUserData({ ...userData, state: stateCode, city: null });
+  };
+
+  const handleCityChange = (cityName) => {
+    const city = City.getCitiesOfState("US", userData.state).find(
+      (c) => c.name === cityName,
+    );
+    setUserData({
+      ...userData,
+      city: cityName,
+      latitude: parseFloat(city.latitude),
+      longitude: parseFloat(city.longitude),
+    });
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -108,7 +128,7 @@ export default function ProfilePage() {
 
   const handleDeleteAccount = async () => {
     const confirmed = confirm(
-      "Are you sure you want to delete your account? This action cannot be undone."
+      "Are you sure you want to delete your account? This action cannot be undone.",
     );
     if (!confirmed) return;
 
@@ -154,7 +174,7 @@ export default function ProfilePage() {
 
   const handleDeletePhoto = async () => {
     const confirmed = confirm(
-      "Are you sure you want to delete your profile picture?"
+      "Are you sure you want to delete your profile picture?",
     );
     if (!confirmed) return;
 
@@ -236,16 +256,73 @@ export default function ProfilePage() {
                 : "No birthdate"}
             </EditableField>
             <p> | </p>
-            <EditableField
-              isEditing={isEditing}
-              placeholder="Location"
-              value={userData.location || ""}
-              onChange={(value) =>
-                setUserData({ ...userData, location: value })
-              }
-            >
-              {userData.location || "No location"}
-            </EditableField>
+          </div>
+          <div>
+            {!isEditing ? (
+              <p className="text-gray-400 text-lg">
+                {userData.gender || "N/A"}
+              </p>
+            ) : (
+              <select
+                value={userData.gender || ""}
+                onChange={(e) =>
+                  setUserData({ ...userData, gender: e.target.value })
+                }
+                className="mt-4 bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full md:w-1/2"
+              >
+                <option value="" disabled>
+                  Select Gender
+                </option>
+                {genderOptions.map((level) => (
+                  <option key={level} value={level}>
+                    {level}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          <div className="flex items-center gap-x-4">
+            {/* State Dropdown */}
+            {!isEditing ? (
+              <p className="text-gray-400 text-lg">
+                {userData.city && userData.state
+                  ? userData?.city + ", " + userData?.state
+                  : "No location"}
+              </p>
+            ) : (
+              <select
+                onChange={(e) => handleStateChange(e.target.value)}
+                value={userData.state || ""}
+                className="mt-4 bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full md:w-1/2"
+              >
+                <option value="">Select State</option>
+                {State.getStatesOfCountry("US").map((state) => (
+                  <option key={state.isoCode} value={state.isoCode}>
+                    {state.name}
+                  </option>
+                ))}
+              </select>
+            )}
+            {/* City Dropdown */}
+            {!isEditing ? (
+              <p></p>
+            ) : (
+              userData.state && (
+                <select
+                  onChange={(e) => handleCityChange(e.target.value)}
+                  value={userData.city || ""}
+                  className="mt-4 bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full md:w-1/2"
+                >
+                  <option value="">Select City</option>
+                  {City.getCitiesOfState("US", userData.state).map((city) => (
+                    <option key={city.name} value={city.name}>
+                      {city.name}
+                    </option>
+                  ))}
+                </select>
+              )
+            )}
           </div>
           <div className="text-gray-400 text-lg">
             <span>Languages: </span>
@@ -406,7 +483,7 @@ export default function ProfilePage() {
                           body: JSON.stringify({ key }),
                         });
                         const updated = userData.photos.filter(
-                          (_, i) => i !== index
+                          (_, i) => i !== index,
                         );
                         setUserData({ ...userData, photos: updated });
                         alert("Photo deleted!");
@@ -441,7 +518,7 @@ export default function ProfilePage() {
             <button
               onClick={() =>
                 setSelectedPhotoIndex((prev) =>
-                  prev === 0 ? userData.photos.length - 1 : prev - 1
+                  prev === 0 ? userData.photos.length - 1 : prev - 1,
                 )
               }
               className="absolute left-2 top-1/2 transform -translate-y-1/2 text-white text-2xl hover:text-yellow-500"
@@ -459,7 +536,7 @@ export default function ProfilePage() {
             <button
               onClick={() =>
                 setSelectedPhotoIndex((prev) =>
-                  prev === userData.photos.length - 1 ? 0 : prev + 1
+                  prev === userData.photos.length - 1 ? 0 : prev + 1,
                 )
               }
               className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white text-2xl hover:text-yellow-500"

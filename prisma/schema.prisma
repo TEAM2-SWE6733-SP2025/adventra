@@ -11,7 +11,6 @@ model User {
   id             String    @id @default(cuid())
   name           String?
   bio            String?
-  location       String?
   email          String?   @unique
   emailVerified  DateTime?
   image          String?
@@ -26,8 +25,23 @@ model User {
   socialMedia   Json?
   accounts      Account[]
   sessions      Session[]
+  state         String?
+  city          String?
+  latitude      Float?
+  longitude     Float?
+  photos        Photo[]
+  gender        String?
+  preferences   Preferences?
+}
 
-  photos        Photo[] 
+model Preferences {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  gender    String?
+  ageStart  Int?
+  ageEnd    Int?
+  distance  Int?
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Photo {
