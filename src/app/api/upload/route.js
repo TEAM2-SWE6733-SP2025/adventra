@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import AWS from "aws-sdk";
-import { Exo } from "next/font/google";
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -29,22 +28,18 @@ export async function POST(req) {
       Key: fileName,
       Body: buffer,
       ContentType: file.type,
-      Exopires: 30 * 24 * 60 * 60, // 30 days in seconds
     };
 
     await s3.upload(params).promise();
 
-    const signedUrl = s3.getSignedUrl("getObject", {
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Key: fileName,
-    });
+    const publicUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
 
     return new Response(
       JSON.stringify({
         message: "File uploaded successfully!",
-        fileUrl: signedUrl,
+        fileUrl: publicUrl,
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Upload error:", error);
@@ -73,7 +68,7 @@ export async function DELETE(req) {
 
     return new Response(
       JSON.stringify({ message: "File deleted successfully!" }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Delete error:", error);

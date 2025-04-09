@@ -8,28 +8,44 @@ datasource db {
 }
 
 model User {
-  id             String    @id @default(cuid())
+  id             String       @id @default(cuid())
   name           String?
-  bio            String?
-  location       String?
-  email          String?   @unique
+  email          String?      @unique
   emailVerified  DateTime?
   image          String?
   password       String?
-  isAdmin        Boolean   @default(false)
+  bio            String?
+  birthdate      DateTime?
+  profilePic     String?
+  skillLevel     String?
+  socialMedia    Json?
   adventureTypes Json?
-  attitude      Json?
-  skillLevel    String?
-  languages     Json?
-  birthdate     DateTime?
-  profilePic    String?
-  socialMedia   Json?
-  accounts      Account[]
-  sessions      Session[]
-
-  photos        Photo[] 
-  messages      Message[]
+  attitude       Json?
+  languages      Json?
+  isAdmin        Boolean      @default(false)
+  city           String?
+  latitude       Float?
+  longitude      Float?
+  state          String?
+  gender         String?
+  accounts       Account[]
+  photos         Photo[]
+  travelPreferences Json?
+  preferences    Preferences?
+  sessions       Session[]
+  messages       Message[]
 }
+
+model Preferences {
+  id       String  @id @default(cuid())
+  userId   String  @unique
+  gender   String?
+  ageStart Int?
+  ageEnd   Int?
+  distance Int?
+  user     User    @relation(fields: [userId], references: [id])
+}
+
 
 model Match {
   id          String   @id @default(cuid())
@@ -50,13 +66,12 @@ model Message {
   user      User     @relation(fields: [senderId], references: [id])
   match     Match    @relation(fields: [matchId], references: [id])
 }
-
 model Photo {
-  id        String   @id @default(cuid())
-  url       String   @unique
-  caption   String?
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  id      String  @id @default(cuid())
+  url     String  @unique
+  caption String?
+  userId  String
+  user    User    @relation(fields: [userId], references: [id])
 }
 
 model Account {

@@ -15,7 +15,7 @@ it("renders homepage unchanged", () => {
   const { container } = render(
     <SessionProvider session={mockSession}>
       <Page />
-    </SessionProvider>
+    </SessionProvider>,
   );
 
   expect(container).toMatchSnapshot();

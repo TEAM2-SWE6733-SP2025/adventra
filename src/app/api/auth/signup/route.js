@@ -9,7 +9,7 @@ export async function POST(req) {
     if (!email || !password || !name) {
       return new Response(
         JSON.stringify({ error: "All fields are required" }),
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -27,7 +27,7 @@ export async function POST(req) {
 
       return new Response(
         JSON.stringify({ message: "Password added successfully" }),
-        { status: 200 }
+        { status: 200 },
       );
     }
 
@@ -43,7 +43,7 @@ export async function POST(req) {
 
     return new Response(
       JSON.stringify({ message: "User created successfully", user }),
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error(error);

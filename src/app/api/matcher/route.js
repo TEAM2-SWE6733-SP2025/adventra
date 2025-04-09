@@ -12,7 +12,7 @@ export async function POST(req) {
         JSON.stringify({
           error: "Invalid data format. Expected an array of user IDs.",
         }),
-        { status: 400 }
+        { status: 400 },
       );
     }
 

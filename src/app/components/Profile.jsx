@@ -8,6 +8,7 @@ import Button from "./Button";
 import Card from "./Card";
 import { signOut } from "next-auth/react";
 import { FaTrashAlt } from "react-icons/fa";
+import { State, City } from "country-state-city";
 
 const languageOptions = [
   "English",
@@ -55,6 +56,7 @@ const attitudeOptions = [
 ];
 
 const skillLevelOptions = ["Beginner", "Intermediate", "Advanced", "Expert"];
+const genderOptions = ["Male", "Female"];
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
@@ -68,6 +70,22 @@ export default function ProfilePage() {
 
   const selectedPhoto =
     selectedPhotoIndex !== null ? userData?.photos?.[selectedPhotoIndex] : null;
+
+  const handleStateChange = (stateCode) => {
+    setUserData({ ...userData, state: stateCode, city: null });
+  };
+
+  const handleCityChange = (cityName) => {
+    const city = City.getCitiesOfState("US", userData.state).find(
+      (c) => c.name === cityName,
+    );
+    setUserData({
+      ...userData,
+      city: cityName,
+      latitude: parseFloat(city.latitude),
+      longitude: parseFloat(city.longitude),
+    });
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -95,20 +113,23 @@ export default function ProfilePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
+      console.log("User data response:", response);
+      console.log("Response status:", response.status);
       if (!response.ok) throw new Error("Failed to save user data");
       const updatedData = await response.json();
       setUserData(updatedData);
       setIsEditing(false);
-      localStorage.setItem("profile", JSON.stringify(updatedData));
+      alert("Profile updated successfully!");
+      console.log("Profile updated:", updatedData);
     } catch (error) {
       console.error("Error saving user data:", error);
-      setError("Failed to save user data.");
+      alert("Failed to save profile. Please try again.");
     }
   };
 
   const handleDeleteAccount = async () => {
     const confirmed = confirm(
-      "Are you sure you want to delete your account? This action cannot be undone."
+      "Are you sure you want to delete your account? This action cannot be undone.",
     );
     if (!confirmed) return;
 
@@ -154,7 +175,7 @@ export default function ProfilePage() {
 
   const handleDeletePhoto = async () => {
     const confirmed = confirm(
-      "Are you sure you want to delete your profile picture?"
+      "Are you sure you want to delete your profile picture?",
     );
     if (!confirmed) return;
 
@@ -218,7 +239,7 @@ export default function ProfilePage() {
         )}
         <div>
           <h1 className="text-3xl font-extrabold">{userData.name}</h1>
-          <div className="flex items-center gap-x-4">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <EditableField
               isEditing={isEditing}
               value={
@@ -235,18 +256,70 @@ export default function ProfilePage() {
                 ? `${calculateAge(userData.birthdate)} years old`
                 : "No birthdate"}
             </EditableField>
-            <p> | </p>
-            <EditableField
-              isEditing={isEditing}
-              placeholder="Location"
-              value={userData.location || ""}
-              onChange={(value) =>
-                setUserData({ ...userData, location: value })
-              }
-            >
-              {userData.location || "No location"}
-            </EditableField>
+
+            <div>|</div>
+
+            {isEditing ? (
+              <select
+                onChange={(e) => handleStateChange(e.target.value)}
+                value={userData.state || ""}
+                className="bg-gray-800 border border-yellow-500 text-white p-2 rounded-md flex-1"
+              >
+                <option value="">Select State</option>
+                {State.getStatesOfCountry("US").map((state) => (
+                  <option key={state.isoCode} value={state.isoCode}>
+                    {state.name}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <p className="text-gray-400 text-lg flex-1">
+                {userData.city && userData.state
+                  ? `${userData.city}, ${userData.state}`
+                  : "No location"}
+              </p>
+            )}
+
+            {isEditing && userData.state && (
+              <select
+                onChange={(e) => handleCityChange(e.target.value)}
+                value={userData.city || ""}
+                className="bg-gray-800 border border-yellow-500 text-white p-2 rounded-md flex-3"
+              >
+                <option value="">Select City</option>
+                {City.getCitiesOfState("US", userData.state).map((city) => (
+                  <option key={city.name} value={city.name}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
+          <div>
+            {!isEditing ? (
+              <p className="text-gray-400 text-lg">
+                {userData.gender || "No Gender"}
+              </p>
+            ) : (
+              <select
+                value={userData.gender || ""}
+                onChange={(e) =>
+                  setUserData({ ...userData, gender: e.target.value })
+                }
+                className="mt-4 bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full md:w-1/2"
+              >
+                <option value="" disabled>
+                  Select Gender
+                </option>
+                {genderOptions.map((level) => (
+                  <option key={level} value={level}>
+                    {level}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
           <div className="text-gray-400 text-lg">
             <span>Languages: </span>
             {!isEditing ? (
@@ -288,6 +361,7 @@ export default function ProfilePage() {
         onChange={(value) => setUserData({ ...userData, bio: value })}
         type="textarea"
         placeholder="Write a short description about yourself, your interests, or your adventures."
+        rows={4}
       >
         {userData.bio || "No bio"}
       </EditableField>
@@ -315,9 +389,7 @@ export default function ProfilePage() {
 
       <h2 className="text-2xl font-semibold mt-8">Skill Level</h2>
       {!isEditing ? (
-        <p className="text-gray-400 text-lg">
-          {userData.skillLevel || "No skill level"}
-        </p>
+        <EditableField>{userData.skillLevel || "No skill level"}</EditableField>
       ) : (
         <select
           value={userData.skillLevel || ""}
@@ -336,6 +408,110 @@ export default function ProfilePage() {
           ))}
         </select>
       )}
+
+      <h2 className="text-2xl font-semibold mt-8">Travel Preferences</h2>
+      <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mt-4">
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mt-4">
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold">Environment</h3>
+            {!isEditing ? (
+              <div className="flex flex-wrap gap-2 mt-2">
+                {userData.travelPreferences?.environment?.length ? (
+                  userData.travelPreferences.environment.map((env) => (
+                    <Badge key={env}>{env}</Badge>
+                  ))
+                ) : (
+                  <p className="text-gray-400">No environment preferences</p>
+                )}
+              </div>
+            ) : (
+              <MultiSelectDropdown
+                options={[
+                  "Mountains",
+                  "Beaches",
+                  "Forests",
+                  "Deserts",
+                  "Urban",
+                ]}
+                selected={userData.travelPreferences?.environment || []}
+                onChange={(selected) =>
+                  setUserData((prev) => ({
+                    ...prev,
+                    travelPreferences: {
+                      ...prev.travelPreferences,
+                      environment: selected,
+                    },
+                  }))
+                }
+              />
+            )}
+          </div>
+
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold">Weather</h3>
+            {!isEditing ? (
+              <div className="flex flex-wrap gap-2 mt-2">
+                {userData.travelPreferences?.weather?.length ? (
+                  userData.travelPreferences.weather.map((weather) => (
+                    <Badge key={weather}>{weather}</Badge>
+                  ))
+                ) : (
+                  <p className="text-gray-400">No weather preferences</p>
+                )}
+              </div>
+            ) : (
+              <MultiSelectDropdown
+                options={["Sunny", "Rainy", "Snowy", "Windy", "Cloudy"]}
+                selected={userData.travelPreferences?.weather || []}
+                onChange={(selected) =>
+                  setUserData((prev) => ({
+                    ...prev,
+                    travelPreferences: {
+                      ...prev.travelPreferences,
+                      weather: selected,
+                    },
+                  }))
+                }
+              />
+            )}
+          </div>
+
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold">Duration</h3>
+            {!isEditing ? (
+              <div className="flex flex-wrap gap-2 mt-2">
+                {userData.travelPreferences?.duration?.length ? (
+                  userData.travelPreferences.duration.map((duration) => (
+                    <Badge key={duration}>{duration}</Badge>
+                  ))
+                ) : (
+                  <p className="text-gray-400">No duration preferences</p>
+                )}
+              </div>
+            ) : (
+              <MultiSelectDropdown
+                options={[
+                  "Day Trips",
+                  "Weekend",
+                  "1 Week",
+                  "2 Weeks",
+                  "1 Month",
+                ]}
+                selected={userData.travelPreferences?.duration || []}
+                onChange={(selected) =>
+                  setUserData((prev) => ({
+                    ...prev,
+                    travelPreferences: {
+                      ...prev.travelPreferences,
+                      duration: selected,
+                    },
+                  }))
+                }
+              />
+            )}
+          </div>
+        </div>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-8">Attitudes</h2>
       {!isEditing ? (
@@ -406,7 +582,7 @@ export default function ProfilePage() {
                           body: JSON.stringify({ key }),
                         });
                         const updated = userData.photos.filter(
-                          (_, i) => i !== index
+                          (_, i) => i !== index,
                         );
                         setUserData({ ...userData, photos: updated });
                         alert("Photo deleted!");
@@ -441,7 +617,7 @@ export default function ProfilePage() {
             <button
               onClick={() =>
                 setSelectedPhotoIndex((prev) =>
-                  prev === 0 ? userData.photos.length - 1 : prev - 1
+                  prev === 0 ? userData.photos.length - 1 : prev - 1,
                 )
               }
               className="absolute left-2 top-1/2 transform -translate-y-1/2 text-white text-2xl hover:text-yellow-500"
@@ -459,7 +635,7 @@ export default function ProfilePage() {
             <button
               onClick={() =>
                 setSelectedPhotoIndex((prev) =>
-                  prev === userData.photos.length - 1 ? 0 : prev + 1
+                  prev === userData.photos.length - 1 ? 0 : prev + 1,
                 )
               }
               className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white text-2xl hover:text-yellow-500"

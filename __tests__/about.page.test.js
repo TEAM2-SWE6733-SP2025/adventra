@@ -31,7 +31,7 @@ describe("AboutPage", () => {
     render(<AboutPage />);
 
     const missionStatement = screen.getByText(
-      /our platform connects like-minded adventurers/i
+      /our platform connects like-minded adventurers/i,
     );
 
     expect(missionStatement).toBeInTheDocument();

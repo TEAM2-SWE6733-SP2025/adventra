@@ -10,7 +10,7 @@ export async function GET(req) {
         JSON.stringify({ error: "Request query did not contain matchId." }),
         {
           status: 400,
-        }
+        },
       );
     }
     const targetMatch = await prisma.match.findUnique({
@@ -32,7 +32,7 @@ export async function GET(req) {
       JSON.stringify({ error: "Failed to fetch match messages" }),
       {
         status: 500,
-      }
+      },
     );
   }
 }
