@@ -50,6 +50,7 @@ export const Navbar = ({ onMenuToggle }) => {
           <div className="hidden md:flex space-x-12 items-center">
             <Link href="/">Home</Link>
             <Link href="/about">About</Link>
+            {session && <Link href="/chat-client">Chats</Link>}
             {session && <Link href="/profile">Profile</Link>} <AuthButton />
           </div>
         </div>
@@ -63,6 +64,7 @@ export const Navbar = ({ onMenuToggle }) => {
         <div className="px-4 py-3 flex flex-col gap-4">
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
+          {session && <Link href="/chat-client">Chats</Link>}
           {session && <Link href="/profile">Profile</Link>} <AuthButton />
         </div>
       </div>

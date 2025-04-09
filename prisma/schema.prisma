@@ -28,6 +28,27 @@ model User {
   sessions      Session[]
 
   photos        Photo[] 
+  messages      Message[]
+}
+
+model Match {
+  id          String   @id @default(cuid())
+  userOneId   String
+  userOneName String
+  userTwoId   String
+  userTwoName String
+  messages  Message[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String 
+  url       String?
+  sentAt    DateTime @default(now())
+  senderId  String
+  matchId   String
+  user      User     @relation(fields: [senderId], references: [id])
+  match     Match    @relation(fields: [matchId], references: [id])
 }
 
 model Photo {
