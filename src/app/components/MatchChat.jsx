@@ -10,6 +10,7 @@ const MatchChat = () => {
   const [userMatches, setUserMatches] = useState([]);
   const [currentMatch, setCurrentMatch] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [transport, setTransport] = useState("N/A");
 
   useEffect(() => {
@@ -36,14 +37,14 @@ const MatchChat = () => {
       //TODO: createMatches() is a temporary method for making matches for testing in the development database, this needs to be replaced with a proper function that creates matches when two users swipe right(or whatever equivalent we come up with) on each other
       createMatches();
       loadUserMatches();
+      setIsLoading(false);
     }
   }, [userData]);
 
   //This useEffect is used to set the current match to the first match in the userMatches array when it is created/updated
   useEffect(() => {
     if (userMatches.length > 0) {
-      setCurrentMatch(userMatches[0]); // Set the first match only after userMatches is updated
-      console.log("Current Match:", userMatches[0]);
+      setCurrentMatch(userMatches[0]); // Set the first match once after userMatches is updated
     }
   }, [userMatches]);
 
@@ -84,6 +85,12 @@ const MatchChat = () => {
       ]);
       console.log("Message received by client:", message);
     });
+
+    /*socket.on("matchChatHistory", (messages) => {
+      setMessages(messages);
+      console.log("Match chat history received:", messages);
+    });*/
+
     // Cleanup listener on component unmount
     return () => {
       socket.off("messageResponse");
@@ -93,7 +100,7 @@ const MatchChat = () => {
   //Send message to the server, and add it to the component's messages array
   const sendMessage = () => {
     if (message.trim()) {
-      socket.emit("message", message); // Send message to server
+      socket.emit("message", message, currentMatch, userData); // Send message and relevant information to server
       setMessages((prevMessages) => [
         ...prevMessages,
         { text: message, self: true },
@@ -102,7 +109,7 @@ const MatchChat = () => {
     }
   };
 
-  //This function is called when the user selects a match from the list of matches, and switches the active chat to that match's chat.
+  //This function is called when the user selects a match from the list of matches, and switches the active chat to that match's chat. (Fetches old match chat messages and displays them)
   const handleMatchChange = async (match) => {
     setCurrentMatch(match);
     console.log("New MatchId:", match.id);
@@ -114,9 +121,13 @@ const MatchChat = () => {
         headers: { "Content-Type": "application/json" },
       });
       if (!response.ok) throw new Error("Failed to fetch user data");
-      const data = await response.json();
-      setMessages(data);
-      console.log("Match Message Data:", data);
+      const fetchedMessages = await response.json();
+      console.log("Fetched Messages:", fetchedMessages);
+      //There's some cleaning up to do here, will be back when i've got more time :)
+      const sortedMessages = fetchedMessages
+        .map((msg) => ({ text: msg.content, self: msg.senderId === userId }))
+        .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+      setMessages(sortedMessages);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -186,26 +197,27 @@ const MatchChat = () => {
   };
 
   return (
-    <div className="flex">
-      <div>
-        <p>Status: {isConnected ? "connected" : "disconnected"}</p>
-        <p>Transport: {transport}</p>
-      </div>
-      <aside className="w-1/4 border-r border-gray-300 p-2.5">
-        <h2 className="text-lg font-bold mb-4">Matches</h2>
-        <ul>
+    <div className="flex h-screen bg-black text-gray-100">
+      <aside className="w-1/4 border-r border-gray-800 p-4 bg-gray-900">
+        <h2 className="text-xl font-bold mb-6 text-gray-400">Your Matches</h2>
+        <ul className="space-y-4">
           {userMatches.map((match, index) => (
-            <li key={index} className="flex items-center justify-between">
-              {match.userOneId === userId
-                ? match.userTwoName
-                : match.userOneName}
+            <li
+              key={index}
+              className="flex items-center justify-between p-2 bg-gray-800 rounded shadow hover:shadow-md transition-shadow"
+            >
+              <span className="text-gray-200 font-medium">
+                {match.userOneId === userId
+                  ? match.userTwoName
+                  : match.userOneName}
+              </span>
               <button
                 onClick={() => {
                   // Swap current room to the selected match
                   handleMatchChange(match);
                   setMessages([]); // Clear messages when switching matches
                 }}
-                className="ml-2 cursor-pointer bg-transparent border-none p-1 transition-colors duration-300 hover:bg-gray-200"
+                className="ml-2 px-3 py-1 text-sm bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
               >
                 Chat
               </button>
@@ -213,44 +225,90 @@ const MatchChat = () => {
           ))}
         </ul>
       </aside>
-      <div className="flex-1 p-2.5">
-        <div className="border border-gray-300 p-2.5 h-72 overflow-y-scroll">
+
+      <div className="flex-1 flex flex-col p-4">
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <p className="text-sm text-gray-400">
+              <span className="font-semibold">Status:</span>{" "}
+              {isConnected ? (
+                <span className="text-green-400">Connected</span>
+              ) : (
+                <span className="text-red-400">Disconnected</span>
+              )}
+            </p>
+            <p className="text-sm text-gray-400">
+              <span className="font-semibold">Transport:</span> {transport}
+            </p>
+          </div>
+          <div>
+            <h2 className="text-sm font-bold text-gray-400">
+              {currentMatch
+                ? `Chatting with ${
+                    currentMatch.userOneId === userId
+                      ? currentMatch.userTwoName
+                      : currentMatch.userOneName
+                  }` //This is a temporary solution, will need to be replaced with a proper function that gets the other user's name if I have the time
+                : "Select a match to start chatting"}
+            </h2>
+          </div>
+        </div>
+
+        <div className="flex-1 border border-gray-800 rounded p-4 overflow-y-scroll bg-gray-900">
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={`flex flex-col ${
-                msg.self ? "items-end" : "items-start"
+              className={`mb-3 flex ${
+                msg.self ? "justify-end" : "justify-start"
               }`}
             >
-              <span className="text-sm text-gray-500">
-                {msg.self ? "You" : msg.senderName || "Other User"}
-              </span>
               <div
-                className={`p-2 rounded-lg ${
-                  msg.self ? "bg-blue-500 text-white" : "bg-gray-200 text-black"
+                className={`max-w-xs p-3 rounded-lg shadow ${
+                  msg.self
+                    ? "bg-gray-600 text-white"
+                    : "bg-gray-800 text-gray-200"
                 }`}
               >
-                {msg.text}
+                <span className="block text-xs mb-1 text-gray-400">
+                  {msg.self
+                    ? "You"
+                    : currentMatch &&
+                      (currentMatch.userOneId === userId
+                        ? currentMatch.userTwoName
+                        : currentMatch.userOneName)}
+                </span>
+                <span>{msg.text}</span>
               </div>
             </div>
           ))}
         </div>
-        <div className="mt-2.5 flex items-center">
+
+        <div className="mt-4 flex items-center">
           <input
             type="text"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Type a message"
-            className="flex-grow p-1.5 border border-gray-300 rounded"
+            placeholder={
+              currentMatch
+                ? "Type a message..."
+                : "Select a chat to start typing"
+            }
+            className="flex-grow p-2 border border-gray-800 rounded bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-600"
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === "Enter" && currentMatch) {
                 sendMessage();
               }
             }}
+            disabled={!currentMatch}
           />
           <button
             onClick={sendMessage}
-            className="ml-2 p-1.5 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className={`ml-3 px-4 py-2 rounded transition-colors ${
+              currentMatch
+                ? "bg-gray-600 text-white hover:bg-gray-700"
+                : "bg-gray-800 text-gray-500 cursor-not-allowed"
+            }`}
+            disabled={!currentMatch}
           >
             Send
           </button>

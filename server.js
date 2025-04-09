@@ -28,8 +28,6 @@ app.prepare().then(() => {
   });
 
   io.on("connection", async (socket) => {
-    //userId for the socket client, not to be confused with userId from the database used elsewhere
-    const userId = socket.handshake.query.userId; // Get userId from the socket handshake query
     console.log("A user connected:", socket.id);
 
     socket.on("Joining match session", async (newMatchId) => {
@@ -46,10 +44,36 @@ app.prepare().then(() => {
       socket.join(newMatchId);
     });
 
-    //TODO: Message sending
-    socket.on("message", (message) => {
-      console.log("Message received by server:", message);
+    //So this feels really innefficient, but it works for now and I can come back and optimize if ya'll care :)
+    socket.on("message", (message, currentMatch, currentUser) => {
+      console.log(
+        "Message received by server:",
+        message,
+        currentMatch,
+        currentUser,
+      );
       console.log("Socket room:", socket.room);
+      // Save the message to the database using Prisma
+      if (message && currentMatch && currentUser) {
+        prisma.message
+          .create({
+            data: {
+              content: message,
+              match: { connect: { id: currentMatch.id } },
+              user: { connect: { id: currentUser.id } },
+            },
+          })
+          .then(() => {
+            console.log("Message saved to database successfully.");
+          })
+          .catch((error) => {
+            console.error("Error saving message to database:", error);
+          });
+      } else {
+        console.error(
+          "Invalid data: message, matchId, and userId are required.",
+        );
+      }
       // Broadcast the message to all connected clients
       if (socket.room) {
         socket.to(socket.room).emit("messageResponse", message);
@@ -58,7 +82,6 @@ app.prepare().then(() => {
       }
     });
 
-    //TODO: implement the server side of this event, currently just a placeholder for testing purposes
     socket.on("disconnect", () => {
       console.log("A user disconnected:", socket.id);
     });

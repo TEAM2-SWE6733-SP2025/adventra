@@ -13,18 +13,19 @@ export async function GET(req) {
         },
       );
     }
-    const targetMatch = await prisma.match.findUnique({
-      where: { id: matchId },
-      include: { messages: true }, // Include messages in the response
+    const foundMessages = await prisma.message.findMany({
+      where: { matchId: matchId },
     });
-
-    if (!targetMatch) {
-      return new Response(JSON.stringify({ error: "Match not found" }), {
+    console.log("Found messages:", foundMessages);
+    if (!foundMessages) {
+      return new Response(JSON.stringify({ error: "No messages found." }), {
         status: 404,
       });
     }
 
-    return new Response(JSON.stringify(targetMatch.messages), { status: 200 });
+    return new Response(JSON.stringify(foundMessages), {
+      status: 200,
+    });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error("Error fetching match messages:", error);
