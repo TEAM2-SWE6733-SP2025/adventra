@@ -9,7 +9,7 @@ export default function PreferencesPage() {
   const [userPreferencesData, setUserPreferencesData] = useState(null);
   const [genderPref, setGenderPref] = useState(0);
   const [ageRange, setAgeRange] = useState([18, 90]);
-  const [distance, setDistance] = useState(99);
+  const [distance, setDistance] = useState(999);
 
   useEffect(() => {
     const fetchUserPrefData = async () => {
@@ -79,15 +79,15 @@ export default function PreferencesPage() {
               <div className="relative w-80 h-10 bg-gray-200 rounded-full">
                 <div
                   className={`absolute top-0 left-0 h-full w-1/3 bg-yellow-500 rounded-full transition-transform duration-300 ${
-                    genderPref === "Men"
+                    genderPref === "Male"
                       ? "translate-x-0"
-                      : genderPref === "Women"
+                      : genderPref === "Female"
                         ? "translate-x-full"
                         : "translate-x-[200%]"
                   }`}
                 ></div>
                 <div className="absolute inset-0 flex justify-between items-center px-4">
-                  {["Men", "Women", "Everyone"].map((option, index) => (
+                  {["Male", "Female", "Everyone"].map((option, index) => (
                     <button
                       key={option}
                       className={`text-gray-600 font-medium focus:outline-none px-5 w-1/3 ${
@@ -109,17 +109,17 @@ export default function PreferencesPage() {
             </div>
             <div className="flex flex-col items-center mt-4 border border-solid border-amber-400 rounded-lg p-8 mb-12">
               <span className="mt-2 text-gray-600 dark:text-white">
-                Selected Distance: {distance}
+                Selected Distance: {distance} Miles
               </span>
               <input
                 type="range"
                 min="0"
-                max="100"
+                max="1000"
                 value={distance}
                 onChange={(e) => setDistance(e.target.value)}
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                 style={{
-                  background: `linear-gradient(to right, #d19e0b ${(distance / 100) * 100}%, #e5e7eb ${(distance / 100) * 100}%)`,
+                  background: `linear-gradient(to right, #d19e0b ${(distance / 1000) * 100}%, #e5e7eb ${(distance / 1000) * 100}%)`,
                 }}
               />
             </div>
@@ -131,7 +131,7 @@ export default function PreferencesPage() {
             </div>
             <div className="flex flex-col items-center mt-4 border border-solid border-amber-400 rounded-lg p-8 mb-12">
               <span className="mt-2 text-gray-600 dark:text-white">
-                Selected Range: {ageRange[0]} - {ageRange[1]}
+                Selected Range: {ageRange[0]} - {ageRange[1]} Years
               </span>
               <RangeSlider
                 min={18}

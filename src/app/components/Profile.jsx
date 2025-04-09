@@ -58,7 +58,7 @@ const attitudeOptions = [
 ];
 
 const skillLevelOptions = ["Beginner", "Intermediate", "Advanced", "Expert"];
-const genderOptions = ["Men", "Women"];
+const genderOptions = ["Male", "Female"];
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);

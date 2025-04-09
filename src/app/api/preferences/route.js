@@ -57,14 +57,14 @@ export async function POST(req) {
         gender: body.gender || null,
         ageStart: body.ageStart || 0,
         ageEnd: body.ageEnd || 100,
-        distance: body.distance || 99,
+        distance: body.distance || 999,
       },
       create: {
         userId: userId,
         gender: body.gender || null,
         ageStart: body.ageStart || 0,
         ageEnd: body.ageEnd || 100,
-        distance: body.distance || 99,
+        distance: body.distance || 999,
       },
     });
 

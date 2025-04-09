@@ -23,7 +23,7 @@ export async function GET(req) {
     });
 
     const genderCondition =
-      userPreferences?.gender === "Men" || userPreferences?.gender === "Women"
+      userPreferences?.gender === "Male" || userPreferences?.gender === "Female"
         ? ` AND gender = '${userPreferences.gender}'`
         : " ";
 

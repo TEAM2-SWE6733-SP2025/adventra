@@ -4,10 +4,10 @@ exports[`renders homepage unchanged 1`] = `
 <div>
   <main
     class="relative w-full h-screen overflow-hidden flex flex-col bg-black"
-    style="background-image: url(/scuba.jpg); background-size: cover; background-position: center;"
   >
     <header
-      class="fixed top-0 left-0 w-full z-50 transition-transform duration-300 translate-y-0"
+      class="fixed top-0 left-0 w-full z-50 transition-transform duration-300 
+          -translate-y-full"
     >
       <nav
         class="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-700 w-full"
@@ -163,6 +163,32 @@ exports[`renders homepage unchanged 1`] = `
       >
         Find like-minded people to join you on your next adventure.
       </p>
+    </section>
+    <section
+      class="relative w-full h-full flex justify-center items-center overflow-hidden"
+    >
+      <div
+        class="absolute w-full h-full bg-cover bg-center"
+        draggable="false"
+        style="background-image: url(/safari.jpg); opacity: 1; transform: none; user-select: none;"
+      >
+        <div
+          class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-6"
+        >
+          <h2
+            class="text-4xl font-bold"
+            style="text-shadow: 0px 8px 12px rgba(0, 0, 0, 0.9);"
+          >
+            Safari
+          </h2>
+          <p
+            class="text-lg"
+            style="text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);"
+          >
+            Serengeti, Tanzania
+          </p>
+        </div>
+      </div>
     </section>
   </main>
 </div>
