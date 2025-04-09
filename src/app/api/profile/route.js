@@ -48,7 +48,6 @@ export async function POST(req) {
     const body = await req.json();
     const incomingPhotos = body.photos || [];
 
-    // Update base user fields (not including photos)
     await prisma.user.update({
       where: { id: userId },
       data: {
@@ -61,6 +60,7 @@ export async function POST(req) {
         longitude: body.longitude || null,
         email: body.email || null,
         adventureTypes: body.adventureTypes || null,
+        travelPreferences: body.travelPreferences || null,
         attitude: body.attitude || null,
         skillLevel: body.skillLevel || null,
         languages: body.languages || null,
@@ -70,18 +70,15 @@ export async function POST(req) {
       },
     });
 
-    // Get current photos from DB
     const existingPhotos = await prisma.photo.findMany({
       where: { userId },
     });
 
-    // Determine which photos to delete (not in incoming list)
     const incomingUrls = incomingPhotos.map((p) => p.url);
     const photosToDelete = existingPhotos.filter(
       (p) => !incomingUrls.includes(p.url),
     );
 
-    // Delete removed photos
     await prisma.photo.deleteMany({
       where: {
         userId,
@@ -91,7 +88,6 @@ export async function POST(req) {
       },
     });
 
-    // Upsert incoming photos
     await Promise.all(
       incomingPhotos.map((photo) =>
         prisma.photo.upsert({
@@ -144,6 +140,7 @@ export async function PUT(req) {
         longitude: body.longitude || null,
         email: body.email || null,
         adventureTypes: body.adventureTypes || null,
+        travelPreferences: body.travelPreferences || null,
         attitude: body.attitude || null,
         skillLevel: body.skillLevel || null,
         languages: body.languages || null,
@@ -162,6 +159,7 @@ export async function PUT(req) {
         longitude: body.longitude || null,
         email: body.email || null,
         adventureTypes: body.adventureTypes || null,
+        travelPreferences: body.travelPreferences || null,
         attitude: body.attitude || null,
         skillLevel: body.skillLevel || null,
         languages: body.languages || null,
