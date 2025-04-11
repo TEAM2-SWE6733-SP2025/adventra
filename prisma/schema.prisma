@@ -63,8 +63,8 @@ model Message {
   sentAt    DateTime @default(now())
   senderId  String
   matchId   String
-  user      User     @relation(fields: [senderId], references: [id])
-  match     Match    @relation(fields: [matchId], references: [id])
+  user      User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
 }
 model Photo {
   id      String  @id @default(cuid())

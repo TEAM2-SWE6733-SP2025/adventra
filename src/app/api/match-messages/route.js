@@ -16,7 +16,7 @@ export async function GET(req) {
     const foundMessages = await prisma.message.findMany({
       where: { matchId: matchId },
     });
-    console.log("Found messages:", foundMessages);
+    //console.log("Found messages:", foundMessages);
     if (!foundMessages) {
       return new Response(JSON.stringify({ error: "No messages found." }), {
         status: 404,

@@ -39,20 +39,12 @@ app.prepare().then(() => {
           socket.leave(room);
         });
       }
-      console.log("Joining match session:", newMatchId);
-      socket.room = newMatchId; // Store the current room in the socket object
+      socket.room = newMatchId; //set the socket's room as the matchId, for message sending
       socket.join(newMatchId);
     });
 
     //So this feels really innefficient, but it works for now and I can come back and optimize if ya'll care :)
     socket.on("message", (message, currentMatch, currentUser) => {
-      console.log(
-        "Message received by server:",
-        message,
-        currentMatch,
-        currentUser,
-      );
-      console.log("Socket room:", socket.room);
       // Save the message to the database using Prisma
       if (message && currentMatch && currentUser) {
         prisma.message
@@ -62,9 +54,6 @@ app.prepare().then(() => {
               match: { connect: { id: currentMatch.id } },
               user: { connect: { id: currentUser.id } },
             },
-          })
-          .then(() => {
-            console.log("Message saved to database successfully.");
           })
           .catch((error) => {
             console.error("Error saving message to database:", error);
@@ -85,6 +74,19 @@ app.prepare().then(() => {
     socket.on("disconnect", () => {
       console.log("A user disconnected:", socket.id);
     });
+
+    socket.on("Deleting a match", async (matchId) => {
+      console.log("Deleting match with ID:", matchId);
+      try {
+        await prisma.match.delete({
+          where: { id: matchId },
+        });
+        socket.emit("Match deleted");
+        console.log("Match deleted successfully.");
+      } catch (error) {
+        console.error("Error deleting match:", error);
+      }
+    });
   });
 
   httpServer
@@ -94,5 +96,8 @@ app.prepare().then(() => {
     })
     .listen(port, () => {
       console.log(`> Ready on http://${hostname}:${port}`);
+      fetch(`http://${hostname}:${port}`) //This is a hack to get the server running in dev mode without an external reqest, should be removable in prod
+        .then(() => console.log("Server warmed up."))
+        .catch((err) => console.error("Error warming up server:", err));
     });
 });
