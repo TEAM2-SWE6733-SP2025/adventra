@@ -4,14 +4,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar.jsx";
 import Button from "./components/Button.jsx";
 import { useSession } from "next-auth/react";
+import LikeButton from "./components/LikeButton.jsx";
 
 export default function Home() {
-  const { data: session } = useSession(); // Get session data
+  const { data: session } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animationDirection, setAnimationDirection] = useState(1);
   const [adventurerMatches, setAdventurerMatches] = useState([]);
+  const [backgroundPosition, setBackgroundPosition] = useState("center center");
+  const [status, setStatus] = useState("Like");
   const headerRef = useRef(null);
 
   const staticAdventureList = [
@@ -78,25 +81,103 @@ export default function Home() {
   }, [session]);
 
   useEffect(() => {
-    if (adventurerMatches.length === 0) {
-      const interval = setInterval(() => {
-        handleSwipeStaticImages("right");
-        console.log("Autoswipe triggered for static images");
-      }, 5000);
+    if (adventurerMatches.length > 0) {
+      const img = new Image();
+      img.src = adventurerMatches[currentIndex]?.profilePic;
 
-      return () => clearInterval(interval);
+      img.onload = () => {
+        const aspectRatio = img.width / img.height;
+        if (aspectRatio < 1) {
+          setBackgroundPosition("center top");
+        } else if (aspectRatio > 1.25) {
+          setBackgroundPosition("center center");
+        } else {
+          setBackgroundPosition("center");
+        }
+      };
     }
-  }, [currentIndex, adventurerMatches.length]);
+  }, [adventurerMatches, currentIndex]);
 
-  const handleSwipe = (direction) => {
-    setAnimationDirection(direction === "left" ? -1 : 1);
-    setCurrentIndex((prev) =>
-      direction === "left"
-        ? (prev + 1) % adventurerMatches.length
-        : prev === 0
-          ? adventurerMatches.length - 1
-          : prev - 1,
-    );
+  useEffect(() => {
+    const fetchStatus = async () => {
+      const likedUserId = adventurerMatches[currentIndex]?.id;
+      const currentUserId = session?.user?.id;
+
+      if (!likedUserId || !currentUserId) {
+        setStatus("Like");
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/match/status", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            likerId: currentUserId,
+            likedId: likedUserId,
+          }),
+        });
+
+        const data = await response.json();
+        if (data.status === "matched") {
+          setStatus("Matched");
+        } else if (data.status === "liked") {
+          setStatus("Liked");
+        } else {
+          setStatus("Like");
+        }
+      } catch (error) {
+        console.error("Error fetching match status:", error);
+        setStatus("Like");
+      }
+    };
+
+    fetchStatus();
+  }, [currentIndex, adventurerMatches, session]);
+
+  const handleSwipe = async (direction) => {
+    setAnimationDirection(-1);
+
+    if (direction === "right") {
+      const likedUserId = adventurerMatches[currentIndex]?.id;
+      const currentUserId = session?.user?.id;
+
+      if (status !== "Like") {
+        alert("You have already liked this user.");
+        return;
+      }
+
+      if (likedUserId && currentUserId) {
+        try {
+          const response = await fetch("/api/match", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              likerId: currentUserId,
+              likedId: likedUserId,
+            }),
+          });
+
+          const data = await response.json();
+          if (data.message === "It's a match!") {
+            setStatus("Matched");
+            alert("It's a match!");
+          } else {
+            setStatus("Liked");
+            alert("Like recorded, waiting for mutual like.");
+          }
+        } catch (error) {
+          console.error("Error liking user:", error);
+          alert("Failed to like user.");
+        }
+      }
+
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % adventurerMatches.length);
+      }, 500);
+    } else {
+      setCurrentIndex((prev) => (prev + 1) % adventurerMatches.length);
+    }
   };
 
   const handleSwipeStaticImages = (direction) => {
@@ -192,28 +273,27 @@ export default function Home() {
       >
         <Navbar onMenuToggle={handleMenuToggle} />
       </header>
-
       <section className="relative w-full h-full flex justify-center items-center overflow-hidden">
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             key={adventurerMatches[currentIndex]?.id}
-            initial={{ x: `${animationDirection * 100}%`, opacity: 1 }}
+            initial={{ x: "100%", opacity: 1 }}
             animate={{ x: "0%", opacity: 1 }}
-            exit={{ x: `${-animationDirection * 100}%`, opacity: 1 }}
+            exit={{ x: "-100%", opacity: 1 }}
             transition={{ duration: 0.7, ease: "easeInOut" }}
             className="absolute w-full h-full bg-cover bg-center"
             style={{
               backgroundImage: `url(${adventurerMatches[currentIndex]?.profilePic})`,
               backgroundRepeat: "no-repeat",
-              backgroundSize: "auto 100%",
-              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundPosition: backgroundPosition,
             }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.0}
             onDragEnd={(event, info) => {
-              if (info.offset.x < -0.1) handleSwipe("right");
-              else if (info.offset.x > 0.1) handleSwipe("left");
+              if (info.offset.x < -50) handleSwipe("left");
+              else if (info.offset.x > 50) handleSwipe("right");
             }}
           >
             <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-6">
@@ -252,8 +332,12 @@ export default function Home() {
         <Button variant="outline" onClick={() => handleSwipe("left")}>
           Pass
         </Button>
-
-        <Button onClick={() => handleSwipe("right")}>Match</Button>
+        <LikeButton
+          likedUserId={adventurerMatches[currentIndex]?.id}
+          currentUserId={session?.user.id}
+          status={status}
+          setStatus={setStatus}
+        />
       </div>
     </main>
   );
