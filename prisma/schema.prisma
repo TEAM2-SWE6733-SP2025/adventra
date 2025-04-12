@@ -33,6 +33,10 @@ model User {
   travelPreferences Json?
   preferences    Preferences?
   sessions       Session[]
+  likesGiven     Like[]       @relation("LikesGiven")
+  likesReceived  Like[]       @relation("LikesReceived")
+  matches1       Match[]      @relation("Matches1")
+  matches2       Match[]      @relation("Matches2")
 }
 
 model Preferences {
@@ -43,6 +47,28 @@ model Preferences {
   ageEnd   Int?
   distance Int?
   user     User    @relation(fields: [userId], references: [id])
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  likerId   String
+  likedId   String
+  createdAt DateTime @default(now())
+  liker     User     @relation("LikesGiven", fields: [likerId], references: [id])
+  liked     User     @relation("LikesReceived", fields: [likedId], references: [id])
+
+  @@unique([likerId, likedId]) 
+}
+
+model Match {
+  id        String   @id @default(cuid())
+  user1Id   String
+  user2Id   String
+  createdAt DateTime @default(now())
+  user1     User     @relation("Matches1", fields: [user1Id], references: [id])
+  user2     User     @relation("Matches2", fields: [user2Id], references: [id])
+
+  @@unique([user1Id, user2Id]) 
 }
 
 model Photo {
