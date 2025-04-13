@@ -21,10 +21,23 @@ See [app README](./README.app.md) for details on how to setup and run the app.
 | Prudhvi Prasad Samudrala | Developer     |
 | Yaswitha Swarna          | Tester        |
 
-### Video Links
-
+### Deliverable Video/Image Links
+#### Deliverables can also be found in their respective folder <Deliverable #> in the root  of this directory.
+#### Confluence and Jira links that span multiple sprints/deliverables in their own section below ####
 ---
 
+#### Deliverable 3 #### 
+[Sprint Retro Video](https://kennesawedu-my.sharepoint.com/:v:/g/personal/khuttar1_students_kennesaw_edu/EckoDSMpE21FnrZBJisM4hAB8lza580ujTOySu1LIKn0BQ?e=i15J9c&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
+
+[Sprint Retro Whiteboard](https://6733team2.atlassian.net/wiki/spaces/Adventra/whiteboard/23298104?atl_f=PAGETREE)
+
+[Daily Scrum Sample](Deliverable3/DailyStandUp.png)
+
+[Mob Session Screenshot](Deliverable3/mob-programming.png)
+
+[CD/CI pipline documentation](Deliverable3/CICDPipeline.pdf)
+
+---
 #### Deliverable 2
 
 [Product Demo](https://kennesawedu-my.sharepoint.com/:v:/g/personal/khuttar1_students_kennesaw_edu/EbrnRZFynbZAllWJbJSlNGsBh-9W9SKgxxJPmSUpMBDd3w?e=4hEJwV&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
@@ -32,6 +45,7 @@ See [app README](./README.app.md) for details on how to setup and run the app.
 [Mob Programming](https://kennesawedu-my.sharepoint.com/:v:/g/personal/khuttar1_students_kennesaw_edu/EUkDhwE4woBBlF45sO-jI6EBb_yiffZuxLJC0iQN3qqCbg?e=xLBEzu&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
 
 [Sprint Retro](https://kennesawedu-my.sharepoint.com/:v:/g/personal/khuttar1_students_kennesaw_edu/EYQTYEhAwkNIn_CJ0mEL14kBP18zuZYhTjL1K1Uhkp5bSA?e=n8Aeaz&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
+
 
 ## Atlassian Tools Integration
 
@@ -48,6 +62,8 @@ To streamline collaboration and project management, we use Atlassian tools for d
 [Backlog Prioritization Criteria](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/3604909/Backlog+Prioritization+Criteria) | [PDF](Deliverable1/ProjectDocuments/AdventraBacklogPrioritizationCriteria.pdf)
 
 [Definition of Ready](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/3604899/Definition+of+Ready+Document) | [PDF](Deliverable1/ProjectDocuments/AdventraDefinitionofReadyDocument.pdf)
+
+[CI/CD Pipeline Documentation](https://6733team2.atlassian.net/wiki/spaces/Adventra/pages/23298120/CD+CI+Pipeline) | [PDF](Deliverable3/CICDPipeline.pdf)
 
 ### Jira
 
