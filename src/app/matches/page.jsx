@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { FaTrash } from "react-icons/fa";
 import Chat from "@/app/components/Chat";
 
-export default function MatchesPage() {
+function MatchesContent() {
   const searchParams = useSearchParams();
   const currentUserId = searchParams.get("userId");
 
@@ -41,6 +41,14 @@ export default function MatchesPage() {
   };
 
   const handleDeleteMatch = async (matchId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this chat? This action cannot be undone.",
+    );
+
+    if (!confirmDelete) {
+      return;
+    }
+
     try {
       const response = await fetch(`/api/messages/${matchId}`, {
         method: "DELETE",
@@ -112,7 +120,7 @@ export default function MatchesPage() {
                     </div>
                     <button
                       onClick={() => handleDeleteMatch(match.id)}
-                      className="text-black-600 hover:text-red-700"
+                      className="text-red-600 hover:text-red-700"
                       aria-label="Delete Match"
                     >
                       <FaTrash className="h-5 w-5" />
@@ -135,5 +143,13 @@ export default function MatchesPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function MatchesPage() {
+  return (
+    <Suspense fallback={<p className="text-gray-400">Loading...</p>}>
+      <MatchesContent />
+    </Suspense>
   );
 }
