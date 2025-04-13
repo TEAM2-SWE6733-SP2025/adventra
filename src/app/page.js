@@ -5,9 +5,11 @@ import Navbar from "./components/Navbar.jsx";
 import Button from "./components/Button.jsx";
 import { useSession } from "next-auth/react";
 import LikeButton from "./components/LikeButton.jsx";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { data: session } = useSession();
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -338,6 +340,18 @@ export default function Home() {
           status={status}
           setStatus={setStatus}
         />
+        {status === "Matched" && (
+          <Button
+            variant="primary"
+            onClick={() =>
+              router.push(
+                `/matches?userId=${session?.user.id}&receiverId=${adventurerMatches[currentIndex]?.id}`,
+              )
+            }
+          >
+            Chat
+          </Button>
+        )}
       </div>
     </main>
   );

@@ -21,7 +21,6 @@ export async function GET(req) {
           select: {
             id: true,
             name: true,
-            location: true,
             profilePic: true,
           },
         },
@@ -29,7 +28,6 @@ export async function GET(req) {
           select: {
             id: true,
             name: true,
-            location: true,
             profilePic: true,
           },
         },

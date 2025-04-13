@@ -8,35 +8,51 @@ datasource db {
 }
 
 model User {
-  id             String       @id @default(cuid())
-  name           String?
-  email          String?      @unique
-  emailVerified  DateTime?
-  image          String?
-  password       String?
-  bio            String?
-  birthdate      DateTime?
-  profilePic     String?
-  skillLevel     String?
-  socialMedia    Json?
-  adventureTypes Json?
-  attitude       Json?
-  languages      Json?
-  isAdmin        Boolean      @default(false)
-  city           String?
-  latitude       Float?
-  longitude      Float?
-  state          String?
-  gender         String?
-  accounts       Account[]
-  photos         Photo[]
+  id                String       @id @default(cuid())
+  name              String?
+  email             String?      @unique
+  emailVerified     DateTime?
+  image             String?
+  password          String?
+  bio               String?
+  birthdate         DateTime?
+  profilePic        String?
+  skillLevel        String?
+  socialMedia       Json?
+  adventureTypes    Json?
+  attitude          Json?
+  languages         Json?
+  isAdmin           Boolean      @default(false)
+  city              String?
+  latitude          Float?
+  longitude         Float?
+  state             String?
+  gender            String?
+  accounts          Account[]
+  photos            Photo[]
   travelPreferences Json?
-  preferences    Preferences?
-  sessions       Session[]
-  likesGiven     Like[]       @relation("LikesGiven")
-  likesReceived  Like[]       @relation("LikesReceived")
-  matches1       Match[]      @relation("Matches1")
-  matches2       Match[]      @relation("Matches2")
+  preferences       Preferences?
+  sessions          Session[]
+  likesGiven        Like[]       @relation("LikesGiven")
+  likesReceived     Like[]       @relation("LikesReceived")
+  matches1          Match[]      @relation("Matches1")
+  matches2          Match[]      @relation("Matches2")
+  sentMessages      Message[]    @relation("SentMessages")
+  receivedMessages  Message[]    @relation("ReceivedMessages")
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  matchId    String
+  content    String
+  createdAt  DateTime @default(now())
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  match      Match    @relation(fields: [matchId], references: [id])
+
+  @@index([matchId])
 }
 
 model Preferences {
@@ -57,18 +73,19 @@ model Like {
   liker     User     @relation("LikesGiven", fields: [likerId], references: [id])
   liked     User     @relation("LikesReceived", fields: [likedId], references: [id])
 
-  @@unique([likerId, likedId]) 
+  @@unique([likerId, likedId])
 }
 
 model Match {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   user1Id   String
   user2Id   String
-  createdAt DateTime @default(now())
-  user1     User     @relation("Matches1", fields: [user1Id], references: [id])
-  user2     User     @relation("Matches2", fields: [user2Id], references: [id])
+  createdAt DateTime  @default(now())
+  user1     User      @relation("Matches1", fields: [user1Id], references: [id])
+  user2     User      @relation("Matches2", fields: [user2Id], references: [id])
+  Message   Message[]
 
-  @@unique([user1Id, user2Id]) 
+  @@unique([user1Id, user2Id])
 }
 
 model Photo {
