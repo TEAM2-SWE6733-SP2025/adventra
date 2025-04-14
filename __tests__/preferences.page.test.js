@@ -162,4 +162,14 @@ describe("Preferences Page submit Buttons", () => {
     const cancelBtn = screen.getByText("Cancel");
     expect(cancelBtn).toBeInTheDocument();
   });
+
+  it("matches the snapshot", () => {
+    const { asFragment } = render(
+      <SessionProvider session={mockSession}>
+        <PreferencesPage />
+      </SessionProvider>,
+    );
+
+    expect(asFragment()).toMatchSnapshot();
+  });
 });

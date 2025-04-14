@@ -36,4 +36,9 @@ describe("AboutPage", () => {
 
     expect(missionStatement).toBeInTheDocument();
   });
+
+  it("matches the snapshot", () => {
+    const { asFragment } = render(<AboutPage />);
+    expect(asFragment()).toMatchSnapshot();
+  });
 });
