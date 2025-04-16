@@ -73,7 +73,7 @@ function MatchesContent() {
 
   const handleBlockMatch = async (matchId) => {
     const confirmBlock = window.confirm(
-      "Are you sure you want to block this user? This action cannot be undone.",
+      "Are you sure you want to block this user?",
     );
 
     if (!confirmBlock) {
@@ -84,10 +84,14 @@ function MatchesContent() {
       const response = await fetch(`/api/matches`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ matchId: matchId }),
+        body: JSON.stringify({ matchId: matchId, userId: currentUserId }),
       });
 
-      if (!response.ok) {
+      if (response.status === 403) {
+        alert(
+          "Unauthorized to perform action. It is blocked by the other user.",
+        );
+      } else if (!response.ok) {
         console.log("Error response:", response);
         throw new Error("Failed to block match");
       }

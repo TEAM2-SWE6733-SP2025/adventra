@@ -85,6 +85,7 @@ model Match {
   user2     User      @relation("Matches2", fields: [user2Id], references: [id])
   Message   Message[]
   isBlocked Boolean   @default(false)
+  blockedBy String?
   @@unique([user1Id, user2Id])
 }
 
