@@ -14,6 +14,7 @@ export default function Chat({ matchId, currentUserId }) {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false); // New state for blocked status
   const messagesEndRef = useRef(null);
   let typingTimeout;
 
@@ -32,8 +33,22 @@ export default function Chat({ matchId, currentUserId }) {
       }
     };
 
+    const checkBlockedStatus = async () => {
+      try {
+        const response = await fetch(`/api/match/status?matchId=${matchId}`, {
+          method: "GET",
+        });
+        const data = await response.json();
+        console.log("Blocked status data from Chat.jsx :", data);
+        setIsBlocked(data.isBlocked);
+      } catch (error) {
+        console.error("Error checking blocked status:", error);
+      }
+    };
+
     if (matchId) {
-      fetchChatHistory();
+      checkBlockedStatus();
+      if (isBlocked) fetchChatHistory();
     }
   }, [matchId]);
 
@@ -101,6 +116,16 @@ export default function Chat({ matchId, currentUserId }) {
     setNewMessage("");
     socket.emit("stopTyping", { matchId, senderId: currentUserId });
   };
+
+  if (isBlocked) {
+    return (
+      <div className="flex flex-col h-full bg-black text-gray-200 justify-center items-center">
+        <p className="text-red-500 text-lg">
+          You cannot chat with this user as they are blocked.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full bg-black text-gray-200">

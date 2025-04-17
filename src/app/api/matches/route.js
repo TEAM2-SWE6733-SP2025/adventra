@@ -46,3 +46,52 @@ export async function GET(req) {
     });
   }
 }
+
+export async function PUT(req, { params }) {
+  try {
+    console.log("Updating isBlocked status");
+    const body = await req.json();
+    const { matchId, userId } = body;
+
+    if (!matchId || !userId) {
+      return new Response(
+        JSON.stringify({ error: "Missing or invalid matchId or userId" }),
+        { status: 400 },
+      );
+    }
+
+    const prev = await prisma.match.findFirst({
+      where: { id: matchId },
+    });
+
+    if (!prev) {
+      return new Response(JSON.stringify({ error: "Match not found" }), {
+        status: 404,
+      });
+    }
+
+    // If isBlocked is being changed from true to false, check if the same user is updating it
+    if (prev.isBlocked && prev.blockedBy !== userId) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized to unblock this match" }),
+        { status: 403 },
+      );
+    }
+
+    const updatedMatch = await prisma.match.update({
+      where: { id: matchId },
+      data: {
+        isBlocked: !prev.isBlocked,
+        blockedBy: prev.isBlocked ? null : userId, // Set blockedBy to null if unblocking, otherwise set to userId
+      },
+    });
+
+    return new Response(JSON.stringify(updatedMatch), { status: 200 });
+  } catch (error) {
+    console.error("Error updating isBlocked:", error);
+    return new Response(
+      JSON.stringify({ error: "Failed to update isBlocked" }),
+      { status: 500 },
+    );
+  }
+}

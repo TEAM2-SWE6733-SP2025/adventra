@@ -41,3 +41,25 @@ export async function POST(req) {
     });
   }
 }
+
+export async function GET(req) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const matchId = searchParams.get("matchId");
+
+    if (!matchId) {
+      return new Response(
+        JSON.stringify({ error: "Missing matchId in request" }),
+        { status: 400 },
+      );
+    }
+
+    const matches = await prisma.match.findFirst({ where: { id: matchId } });
+    return new Response(JSON.stringify(matches), { status: 200 });
+  } catch (error) {
+    console.error("Error fetching match status:", error);
+    return new Response(JSON.stringify({ error: "Failed to fetch status" }), {
+      status: 500,
+    });
+  }
+}
