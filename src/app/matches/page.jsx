@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { FaTrash, FaBan } from "react-icons/fa";
+import { FaShieldHalved } from "react-icons/fa6";
 import Chat from "@/app/components/Chat";
 import Navbar from "../components/Navbar";
 
@@ -71,10 +72,12 @@ function MatchesContent() {
     }
   };
 
-  const handleBlockMatch = async (matchId) => {
-    const confirmBlock = window.confirm(
-      "Are you sure you want to block this user?",
-    );
+  const handleBlockMatch = async (matchId, isBlocked) => {
+    const ConfirmMessageString = isBlocked
+      ? "Are you sure you want to unblock this user?"
+      : "Are you sure you want to block this user?";
+
+    const confirmBlock = window.confirm(ConfirmMessageString);
 
     if (!confirmBlock) {
       return;
@@ -89,7 +92,7 @@ function MatchesContent() {
 
       if (response.status === 403) {
         alert(
-          "Unauthorized to perform action. It is blocked by the other user.",
+          "Unauthorized to perform action. Chat blocked by the other user.",
         );
       } else if (!response.ok) {
         console.log("Error response:", response);
@@ -157,13 +160,28 @@ function MatchesContent() {
                           </div>
                         </div>
                         <div className="flex space-x-8">
-                          <button
-                            onClick={() => handleBlockMatch(match.id)}
-                            className="text-yellow-500 hover:text-purple-400"
-                            aria-label="Block Match"
-                          >
-                            <FaBan className="h-5 w-5" />
-                          </button>
+                          {match.isBlocked ? (
+                            <button
+                              onClick={() =>
+                                handleBlockMatch(match.id, match.isBlocked)
+                              }
+                              className="text-yellow-500 hover:text-purple-400"
+                              aria-label="Unblock Match"
+                            >
+                              <FaShieldHalved className="h-5 w-5" />
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() =>
+                                handleBlockMatch(match.id, match.isBlocked)
+                              }
+                              className="text-yellow-500 hover:text-purple-400"
+                              aria-label="Block Match"
+                            >
+                              <FaBan className="h-5 w-5" />
+                            </button>
+                          )}
+
                           <button
                             onClick={() => handleDeleteMatch(match.id)}
                             className="text-red-600 hover:text-red-700"
