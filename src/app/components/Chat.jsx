@@ -48,7 +48,7 @@ export default function Chat({ matchId, currentUserId }) {
 
     if (matchId) {
       checkBlockedStatus();
-      if (isBlocked) fetchChatHistory();
+      fetchChatHistory();
     }
   }, [matchId]);
 
@@ -121,7 +121,7 @@ export default function Chat({ matchId, currentUserId }) {
     return (
       <div className="flex flex-col h-full bg-black text-gray-200 justify-center items-center">
         <p className="text-red-500 text-lg">
-          You cannot chat with this user as they are blocked.
+          You cannot chat with this user as the chat is blocked.
         </p>
       </div>
     );
