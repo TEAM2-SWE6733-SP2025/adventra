@@ -25,6 +25,16 @@ See [app README](./README.app.md) for details on how to setup and run the app.
 #### Deliverables can also be found in their respective folder <Deliverable #> in the root  of this directory.
 #### Confluence and Jira links that span multiple sprints/deliverables in their own section below ####
 ---
+#### Deliverable 4 ####
+[Sprint Retro Whiteboard](https://6733team2.atlassian.net/wiki/spaces/Adventra/whiteboard/23298104?atl_f=PAGETREE)
+
+[Daily Scrum Sample](___deliverables/sprint3-deliverable4/Daily%20Scrum.png)
+
+[Story Point Forcast](___deliverables/sprint3-deliverable4/Adventra-Story%20Point%20Forecast-280425-172011.pdf)
+
+[Burndown Chart](___deliverables/sprint3-deliverable4/BurndownChart.png)
+
+[CD/CI pipline documentation](___deliverables/sprint2-deliverable3//product_documents/CICDPipeline.pdf)
 
 #### Deliverable 3 #### 
 [Sprint Retro Video](https://kennesawedu-my.sharepoint.com/:v:/g/personal/khuttar1_students_kennesaw_edu/EckoDSMpE21FnrZBJisM4hAB8lza580ujTOySu1LIKn0BQ?e=i15J9c&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
