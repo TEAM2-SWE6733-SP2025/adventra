@@ -26,6 +26,8 @@ See [app README](./README.app.md) for details on how to setup and run the app.
 #### Confluence and Jira links that span multiple sprints/deliverables in their own section below ####
 ---
 #### Deliverable 4 ####
+[Sprint Retro Video](https://kennesawedu-my.sharepoint.com/:v:/g/personal/khuttar1_students_kennesaw_edu/ERU-gH9K4VxPmfBr_fUN2E4BFFmS40Hb0yQCj2-u7a0SaA?e=f0e3MS&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
+
 [Sprint Retro Whiteboard](https://6733team2.atlassian.net/wiki/spaces/Adventra/whiteboard/23298104?atl_f=PAGETREE)
 
 [Daily Scrum Sample](___deliverables/sprint3-deliverable4/Daily%20Scrum.png)
@@ -34,7 +36,9 @@ See [app README](./README.app.md) for details on how to setup and run the app.
 
 [Burndown Chart](___deliverables/sprint3-deliverable4/BurndownChart.png)
 
-[CD/CI pipline documentation](___deliverables/sprint2-deliverable3//product_documents/CICDPipeline.pdf)
+[Mob Session Screenshot](___deliverables/sprint3-deliverable4/MobProgram.png)
+
+[CD/CI pipline documentation](___deliverables/sprint2-deliverable3/product_documents/CICDPipeline.pdf)
 
 #### Deliverable 3 #### 
 [Sprint Retro Video](https://kennesawedu-my.sharepoint.com/:v:/g/personal/khuttar1_students_kennesaw_edu/EckoDSMpE21FnrZBJisM4hAB8lza580ujTOySu1LIKn0BQ?e=i15J9c&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
