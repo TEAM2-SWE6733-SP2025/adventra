@@ -362,6 +362,7 @@ export default function ProfilePage() {
         type="textarea"
         placeholder="Write a short description about yourself, your interests, or your adventures."
         rows={4}
+        ariaLabel="About Me"
       >
         {userData.bio || "No bio"}
       </EditableField>
