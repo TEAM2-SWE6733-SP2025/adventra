@@ -7,17 +7,32 @@ const SocialLinksEditor = ({ isEditing, links = {}, onChange }) => {
       {!isEditing ? (
         <>
           {links.instagram && (
-            <a href={links.instagram} target="_blank" rel="noopener noreferrer">
+            <a
+              href={links.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
               <FaInstagram className="text-yellow-500 text-2xl" />
             </a>
           )}
           {links.twitter && (
-            <a href={links.twitter} target="_blank" rel="noopener noreferrer">
+            <a
+              href={links.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+            >
               <FaTwitter className="text-yellow-500 text-2xl" />
             </a>
           )}
           {links.linkedin && (
-            <a href={links.linkedin} target="_blank" rel="noopener noreferrer">
+            <a
+              href={links.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
               <FaLinkedin className="text-yellow-500 text-2xl" />
             </a>
           )}

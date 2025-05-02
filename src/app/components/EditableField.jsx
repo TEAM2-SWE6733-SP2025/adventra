@@ -8,6 +8,7 @@ const EditableField = ({
   placeholder = "",
   className = "",
   rows = 1,
+  ariaLabel = "",
   children,
 }) => {
   return isEditing ? (
@@ -17,6 +18,7 @@ const EditableField = ({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={rows}
+        aria-label={ariaLabel}
         className={`bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full ${className}`}
       />
     ) : (
@@ -25,6 +27,7 @@ const EditableField = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
+        aria-label={ariaLabel}
         className={`bg-gray-800 border border-yellow-500 text-white p-2 rounded-md w-full ${className}`}
       />
     )
