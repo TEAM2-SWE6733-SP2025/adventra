@@ -46,11 +46,24 @@ exports[`AboutPage matches the snapshot 1`] = `
         <div
           class="p-6 dark rounded-2xl shadow-lg flex flex-col items-center"
         >
-          <div
-            class="w-24 h-24 bg-yellow-500 text-black font-bold flex items-center justify-center rounded-full text-2xl mb-4"
+          <a
+            href="/kh.jpg"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            K
-          </div>
+            <img
+              alt="Kirsten Huttar"
+              class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-yellow-500"
+              data-nimg="1"
+              decoding="async"
+              height="96"
+              loading="lazy"
+              src="/_next/image?url=%2Fkh.jpg&w=256&q=75"
+              srcset="/_next/image?url=%2Fkh.jpg&w=96&q=75 1x, /_next/image?url=%2Fkh.jpg&w=256&q=75 2x"
+              style="color: transparent;"
+              width="96"
+            />
+          </a>
           <h2
             class="text-xl font-semibold"
           >
@@ -66,7 +79,7 @@ exports[`AboutPage matches the snapshot 1`] = `
           class="p-6 dark rounded-2xl shadow-lg flex flex-col items-center"
         >
           <a
-            href="/profilepic.png"
+            href="/jp.jpg"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -77,8 +90,8 @@ exports[`AboutPage matches the snapshot 1`] = `
               decoding="async"
               height="96"
               loading="lazy"
-              src="/_next/image?url=%2Fprofilepic.png&w=256&q=75"
-              srcset="/_next/image?url=%2Fprofilepic.png&w=96&q=75 1x, /_next/image?url=%2Fprofilepic.png&w=256&q=75 2x"
+              src="/_next/image?url=%2Fjp.jpg&w=256&q=75"
+              srcset="/_next/image?url=%2Fjp.jpg&w=96&q=75 1x, /_next/image?url=%2Fjp.jpg&w=256&q=75 2x"
               style="color: transparent;"
               width="96"
             />
@@ -129,11 +142,24 @@ exports[`AboutPage matches the snapshot 1`] = `
         <div
           class="p-6 dark rounded-2xl shadow-lg flex flex-col items-center"
         >
-          <div
-            class="w-24 h-24 bg-yellow-500 text-black font-bold flex items-center justify-center rounded-full text-2xl mb-4"
+          <a
+            href="/cw.jpg"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            C
-          </div>
+            <img
+              alt="Christopher Wilder"
+              class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-yellow-500"
+              data-nimg="1"
+              decoding="async"
+              height="96"
+              loading="lazy"
+              src="/_next/image?url=%2Fcw.jpg&w=256&q=75"
+              srcset="/_next/image?url=%2Fcw.jpg&w=96&q=75 1x, /_next/image?url=%2Fcw.jpg&w=256&q=75 2x"
+              style="color: transparent;"
+              width="96"
+            />
+          </a>
           <h2
             class="text-xl font-semibold"
           >
@@ -148,11 +174,24 @@ exports[`AboutPage matches the snapshot 1`] = `
         <div
           class="p-6 dark rounded-2xl shadow-lg flex flex-col items-center"
         >
-          <div
-            class="w-24 h-24 bg-yellow-500 text-black font-bold flex items-center justify-center rounded-full text-2xl mb-4"
+          <a
+            href="/ps.png"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            P
-          </div>
+            <img
+              alt="Prudhvi Samudrala"
+              class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-yellow-500"
+              data-nimg="1"
+              decoding="async"
+              height="96"
+              loading="lazy"
+              src="/_next/image?url=%2Fps.png&w=256&q=75"
+              srcset="/_next/image?url=%2Fps.png&w=96&q=75 1x, /_next/image?url=%2Fps.png&w=256&q=75 2x"
+              style="color: transparent;"
+              width="96"
+            />
+          </a>
           <h2
             class="text-xl font-semibold"
           >
@@ -167,11 +206,24 @@ exports[`AboutPage matches the snapshot 1`] = `
         <div
           class="p-6 dark rounded-2xl shadow-lg flex flex-col items-center"
         >
-          <div
-            class="w-24 h-24 bg-yellow-500 text-black font-bold flex items-center justify-center rounded-full text-2xl mb-4"
+          <a
+            href="/ys.png"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            Y
-          </div>
+            <img
+              alt="Yaswitha Swarna"
+              class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-yellow-500"
+              data-nimg="1"
+              decoding="async"
+              height="96"
+              loading="lazy"
+              src="/_next/image?url=%2Fys.png&w=256&q=75"
+              srcset="/_next/image?url=%2Fys.png&w=96&q=75 1x, /_next/image?url=%2Fys.png&w=256&q=75 2x"
+              style="color: transparent;"
+              width="96"
+            />
+          </a>
           <h2
             class="text-xl font-semibold"
           >
