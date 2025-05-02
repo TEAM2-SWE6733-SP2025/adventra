@@ -7,12 +7,12 @@ const teamMembers = [
   {
     name: "Kirsten Huttar",
     role: "Scrum Master",
-    imageUrl: "",
+    imageUrl: "/kh.jpg",
   },
   {
     name: "John Pranoy Yalla",
     role: "Product Owner",
-    imageUrl: "/profilepic.png",
+    imageUrl: "/jp.jpg",
   },
   {
     name: "Louis Muhammad",
@@ -22,17 +22,17 @@ const teamMembers = [
   {
     name: "Christopher Wilder",
     role: "Developer",
-    imageUrl: "",
+    imageUrl: "/cw.jpg",
   },
   {
     name: "Prudhvi Samudrala",
     role: "Developer",
-    imageUrl: "",
+    imageUrl: "/ps.png",
   },
   {
     name: "Yaswitha Swarna",
     role: "UI / Tester",
-    imageUrl: "",
+    imageUrl: "/ys.png",
   },
 ];
 
